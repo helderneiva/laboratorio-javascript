@@ -51,7 +51,7 @@ body{
   color: var(--texto);
 }
 
-header#cabecalho{
+header{
   width: 100%;
   background-color: var(--fundo-card);
   color: var(--texto);
@@ -61,7 +61,7 @@ header#cabecalho{
   align-items: center;
 }
 
-header#cabecalho h1{
+header h1{
   font-family: var(--font-titulos);
   font-size: 2em;
   font-weight: 700;
@@ -86,4 +86,37 @@ nav#menu a{
 nav#menu a:hover{
   background-color: var(--destaque);
   color: var(--texto-inverso);
+}
+
+main{
+
+}
+
+section#apresentacao {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 50px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+section#apresentacao h2{
+  font-family: var(--font-titulos);
+  font-size: 2em;
+  font-weight: 600;
+  line-height: 1.2em;
+  color: var(--destaque);
+  text-align: center;
+}
+
+section#apresentacao p {
+  font-family: var(--font-textos);
+  font-size: 1.2em;
+  line-height: 1.5em;
+}
+
+footer{
+  background-color: var(--fundo-card);
 }

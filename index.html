@@ -6,17 +6,18 @@
     <title>Laboratório JavaScript</title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="estilos/principal.css">
+    <script src="https://kit.fontawesome.com/2fb14b2086.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <header id="cabecalho">
+    <header>
         <h1>Laboratório JavaScript</h1>
         <nav id="menu">
             <ul>
-                <li><a href="#apresentacao">Home</a></li>
-                <li><a href="#painel-controle">Painel</a></li>
-                <li><a href="#experiencia">Habilidades</a></li>
-                <li><a href="#contato">Contatos</a></li>
-                <li><a href="#">Tema</a></li>
+                <li><a href="#apresentacao"><i class="fa-solid fa-house"></i></a></li>
+                <li><a href="#painel-controle"><i class="fa-solid fa-flask"></i></a></li>
+                <li><a href="#experiencia"><i class="fa-solid fa-code"></i></a></li>
+                <li><a href="#contato"><i class="fa-solid fa-envelope"></i></a></li>
+                <li><a href="#"><i class="fa-solid fa-star-and-crescent"></i></a></li>
             </ul>
         </nav>
     </header>
@@ -25,12 +26,10 @@
         <section id="apresentacao">
             <h2>Bem-vindo ao meu laboratório de JavaScript</h2>
             <p>Este site é um projeto por si só: um espaço que criei para centralizar, testar e documentar todas as minhas aplicações com JS. <br>Mais do que um índice estático, esta página é um ecossistema vivo que reflete minha evolução lógica e técnica. <br>Este espaço serve para validar meus algoritmos e testar conceitos de manipulação de dados em tempo real, transformando linhas de código estáticas em recursos web dinâmicos e funcionais. <br> Cada projeto publicado aqui funciona como um experimento que consolida minha evolução lógica e visual.</p>
-            
-            <div id="social"></div>
         </section>
 
         <section id="painel-controle" class="lab">
-             <header class="painel-barra-horizontal">
+            <div class="painel-barra-horizontal">
                 <h2>Meus Experimentos</h2>
 
                 <div class="filtros">
@@ -39,12 +38,12 @@
                     <button class="btn-filtro" data-categoria="api">Consumo de APIs</button>
                     <button class="btn-filtro" data-categoria="logica">Lógica Pura</button>
                 </div>
-                </header>
+            </div>
 
-                <!-- O Grid onde o JavaScript vai renderizar os cards -->
-                <div id="grid-projetos" class="grid-container">
-                <!-- Seus cards JS entrarão aqui dinamicamente -->
-                </div>
+            <!-- O Grid onde o JavaScript vai renderizar os cards -->
+            <div id="grid-projetos" class="grid-container">
+            <!-- Seus cards JS entrarão aqui dinamicamente -->
+            </div>
         </section>
 
         <section id="experiencia" class="experiencia-container">
