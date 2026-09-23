@@ -1,0 +1,73 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: 'Syne Local';
+  src: url('../fontes/Syne-VariableFont_wght.ttf') format('truetype');
+  font-weight: 400 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Inter Local';
+  src: url('../fontes/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+:root{
+    --font-titulos: 'Syne Local', sans-serif;
+    --font-textos: 'Inter Local', sans-serif;
+
+    --fundo-principal: #F5F7FA;
+    --texto: #1E1F26;
+    --texto-inverso: #FFFFFF;
+    --destaque: #03A87C;
+    --destaque-inverso: #7B899B;
+    --fundo-card: #FFFFFF;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+  font-family: var(--font-textos);
+  line-height: 1.5em;
+  background-color: var(--fundo-principal);
+  color: var(--texto);
+}
+
+header#cabecalho {
+  background-color: var(--destaque);
+  color: var(--texto);
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header#cabecalho h1 {
+  font-family: var(--font-titulos);
+  font-size: 1.6em;
+  font-weight: 700;
+}
+
+nav#menu ul{
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+nav#menu a {
+  text-decoration: none;
+  color: var(--texto-inverso);
+  font-weight: 600;
+  border-radius: 5px;
+}
+
+nav#menu a:hover {
+  
+}
