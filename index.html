@@ -5,13 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laboratório JavaScript</title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    
+
+    <script>
+      try {
+        if (localStorage.getItem('laboratorio-tema') === 'light') {
+          document.documentElement.classList.add('light-mode');
+        }
+      } catch (e) {}
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Orbitron:wght@700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="estilos/principal.css">
-    <script src="https://kit.fontawesome.com/2fb14b2086.js" crossorigin="anonymous"></script>
+    <script src="scripts/lucide.js"></script>
 </head>
 <body>
 
@@ -19,13 +27,13 @@
         <h1>Laboratório JavaScript</h1>
     </header>
 
-    <nav id="menu">
+    <nav id="menu" aria-label="Menu principal">
         <ul>
-            <li><a href="#apresentacao"><i class="fa-solid fa-house"></i></a></li>
-            <li><a href="#painel-controle"><i class="fa-solid fa-flask"></i></a></li>
-            <li><a href="#experiencia"><i class="fa-solid fa-code"></i></a></li>
-            <li><a href="#contato"><i class="fa-solid fa-envelope"></i></a></li>
-            <li><a href="#"><i class="fa-solid fa-star-and-crescent"></i></a></li>
+            <li><a href="#apresentacao" aria-label="Início"><i data-lucide="house-plus"></i></a></li>
+            <li><a href="#painel-controle" aria-label="Meus experimentos"><i data-lucide="flask-conical"></i></a></li>
+            <li><a href="#experiencia" aria-label="Minha proficiência"><i data-lucide="square-code"></i></a></li>
+            <li><a href="#contato" aria-label="Contato"><i data-lucide="contact-round"></i></a></li>
+            <li><a href="#" class="btn-tema" aria-label="Alternar tema claro/escuro"><i data-lucide="moon-star"></i></a></li>
         </ul>
     </nav>
 
@@ -49,10 +57,8 @@
                 </div>
             </div>
 
-            <!-- O Grid onde o JavaScript vai renderizar os cards -->
-            <div id="grid-projetos" class="grid-container">
-            <!-- Seus cards JS entrarão aqui dinamicamente -->
-            </div>
+            <!-- O Grid onde o JavaScript renderiza os cards -->
+            <div id="grid-projetos" class="grid-container"></div>
         </section>
 
         <section id="experiencia" class="experiencia-container">
@@ -91,20 +97,19 @@
                 <form id="form-contato">
                     <div class="input-grupo">
                         <label for="nome">Nome</label>
-                        <input type="text" id="nome" required placeholder="Seu nome...">
+                        <input type="text" id="nome" name="nome" required placeholder="Seu nome...">
                     </div>
                     <div class="input-grupo">
                         <label for="email">E-mail</label>
-                        <input type="email" id="email" required placeholder="seu@email.com">
+                        <input type="email" id="email" name="email" required placeholder="seu@email.com">
                     </div>
                     <div class="input-grupo">
                         <label for="mensagem">Mensagem</label>
-                        <textarea id="mensagem" rows="4" required placeholder="Digite sua mensagem técnica..."></textarea>
+                        <textarea id="mensagem" name="mensagem" rows="4" required placeholder="Digite sua mensagem técnica..."></textarea>
                     </div>
                     <button type="submit" class="btn-enviar">Transmitir Dados</button>
                 </form>
             </div>
-
         </section>
     </main>
 
@@ -112,6 +117,18 @@
         <p>Laboratório desenvolvido por <a href="https://github.com/helderneiva" target="_blank" rel="noopener noreferrer">Helder Neiva</a></p>
     </footer>
 
-    <script src="script.js"></script>
+    <div id="modal-container" class="modal-oculto" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="modal-conteudo">
+            <button id="btn-fechar-modal" class="modal-fechar" type="button" aria-label="Fechar"><i data-lucide="x"></i></button>
+            <div id="modal-corpo">
+                <!-- Conteúdo dinâmico -->
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/script.js"></script>
+    <script>
+      lucide.createIcons();
+    </script>
 </body>
 </html>
