@@ -335,8 +335,8 @@ section#painel-controle {
 .card-projeto {
   background-color: var(--fundo-card);
   border: 1px solid var(--borda);
-  border-radius: 12px;
-  padding: 24px;
+  border-radius: 10px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 16px;

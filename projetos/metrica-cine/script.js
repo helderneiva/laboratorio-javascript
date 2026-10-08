@@ -1,252 +1,270 @@
-import { ENDPOINTS, FETCH_OPTIONS, IMAGE_URL } from './config.js';
+import {
+    ENDPOINTS,
+    FETCH_OPTIONS,
+    IMAGE_URL,
+    BASE_URL,
+    MAX_CARDS,
+    DEBUG,
+    DEFAULT_MAX_CARDS,
+    STORAGE_KEYS,
+    lerStorage,
+    gravarStorage,
+    removerStorage,
+    normalizarUrlApi
+} from './config.js';
 
-document.addEventListener('DOMContentLoaded', () => {
-    
+const raiz = document.documentElement;
+const POSTER_VAZIO = 'https://placehold.co/500x750/1c1c1e/ffffff?text=Sem+Poster';
+
+const log = (...args) => {
+    if (DEBUG) console.log('[Métrica Cine]', ...args);
+};
+
+const prefereMenosMovimento = () =>
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function configurarMenu() {
     const menuToggle = document.getElementById('menuToggle');
-    const floatingNav = document.querySelector('.floating-nav');
-    const themeBtn = document.querySelector('.nav-btn[data-tooltip="Alterar Tema"]');
+    const nav = document.querySelector('.floating-nav');
+    if (!menuToggle || !nav) return () => {};
 
-    
-    const toggleMenu = (forceClose = null) => {
-        if (!menuToggle || !floatingNav) return;
-        
-        const isActive = forceClose !== null ? !forceClose : floatingNav.classList.toggle('active');
-        
-        if (forceClose === true) floatingNav.classList.remove('active');
-        
-        menuToggle.setAttribute('aria-expanded', isActive);
-        const icon = menuToggle.querySelector('i');
-        
-        if (icon) {
-            if (isActive) {
-                icon.classList.replace('fa-bars', 'fa-xmark');
-            } else {
-                icon.classList.replace('fa-xmark', 'fa-bars');
-            }
+    const definirMenu = (aberto) => {
+        nav.classList.toggle('active', aberto);
+        menuToggle.setAttribute('aria-expanded', String(aberto));
+        menuToggle.setAttribute('aria-label', aberto ? 'Fechar menu de navegação' : 'Abrir menu de navegação');
+
+        const icone = menuToggle.querySelector('i');
+        if (icone) {
+            icone.classList.toggle('fa-bars', !aberto);
+            icone.classList.toggle('fa-xmark', aberto);
         }
     };
 
-    if (menuToggle) {
-        menuToggle.addEventListener('click', () => toggleMenu());
-    }
-
-    /**
-     * 2. ROLAGEM PROGRAMÁTICA AVANÇADA (SMOOTH SCROLL & FOCUS MANAGEMENT)
-     * Demonstra proficiência em manipulação de eventos e acessibilidade.
-     */
-    const setupNavigation = () => {
-        // Mapeamento semântico dos botões para seus respectivos IDs alvos
-        const navigationMap = {
-            'Início': '.apresentacao',
-            'Maiores Bilheterias': '#title-box-office',
-            'Mais Bem Avaliados': '#title-top-rated',
-            'Mais Assistidos no Brasil': '#title-popular-br',
-            'Filmes em Alta': '#title-trending',
-            'Próximos Lançamentos': '#title-upcoming'
-        };
-
-        const navButtons = document.querySelectorAll('.nav-btn[data-tooltip]');
-
-        navButtons.forEach(button => {
-            const tooltipText = button.getAttribute('data-tooltip');
-            const targetSelector = navigationMap[tooltipText];
-
-            // Ignora o botão de alternar tema do fluxo de navegação
-            if (!targetSelector) return;
-
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
-                
-                const targetElement = document.querySelector(targetSelector);
-                if (!targetElement) return;
-
-                // Executa a rolagem suave nativa otimizada por hardware
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-
-                // Acessibilidade: Move o foco do teclado para o elemento alvo
-                targetElement.setAttribute('tabindex', '-index');
-                targetElement.focus({ preventScroll: true });
-
-                // Fecha o menu hamburguer caso esteja no mobile
-                toggleMenu(true);
-            });
-        });
-    };
-
-    /**
-     * 3. INTERSECTION OBSERVER API (RECURSO AVANÇADO)
-     * Detecta dinamicamente qual seção está na tela e adiciona feedback visual no menu.
-     */
-    const setupScrollObserver = () => {
-        const sections = document.querySelectorAll('.apresentacao, .movies-section');
-        const navButtons = document.querySelectorAll('.nav-btn[data-tooltip]');
-
-        const observerOptions = {
-            root: null, // Usa a viewport do navegador
-            rootMargin: '-20% 0px -60% 0px', // Ativa quando a seção ocupa a área central da tela
-            threshold: 0
-        };
-
-        const observerCallback = (entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const id = entry.target.id;
-                    const isHome = entry.target.classList.contains('apresentacao');
-                    
-                    navButtons.forEach(button => {
-                        const tooltip = button.getAttribute('data-tooltip');
-                        
-                        // Validação cruzada para iluminar o botão do menu correspondente
-                        const isMatch = 
-                            (isHome && tooltip === 'Início') ||
-                            (id === 'title-box-office' && tooltip === 'Maiores Bilheterias') ||
-                            (id === 'title-top-rated' && tooltip === 'Mais Bem Avaliados') ||
-                            (id === 'title-popular-br' && tooltip === 'Mais Assistidos no Brasil') ||
-                            (id === 'title-trending' && tooltip === 'Filmes em Alta') ||
-                            (id === 'title-upcoming' && tooltip === 'Próximos Lançamentos');
-
-                        if (isMatch) {
-                            button.classList.add('active-nav');
-                        } else {
-                            button.classList.remove('active-nav');
-                        }
-                    });
-                }
-            });
-        };
-
-        const observer = new IntersectionObserver(observerCallback, observerOptions);
-        sections.forEach(section => observer.observe(section));
-    };
-
-    /**
-     * 4. GERENCIAMENTO DE TEMA (DARK/LIGHT MODE)
-     */
-    const initTheme = () => {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') {
-            document.body.classList.add('light-theme');
-        }
-
-        if (themeBtn) {
-            themeBtn.addEventListener('click', () => {
-                const isLight = document.body.classList.toggle('light-theme');
-                localStorage.setItem('theme', isLight ? 'light' : 'dark');
-            });
-        }
-    };
-
-    // Inicialização dos módulos do ecossistema do App
-    initTheme();
-    setupNavigation();
-    setupScrollObserver();
-
-    const settingsToggle = document.getElementById('settingsToggle');
-    const settingsModal = document.getElementById('settingsModal');
-    const closeSettings = document.getElementById('closeSettings');
-    const saveSettingsBtn = document.getElementById('saveSettingsBtn');
-
-    // Função para abrir o painel
-    const openSettings = () => {
-        settingsModal.classList.add('active');
-        settingsModal.setAttribute('aria-hidden', 'false');
-    };
-
-    // Função para fechar o painel
-    const closeSettingsPanel = () => {
-        settingsModal.classList.remove('active');
-        settingsModal.setAttribute('aria-hidden', 'true');
-    };
-
-    // Ouvintes de eventos
-    if (settingsToggle) settingsToggle.addEventListener('click', openSettings);
-    if (closeSettings) closeSettings.addEventListener('click', closeSettingsPanel);
-
-    // Fecha o painel ao clicar fora da caixa do conteúdo
-    window.addEventListener('click', (e) => {
-        if (e.target === settingsModal) closeSettingsPanel();
+    menuToggle.addEventListener('click', () => {
+        definirMenu(!nav.classList.contains('active'));
     });
 
-    // Salva as configurações de programação no navegador
-    if (saveSettingsBtn) {
-        saveSettingsBtn.addEventListener('click', () => {
-            const apiUrl = document.getElementById('apiUrlInput').value.trim();
-            const maxCards = document.getElementById('maxCardsSelect').value;
-            const debugMode = document.getElementById('debugModeCheckbox').checked;
+    return definirMenu;
+}
 
-            localStorage.setItem('metrica_api_url', apiUrl);
-            localStorage.setItem('metrica_max_cards', maxCards);
-            localStorage.setItem('metrica_debug', debugMode);
+function configurarNavegacao(definirMenu) {
+    const botoes = document.querySelectorAll('.nav-btn[data-alvo]');
 
-            closeSettingsPanel();
-            window.location.reload(); // Recarrega a página para aplicar
+    botoes.forEach(botao => {
+        botao.addEventListener('click', () => {
+            const alvo = document.querySelector(botao.dataset.alvo);
+            if (!alvo) return;
+
+            alvo.scrollIntoView({
+                behavior: prefereMenosMovimento() ? 'auto' : 'smooth',
+                block: 'start'
+            });
+
+            alvo.setAttribute('tabindex', '-1');
+            alvo.focus({ preventScroll: true });
+
+            definirMenu(false);
         });
-    }
+    });
+}
 
-    async function fetchMovies(url) {
-        try {
-            const response = await fetch(url, FETCH_OPTIONS);
-            if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
-            
-            const data = await response.json();
-            return data.results || [];
-        } catch (error) {
-            console.error(`Falha ao buscar dados: ${url}`, error);
-            return [];
-        }
-    }
+function configurarObservadorDeSecao() {
+    const botoes = [...document.querySelectorAll('.nav-btn[data-alvo]')];
+    const secoes = botoes
+        .map(botao => document.querySelector(botao.dataset.alvo))
+        .filter(Boolean);
 
-    function renderSection(movies, containerId) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
+    if (!('IntersectionObserver' in window) || secoes.length === 0) return;
 
-        container.removeAttribute('data-loading');
+    const observador = new IntersectionObserver((entradas) => {
+        entradas.forEach(entrada => {
+            if (!entrada.isIntersecting) return;
 
-        if (movies.length === 0) {
-            container.innerHTML = '<p style="color: var(--texto); opacity: 0.5; padding: 15px;">Não foi possível carregar os filmes.</p>';
+            const alvoAtual = `#${entrada.target.id}`;
+            botoes.forEach(botao => {
+                const ativo = botao.dataset.alvo === alvoAtual;
+                botao.classList.toggle('active-nav', ativo);
+                if (ativo) {
+                    botao.setAttribute('aria-current', 'true');
+                } else {
+                    botao.removeAttribute('aria-current');
+                }
+            });
+        });
+    }, {
+        root: null,
+        rootMargin: '-20% 0px -60% 0px',
+        threshold: 0
+    });
+
+    secoes.forEach(secao => observador.observe(secao));
+}
+
+function temaAtual() {
+    if (raiz.dataset.theme) return raiz.dataset.theme;
+    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+}
+
+function configurarTema() {
+    const botao = document.getElementById('themeToggle');
+    if (!botao) return;
+
+    botao.addEventListener('click', () => {
+        const novoTema = temaAtual() === 'light' ? 'dark' : 'light';
+        raiz.dataset.theme = novoTema;
+        gravarStorage(STORAGE_KEYS.theme, novoTema);
+        log('Tema alterado para', novoTema);
+    });
+}
+
+function configurarPainelDeConfiguracoes() {
+    const modal = document.getElementById('settingsModal');
+    const btnAbrir = document.getElementById('settingsToggle');
+    const btnFechar = document.getElementById('closeSettings');
+    const btnSalvar = document.getElementById('saveSettingsBtn');
+    const btnRestaurar = document.getElementById('resetSettingsBtn');
+    const inputUrl = document.getElementById('apiUrlInput');
+    const selectMax = document.getElementById('maxCardsSelect');
+    const checkDebug = document.getElementById('debugModeCheckbox');
+    const erro = document.getElementById('settingsErro');
+
+    if (!modal || !btnAbrir) return;
+
+    const mostrarErro = (mensagem) => {
+        erro.textContent = mensagem;
+        erro.hidden = !mensagem;
+    };
+
+    const abrir = () => {
+        inputUrl.value = BASE_URL;
+        selectMax.value = String(MAX_CARDS);
+        checkDebug.checked = DEBUG;
+        mostrarErro('');
+
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+        inputUrl.focus();
+    };
+
+    const fechar = () => {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        btnAbrir.focus();
+    };
+
+    btnAbrir.addEventListener('click', abrir);
+    btnFechar.addEventListener('click', fechar);
+
+    modal.addEventListener('click', (evento) => {
+        if (evento.target === modal) fechar();
+    });
+
+    document.addEventListener('keydown', (evento) => {
+        if (evento.key === 'Escape' && modal.classList.contains('active')) fechar();
+    });
+
+    btnSalvar.addEventListener('click', () => {
+        const url = normalizarUrlApi(inputUrl.value);
+        if (!url) {
+            mostrarErro('Informe uma URL válida que comece com https://');
+            inputUrl.focus();
             return;
         }
 
-        const fragment = document.createDocumentFragment();
+        gravarStorage(STORAGE_KEYS.apiUrl, url);
+        gravarStorage(STORAGE_KEYS.maxCards, selectMax.value);
+        gravarStorage(STORAGE_KEYS.debug, String(checkDebug.checked));
 
-        movies.slice(0, 10).forEach(movie => {
-            const card = document.createElement('article');
-            card.classList.add('movie-card');
+        window.location.reload(); 
+    });
 
-            const posterPath = movie.poster_path 
-            ? `${IMAGE_URL}${movie.poster_path}` 
-            : 'https://placehold.co/500x750/1c1c1e/ffffff?text=Sem+Poster';
+    btnRestaurar.addEventListener('click', () => {
+        removerStorage(STORAGE_KEYS.apiUrl);
+        removerStorage(STORAGE_KEYS.maxCards);
+        removerStorage(STORAGE_KEYS.debug);
+        window.location.reload();
+    });
+}
 
-            card.innerHTML = `
-                <img src="${posterPath}" alt="Pôster do filme ${movie.title}" loading="lazy">
-                <h3>${movie.title}</h3>
-            `;
 
-            fragment.appendChild(card);
-        });
+async function buscarFilmes(url) {
+    try {
+        const resposta = await fetch(url, FETCH_OPTIONS);
+        if (!resposta.ok) throw new Error(`Erro HTTP: ${resposta.status}`);
 
-        container.appendChild(fragment);
+        const dados = await resposta.json();
+        log('Resposta de', url, dados);
+        return dados.results || [];
+    } catch (erro) {
+        console.error(`Falha ao buscar dados: ${url}`, erro);
+        return [];
+    }
+}
+
+function criarCard(filme) {
+    const titulo = filme.title || filme.name || 'Sem título';
+
+    const card = document.createElement('article');
+    card.classList.add('movie-card');
+
+    const img = document.createElement('img');
+    img.src = filme.poster_path ? `${IMAGE_URL}${filme.poster_path}` : POSTER_VAZIO;
+    img.alt = `Pôster do filme ${titulo}`;
+    img.width = 500;
+    img.height = 750;
+    img.loading = 'lazy';
+    img.addEventListener('error', () => {
+        if (img.src !== POSTER_VAZIO) img.src = POSTER_VAZIO;
+    }, { once: true });
+
+    const h3 = document.createElement('h3');
+    h3.textContent = titulo; 
+
+    card.append(img, h3);
+    return card;
+}
+
+function renderizarSecao(filmes, idContainer) {
+    const container = document.getElementById(idContainer);
+    if (!container) return;
+
+    container.removeAttribute('data-loading');
+    container.replaceChildren();
+
+    if (filmes.length === 0) {
+        const aviso = document.createElement('p');
+        aviso.className = 'mensagem-vazia';
+        aviso.textContent = 'Não foi possível carregar os filmes. Tente recarregar a página.';
+        container.appendChild(aviso);
+        return;
     }
 
-    
-    async function initApp() {
-        const [boxOffice, topRated, popularBr, trending, upcoming] = await Promise.all([
-            fetchMovies(ENDPOINTS.boxOffice),
-            fetchMovies(ENDPOINTS.topRated),
-            fetchMovies(ENDPOINTS.popularBr),
-            fetchMovies(ENDPOINTS.trending),
-            fetchMovies(ENDPOINTS.upcoming)
-        ]);
+    const fragmento = document.createDocumentFragment();
+    filmes.slice(0, MAX_CARDS).forEach(filme => fragmento.appendChild(criarCard(filme)));
+    container.appendChild(fragmento);
+}
 
-        renderSection(boxOffice, 'box-office-list');
-        renderSection(topRated, 'top-rated-list');
-        renderSection(popularBr, 'popular-br-list');
-        renderSection(trending, 'trending-list');
-        renderSection(upcoming, 'upcoming-list');
-    }
+function carregarSecoes() {
+    const secoes = [
+        { endpoint: ENDPOINTS.boxOffice, container: 'box-office-list' },
+        { endpoint: ENDPOINTS.topRated, container: 'top-rated-list' },
+        { endpoint: ENDPOINTS.popularBr, container: 'popular-br-list' },
+        { endpoint: ENDPOINTS.trending, container: 'trending-list' },
+        { endpoint: ENDPOINTS.upcoming, container: 'upcoming-list' }
+    ];
 
-    initApp();
+    secoes.forEach(async ({ endpoint, container }) => {
+        renderizarSecao(await buscarFilmes(endpoint), container);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    log('Configuração em uso:', { BASE_URL, MAX_CARDS, DEBUG, padrao: DEFAULT_MAX_CARDS });
+
+    const definirMenu = configurarMenu();
+    configurarNavegacao(definirMenu);
+    configurarObservadorDeSecao();
+    configurarTema();
+    configurarPainelDeConfiguracoes();
+    carregarSecoes();
 });
