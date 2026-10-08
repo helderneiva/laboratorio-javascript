@@ -659,3 +659,21 @@ footer a:hover {
   pointer-events: none;
   visibility: hidden;
 }
+
+.modal-conteudo.modal-largo {
+  width: 95%;
+  max-width: 1000px;
+}
+
+.modal-iframe {
+  width: 100%;
+  height: 65vh;
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.modal-iframe + .card-link {
+  display: block;
+  margin-top: 12px;
+}

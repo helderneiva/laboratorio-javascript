@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métrica Cine</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://kit.fontawesome.com" crossorigin>
+
+    <link rel="stylesheet" href="estilos/style.css">
+
+    <script src="https://kit.fontawesome.com/2fb14b2086.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <!-- Navegação Global Fluida -->
+    <nav class="floating-nav" aria-label="Navegação principal">
+        <button type="button" class="menu-toggle" id="menuToggle" aria-label="Abrir menu de navegação" aria-expanded="false">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
+        <ul>
+            <li>
+                <button type="button" class="nav-btn" data-tooltip="Início" aria-label="Ir para o início">
+                    <i class="fa-solid fa-house" aria-hidden="true"></i>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="nav-btn" data-tooltip="Maiores Bilheterias" aria-label="Ir para Maiores Bilheterias">
+                    <i class="fa-solid fa-money-bill-trend-up" aria-hidden="true"></i>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="nav-btn" data-tooltip="Mais Bem Avaliados" aria-label="Ir para Mais Bem Avaliados">
+                    <i class="fa-solid fa-crown" aria-hidden="true"></i>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="nav-btn" data-tooltip="Mais Assistidos no Brasil" aria-label="Ir para Mais Assistidos no Brasil">
+                    <i class="fa-solid fa-users" aria-hidden="true"></i>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="nav-btn" data-tooltip="Filmes em Alta" aria-label="Ir para Filmes em Alta">
+                    <i class="fa-solid fa-fire" aria-hidden="true"></i>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="nav-btn" data-tooltip="Próximos Lançamentos" aria-label="Ir para Próximos Lançamentos">
+                    <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="nav-btn" data-tooltip="Alterar Tema" aria-label="Alternar tema claro e escuro">
+                    <i class="fa-solid fa-star-and-crescent" aria-hidden="true"></i>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="nav-btn" id="settingsToggle" data-tooltip="Configurações" aria-label="Abrir configurações de programação">
+                    <i class="fa-solid fa-gear" aria-hidden="true"></i>
+                </button>
+            </li>
+        </ul>
+    </nav>
+
+    <header class="app-header">
+        <h1>Métrica Cine</h1>
+    </header>
+
+    <main class="app-main">
+        
+        <section class="apresentacao" aria-labelledby="hero-title">
+            <h2 id="hero-title">Do Código à Tela</h2>
+            <p>O <strong>Métrica Cine</strong> é uma aplicação de alta performance que demonstra a manipulação avançada do DOM através de requisições assíncronas feitas à API de cinema. Cada card abaixo foi renderizado utilizando técnicas de <em>DocumentFragment</em> para garantir máxima fluidez visual e consumo inteligente de dados.</p>
+        </section>
+
+        <div class="conteudo-container">
+            
+            <!-- Categoria: Maiores Bilheterias -->
+            <section class="movies-section" aria-labelledby="title-box-office">
+                <h2 id="title-box-office">Maiores bilheterias</h2>
+                <div id="box-office-list" class="movies-grid" data-loading="true" aria-live="polite">
+                    <!-- O JavaScript vai injetar os <article class="movie-card"> aqui -->
+                </div>
+            </section>
+
+            <!-- Categoria: Mais Bem Avaliados -->
+            <section class="movies-section" aria-labelledby="title-top-rated">
+                <h2 id="title-top-rated">Mais bem avaliados</h2>
+                <div id="top-rated-list" class="movies-grid" data-loading="true" aria-live="polite">
+                    <!-- Cards injetados via JS -->
+                </div>
+            </section>
+
+            <!-- Categoria: Mais Vistos no Brasil -->
+            <section class="movies-section" aria-labelledby="title-popular-br">
+                <h2 id="title-popular-br">Mais vistos no Brasil</h2>
+                <div id="popular-br-list" class="movies-grid" data-loading="true" aria-live="polite">
+                    <!-- Cards injetados via JS -->
+                </div>
+            </section>
+
+            <!-- Categoria: Em Alta -->
+            <section class="movies-section" aria-labelledby="title-trending">
+                <h2 id="title-trending">Em alta</h2>
+                <div id="trending-list" class="movies-grid" data-loading="true" aria-live="polite">
+                    <!-- Cards injetados via JS -->
+                </div>
+            </section>
+
+            <!-- Categoria: Lançamentos -->
+            <section class="movies-section" aria-labelledby="title-upcoming">
+                <h2 id="title-upcoming">Lançamentos</h2>
+                <div id="upcoming-list" class="movies-grid" data-loading="true" aria-live="polite">
+                    <!-- Cards injetados via JS -->
+                </div>
+            </section>
+                
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <p>Projeto desenvolvido por <a href="https://github.com" target="_blank" rel="noopener noreferrer">Helder Neiva</a></p>
+    </footer>
+
+    <script src="script.js" type="module"></script>
+
+    <div id="settingsModal" class="settings-modal" aria-hidden="true" role="dialog" aria-labelledby="settingsTitle">
+  <div class="settings-content">
+    <header class="settings-header">
+      <h2 id="settingsTitle">Configurações de Programação</h2>
+      <button type="button" id="closeSettings" class="close-btn" aria-label="Fechar configurações">&times;</button>
+    </header>
+    
+    <div class="settings-body">
+      <div class="control-group">
+        <label for="apiUrlInput">URL Base da API:</label>
+        <input type="url" id="apiUrlInput" value="https://themoviedb.org" autocomplete="off">
+      </div>
+      
+      <div class="control-group">
+        <label for="maxCardsSelect">Máximo de Cards por Linha:</label>
+        <select id="maxCardsSelect">
+          <option value="4">4 Filmes</option>
+          <option value="8" selected>8 Filmes</option>
+          <option value="12">12 Filmes</option>
+        </select>
+      </div>
+
+      <div class="control-group checkbox-group">
+        <label>
+          <input type="checkbox" id="debugModeCheckbox"> Ativar Modo Debug no Console
+        </label>
+      </div>
+      
+      <button type="button" id="saveSettingsBtn" class="save-btn">Salvar Modificações</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

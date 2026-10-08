@@ -120,11 +120,15 @@ function configurarNavegacaoEMenu() {
 }
 
 let elementoAntesDoModal = null;
+let limpezaModal = null; 
 
-function abrirModal(titulo, conteudo) {
+function abrirModal(titulo, conteudo, opcoes = {}) {
   const modal = document.getElementById('modal-container');
   const corpo = document.getElementById('modal-corpo');
   if (!modal || !corpo) return;
+
+  const caixa = modal.querySelector('.modal-conteudo');
+  if (caixa) caixa.classList.toggle('modal-largo', Boolean(opcoes.largo));
 
   corpo.replaceChildren();
 
@@ -154,6 +158,8 @@ function abrirModal(titulo, conteudo) {
 function fecharModal() {
   const modal = document.getElementById('modal-container');
   if (!modal) return;
+  if (typeof limpezaModal === 'function') limpezaModal();
+  limpezaModal = null;
 
   modal.classList.remove('visivel');
   modal.classList.add('modal-oculto');
@@ -163,6 +169,13 @@ function fecharModal() {
     elementoAntesDoModal.focus();
   }
   elementoAntesDoModal = null;
+
+  
+  setTimeout(() => {
+    if (modal.classList.contains('visivel')) return;
+    const corpo = document.getElementById('modal-corpo');
+    if (corpo) corpo.replaceChildren();
+  }, 350);
 }
 
 function configurarModal() {
@@ -182,6 +195,25 @@ function configurarModal() {
       fecharModal();
     }
   });
+}
+
+function abrirProjetoNoModal(titulo, url) {
+  const bloco = document.createElement('div');
+
+  const moldura = document.createElement('iframe');
+  moldura.className = 'modal-iframe';
+  moldura.src = url;
+  moldura.title = titulo;
+
+  const novaAba = document.createElement('a');
+  novaAba.className = 'card-link';
+  novaAba.href = url;
+  novaAba.target = '_blank';
+  novaAba.rel = 'noopener noreferrer';
+  novaAba.textContent = 'Abrir em nova aba';
+
+  bloco.append(moldura, novaAba);
+  abrirModal(titulo, bloco, { largo: true });
 }
 
 function renderizarCards(lista) {
@@ -235,17 +267,20 @@ function renderizarCards(lista) {
     }
 
     if (item.link) {
-      const a = document.createElement('a');
-      a.className = 'card-link';
-      a.href = item.link;
-      a.target = '_blank';
-      a.rel = 'noopener noreferrer';
-      a.textContent = 'Abrir projeto';
-      card.appendChild(a);
-    }
+    const a = document.createElement('a');
+    a.className = 'card-link';
+    a.href = item.link; 
+    a.textContent = 'Abrir projeto';
+    a.addEventListener('click', (evento) => {
+      if (evento.ctrlKey || evento.metaKey || evento.shiftKey) return;
+      evento.preventDefault();
+      abrirProjetoNoModal(titulo, item.link);
+    });
+    card.appendChild(a);
+}
+  container.appendChild(card);
+});
 
-    container.appendChild(card);
-  });
 }
 
 function configurarFiltros() {
@@ -335,6 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
   configurarFiltros();
   configurarFormulario();
   atualizarIcones();
-  
+
+  console.log('Experimentos:', meusExperimentos);
   renderizarCards(meusExperimentos);
 });
