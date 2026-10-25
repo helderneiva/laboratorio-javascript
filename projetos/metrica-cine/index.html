@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Métrica Cine</title>
+    <meta name="description" content="Métrica Cine: catálogo de filmes com busca, detalhes e favoritos usando a API do TMDB, feito com JavaScript puro.">
+
     <script>
       try {
-        var tema = localStorage.getItem('theme');
+        var tema = localStorage.getItem('metrica_theme');
         if (tema === 'light' || tema === 'dark') {
           document.documentElement.dataset.theme = tema;
         }
@@ -35,6 +37,11 @@
                 </button>
             </li>
             <li>
+                <button type="button" class="nav-btn" data-alvo="#busca" data-tooltip="Buscar Filmes" aria-label="Ir para a busca">
+                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                </button>
+            </li>
+            <li>
                 <button type="button" class="nav-btn" data-alvo="#bilheterias" data-tooltip="Maiores Bilheterias" aria-label="Ir para Maiores Bilheterias">
                     <i class="fa-solid fa-money-bill-trend-up" aria-hidden="true"></i>
                 </button>
@@ -60,6 +67,11 @@
                 </button>
             </li>
             <li>
+                <button type="button" class="nav-btn" data-alvo="#favoritos" data-tooltip="Meus Favoritos" aria-label="Ir para Meus Favoritos">
+                    <i class="fa-solid fa-heart" aria-hidden="true"></i>
+                </button>
+            </li>
+            <li>
                 <button type="button" class="nav-btn" id="themeToggle" data-tooltip="Alterar Tema" aria-label="Alternar tema claro e escuro">
                     <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
                 </button>
@@ -80,34 +92,54 @@
 
         <section id="inicio" class="apresentacao" aria-labelledby="hero-title">
             <h2 id="hero-title">Do Código à Tela</h2>
-            <p>O <strong>Métrica Cine</strong> é uma aplicação de alta performance que demonstra a manipulação avançada do DOM através de requisições assíncronas feitas à API de cinema. Cada card abaixo foi renderizado utilizando técnicas de <em>DocumentFragment</em> para garantir máxima fluidez visual e consumo inteligente de dados.</p>
+            <p>O <strong>Métrica Cine</strong> é uma aplicação que demonstra a manipulação do DOM com requisições assíncronas à API do TMDB. Busque filmes com <em>debounce</em>, veja detalhes, elenco e trailer, e salve seus favoritos no <em>localStorage</em>.</p>
         </section>
 
         <div class="conteudo-container">
 
+            <section id="busca" class="movies-section" aria-labelledby="titulo-busca">
+                <h2 id="titulo-busca">Buscar filmes</h2>
+                <form id="form-busca" class="form-busca" role="search" autocomplete="off">
+                    <label for="campo-busca" class="sr-only">Título do filme</label>
+                    <i class="fa-solid fa-magnifying-glass icone-busca" aria-hidden="true"></i>
+                    <input type="search" id="campo-busca" placeholder="Digite o título de um filme..." maxlength="100">
+                    <button type="button" id="limpar-busca" class="btn-limpar" aria-label="Limpar busca" hidden>&times;</button>
+                </form>
+            </section>
+
+            <section id="resultados" class="movies-section" aria-labelledby="titulo-resultados" hidden>
+                <h2 id="titulo-resultados">Resultados</h2>
+                <div id="resultados-list" class="movies-grid" aria-live="polite"></div>
+            </section>
+
             <section id="bilheterias" class="movies-section" aria-labelledby="title-box-office">
                 <h2 id="title-box-office">Maiores bilheterias</h2>
-                <div id="box-office-list" class="movies-grid" data-loading="true" aria-live="polite"></div>
+                <div id="box-office-list" class="movies-grid" aria-live="polite"></div>
             </section>
 
             <section id="bem-avaliados" class="movies-section" aria-labelledby="title-top-rated">
                 <h2 id="title-top-rated">Mais bem avaliados</h2>
-                <div id="top-rated-list" class="movies-grid" data-loading="true" aria-live="polite"></div>
+                <div id="top-rated-list" class="movies-grid" aria-live="polite"></div>
             </section>
 
             <section id="brasil" class="movies-section" aria-labelledby="title-popular-br">
                 <h2 id="title-popular-br">Mais vistos no Brasil</h2>
-                <div id="popular-br-list" class="movies-grid" data-loading="true" aria-live="polite"></div>
+                <div id="popular-br-list" class="movies-grid" aria-live="polite"></div>
             </section>
 
             <section id="em-alta" class="movies-section" aria-labelledby="title-trending">
                 <h2 id="title-trending">Em alta</h2>
-                <div id="trending-list" class="movies-grid" data-loading="true" aria-live="polite"></div>
+                <div id="trending-list" class="movies-grid" aria-live="polite"></div>
             </section>
 
             <section id="lancamentos" class="movies-section" aria-labelledby="title-upcoming">
                 <h2 id="title-upcoming">Lançamentos mais esperados</h2>
-                <div id="upcoming-list" class="movies-grid" data-loading="true" aria-live="polite"></div>
+                <div id="upcoming-list" class="movies-grid" aria-live="polite"></div>
+            </section>
+
+            <section id="favoritos" class="movies-section" aria-labelledby="title-favoritos">
+                <h2 id="title-favoritos">Meus favoritos <span id="favoritos-contagem" class="contagem"></span></h2>
+                <div id="favoritos-list" class="movies-grid" aria-live="polite"></div>
             </section>
 
         </div>
@@ -117,6 +149,15 @@
         <p>Projeto desenvolvido por <a href="https://github.com/helderneiva" target="_blank" rel="noopener noreferrer">Helder Neiva</a></p>
     </footer>
 
+    <!-- Detalhes do filme (<dialog> nativo: foco, Esc e fundo já vêm prontos) -->
+    <dialog id="detalheModal" class="detalhe-modal" aria-labelledby="detalheTitulo">
+        <div class="detalhe-conteudo">
+            <button type="button" id="fecharDetalhe" class="close-btn detalhe-fechar" aria-label="Fechar detalhes">&times;</button>
+            <div id="detalheCorpo"></div>
+        </div>
+    </dialog>
+
+    <!-- Configurações -->
     <div id="settingsModal" class="settings-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
         <div class="settings-content">
             <header class="settings-header">
@@ -128,6 +169,7 @@
                 <div class="control-group">
                     <label for="apiUrlInput">URL base da API:</label>
                     <input type="url" id="apiUrlInput" autocomplete="off" placeholder="https://api.themoviedb.org/3">
+                    <small class="dica-campo">Somente a API oficial do TMDB é aceita.</small>
                 </div>
 
                 <div class="control-group">

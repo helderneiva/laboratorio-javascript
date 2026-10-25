@@ -22,6 +22,11 @@
   --font-titulos-secoes: 'Syne Local', sans-serif;
   --font-textos: 'Inter Local', sans-serif;
 
+  /* Transições (curva ease-in-out, mais macia) */
+  --ease-suave: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --t-rapida: 0.25s var(--ease-suave);
+  --t-media: 0.35s var(--ease-suave);
+
   /* Base */
   --fundo-principal: #0b0f19;
   --fundo-card: #161b26;
@@ -38,7 +43,7 @@
   --destaque-inverso: #0b0f19;
 
   /* Títulos */
-  --titulo-h2: #22e7f2;                    
+  --titulo-h2: #22e7f2;
   --titulo-h3: #fde829;
   --glow-h2: 0 0 6px #22e7f226;
   --glow-h3: 0 0 6px #e9d52033;
@@ -47,18 +52,19 @@
   --header-cor: #e4e011;
   --header-glow: 0 0 18px #ffd60a56;
 
-  
+  /* Menu lateral */
   --menu-fundo: #161b26cc;
   --menu-borda: transparent;
   --menu-item-fundo: #0f172acc;
-  --menu-hover-fundo: #353535;             
-  --menu-hover-icone: #e7f51f;             
+  --menu-hover-fundo: #353535;
+  --menu-hover-icone: #e7f51f;
   --menu-hover-borda: #f1ff31bb;
 
   /* Filtros e cards */
   --filtro-hover-fundo: #22e7f20d;
   --card-hover-sombra: 0 5px 15px #22e7f21a;
 
+  /* Habilidades */
   --tech-titulo: #f5f9ff;
   --tech-titulo-glow: 0 0 12px #bcd9ff33;
   --tech-titulo-hover: #ffe731;
@@ -67,7 +73,7 @@
   --barra-glow: 0 0 8px #22e7f266;
   --barra-sombra-interna: inset 0 2px 4px #00000066;
 
-  
+  /* Formulário */
   --label-form: #f3dd7e;
 
   /* Modal */
@@ -99,7 +105,6 @@
   --glow-h2: none;
   --glow-h3: none;
 
-  
   --header-fundo: #ffffffe6;
   --header-cor: #8a5a0b;
   --header-glow: none;
@@ -152,7 +157,11 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color var(--t-media), color var(--t-media);
+}
+
+body:has(dialog[open]) {
+  overflow: hidden;
 }
 
 :focus-visible {
@@ -160,6 +169,7 @@ body {
   outline-offset: 3px;
 }
 
+/* ---------- Cabeçalho ---------- */
 header {
   position: fixed;
   top: 0;
@@ -173,7 +183,7 @@ header {
   justify-content: center;
   align-items: center;
   z-index: 999;
-  transition: background-color 0.3s ease;
+  transition: background-color var(--t-media), border-color var(--t-media);
 }
 
 header h1 {
@@ -185,8 +195,10 @@ header h1 {
   letter-spacing: -0.5px;
   color: var(--header-cor);
   text-shadow: var(--header-glow);
+  transition: color var(--t-media), text-shadow var(--t-media);
 }
 
+/* ---------- Menu ---------- */
 nav#menu {
   position: fixed;
   top: 55%;
@@ -197,7 +209,7 @@ nav#menu {
   border-radius: 15px;
   padding: 15px;
   z-index: 1000;
-  transition: all 0.3s ease;
+  transition: background-color var(--t-media), border-color var(--t-media);
 }
 
 nav#menu ul {
@@ -207,9 +219,10 @@ nav#menu ul {
   gap: 20px;
 }
 
-nav#menu a {
+nav#menu a,
+nav#menu button {
   text-decoration: none;
-  color: var(--titulo-h2); 
+  color: var(--titulo-h2);
   background-color: var(--menu-item-fundo);
   font-size: 1.2em;
   width: 55px;
@@ -219,17 +232,22 @@ nav#menu a {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  transition: transform var(--t-media), background-color var(--t-media),
+              color var(--t-media), border-color var(--t-media);
 }
 
 nav#menu a:hover,
-nav#menu a:focus-visible {
+nav#menu a:focus-visible,
+nav#menu button:hover,
+nav#menu button:focus-visible {
   background-color: var(--menu-hover-fundo);
   color: var(--menu-hover-icone);
   border-color: var(--menu-hover-borda);
-  transform: scale(1.1) translateX(4px);
+  transform: scale(1.06) translateX(3px);
 }
 
+/* ---------- Estrutura ---------- */
 main {
   flex: 1;
   padding-top: 85px;
@@ -247,6 +265,7 @@ h2 {
   color: var(--titulo-h2);
   text-shadow: var(--glow-h2);
   margin-bottom: 24px;
+  transition: color var(--t-media), text-shadow var(--t-media);
 }
 
 h3 {
@@ -255,11 +274,13 @@ h3 {
   font-weight: 600;
   color: var(--titulo-h3);
   text-shadow: var(--glow-h3);
+  transition: color var(--t-media), text-shadow var(--t-media);
 }
 
 section {
   padding: 50px 0 70px 0;
   border-bottom: 1px solid var(--borda);
+  transition: border-color var(--t-media);
 }
 
 section#apresentacao {
@@ -281,6 +302,7 @@ section#apresentacao p {
   opacity: 0.9;
 }
 
+/* ---------- Experimentos ---------- */
 section#painel-controle {
   display: flex;
   flex-direction: column;
@@ -316,10 +338,11 @@ section#painel-controle {
   border-radius: 6px;
   cursor: pointer;
   text-transform: uppercase;
-  transition: all 0.2s ease;
+  transition: background-color var(--t-rapida), color var(--t-rapida), border-color var(--t-rapida);
 }
 
-.btn-filtro:hover{
+.btn-filtro:hover,
+.btn-filtro.active {
   color: var(--titulo-h2);
   border-color: var(--titulo-h2);
   background-color: var(--filtro-hover-fundo);
@@ -340,8 +363,9 @@ section#painel-controle {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  transition: all 0.25s ease;
   min-width: 0;
+  transition: transform var(--t-media), border-color var(--t-media),
+              box-shadow var(--t-media), background-color var(--t-media);
 }
 
 .card-projeto:hover {
@@ -361,6 +385,22 @@ section#painel-controle {
   color: var(--titulo-h2);
   text-transform: uppercase;
   font-weight: bold;
+  transition: color var(--t-media);
+}
+
+.card-techs {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.card-techs li {
+  font-size: 0.8em;
+  padding: 3px 10px;
+  border: 1px solid var(--borda);
+  border-radius: 999px;
+  opacity: 0.9;
 }
 
 .card-link {
@@ -376,7 +416,7 @@ section#painel-controle {
   text-transform: uppercase;
   font-size: 1em;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background-color var(--t-rapida), color var(--t-rapida), border-color var(--t-rapida);
 }
 
 .card-link:hover {
@@ -385,9 +425,71 @@ section#painel-controle {
   border-color: var(--destaque);
 }
 
-/* --- HABILIDADES --- */
+.card-link-sec {
+  background: transparent;
+}
+
+/* ---------- Carrossel (liga sozinho acima do limite) ---------- */
+.carrossel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.carrossel .grid-container {
+  flex: 1;
+  min-width: 0;
+}
+
+.carrossel-btn {
+  display: none;
+}
+
+.modo-carrossel .carrossel-btn {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--borda);
+  background: var(--fundo-card);
+  color: var(--titulo-h2);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: border-color var(--t-rapida), opacity var(--t-rapida), background-color var(--t-media);
+}
+
+.modo-carrossel .carrossel-btn:hover:not(:disabled) {
+  border-color: var(--titulo-h2);
+}
+
+.modo-carrossel .carrossel-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.modo-carrossel .grid-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 24px;
+  padding: 8px 4px 16px;
+  scrollbar-width: thin;
+}
+
+.modo-carrossel .card-projeto {
+  flex: 0 0 min(320px, 80%);
+  scroll-snap-align: start;
+}
+
+/* ---------- Habilidades ---------- */
 .experiencia-container h2 {
   text-align: left;
+}
+
+.nota-habilidades {
+  margin: -12px 0 24px;
+  opacity: 0.75;
 }
 
 .habilidades-bloco {
@@ -400,6 +502,7 @@ section#painel-controle {
   gap: 40px 50px;
   height: auto;
   min-height: 420px;
+  transition: background-color var(--t-media), border-color var(--t-media);
 }
 
 .tech-item {
@@ -418,13 +521,19 @@ section#painel-controle {
   color: var(--tech-titulo);
   text-shadow: var(--tech-titulo-glow);
   transform-origin: left center;
-  transition: color 0.25s ease, transform 0.25s ease, text-shadow 0.25s ease;
+  transition: color var(--t-media), transform var(--t-media), text-shadow var(--t-media);
 }
 
 .tech-item:hover h3 {
   color: var(--tech-titulo-hover);
   text-shadow: var(--tech-titulo-hover-glow);
-  transform: scale(1.07);
+  transform: scale(1.03);
+}
+
+.tech-nivel {
+  font-size: 0.85em;
+  opacity: 0.75;
+  margin-top: -6px;
 }
 
 .barra-progresso {
@@ -435,6 +544,7 @@ section#painel-controle {
   border-radius: 50px;
   overflow: hidden;
   box-shadow: var(--barra-sombra-interna);
+  transition: background-color var(--t-media), border-color var(--t-media);
 }
 
 .progresso-interno {
@@ -446,6 +556,7 @@ section#painel-controle {
   width: 0%;
 }
 
+/* ---------- Contato ---------- */
 section#contato {
   width: 100%;
   margin: 0 auto;
@@ -464,6 +575,7 @@ section#contato {
   overflow: hidden;
   width: 100%;
   max-width: 860px;
+  transition: background-color var(--t-media), border-color var(--t-media);
 }
 
 .formulario-bloco::before {
@@ -483,24 +595,20 @@ section#contato {
 
 #form-contato {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr)); /* Nome e E-mail lado a lado */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 22px;
 }
 
-#form-contato .input-grupo:nth-child(1) {
-  grid-column: 1;
-}
-
-#form-contato .input-grupo:nth-child(2) {
-  grid-column: 2;
-}
-
-#form-contato .input-grupo:nth-child(3) {
-  grid-column: 1 / -1;
-}
-
+#form-contato .campo-mensagem,
 #form-contato .btn-enviar {
   grid-column: 1 / -1;
+}
+
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .input-grupo {
@@ -516,6 +624,7 @@ section#contato {
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  transition: color var(--t-media);
 }
 
 .input-grupo input,
@@ -528,7 +637,15 @@ section#contato {
   color: var(--texto);
   font-family: var(--font-textos);
   font-size: 1em;
-  transition: all 0.2s ease;
+  transition: border-color var(--t-rapida), box-shadow var(--t-rapida),
+              background-color var(--t-media), color var(--t-media);
+}
+
+.input-grupo input:focus,
+.input-grupo textarea:focus {
+  outline: none;
+  border-color: var(--titulo-h2);
+  box-shadow: 0 0 0 3px var(--filtro-hover-fundo);
 }
 
 .input-grupo textarea {
@@ -548,8 +665,8 @@ section#contato {
   font-weight: 600;
   text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.2s ease;
   margin-top: 5px;
+  transition: background-color var(--t-rapida), color var(--t-rapida), border-color var(--t-rapida);
 }
 
 .btn-enviar:hover:not(:disabled) {
@@ -563,6 +680,7 @@ section#contato {
   cursor: wait;
 }
 
+/* ---------- Rodapé ---------- */
 footer {
   background-color: var(--fundo-card);
   border-top: 1px solid var(--borda);
@@ -573,6 +691,7 @@ footer {
   color: var(--texto);
   opacity: var(--opacidade-rodape);
   margin-top: 40px;
+  transition: background-color var(--t-media), border-color var(--t-media), color var(--t-media);
 }
 
 footer p {
@@ -584,57 +703,89 @@ footer a {
   color: var(--texto-secundario);
   text-decoration: none;
   font-weight: 700;
-  transition: all 0.3s ease;
+  transition: color var(--t-rapida);
 }
 
 footer a:hover {
   color: var(--titulo-h2);
 }
 
-#modal-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--modal-overlay);
-  backdrop-filter: blur(8px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
+/* ---------- Modal (<dialog> nativo) ---------- */
+dialog#modal {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: auto;
+  max-width: 100vw;
+  max-height: 100dvh;
+  overflow: visible;
   opacity: 0;
-  pointer-events: none;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition: opacity 0.4s var(--ease-suave),
+              display 0.4s allow-discrete,
+              overlay 0.4s allow-discrete;
 }
 
-#modal-container.visivel {
+dialog#modal[open] {
   opacity: 1;
-  pointer-events: all;
-  visibility: visible;
+}
+
+@starting-style {
+  dialog#modal[open] {
+    opacity: 0;
+  }
+}
+
+dialog#modal::backdrop {
+  background: var(--modal-overlay);
+  backdrop-filter: blur(8px);
+  transition: background-color 0.4s var(--ease-suave);
 }
 
 .modal-conteudo {
   background-color: var(--fundo-card);
+  color: var(--texto);
   border: 1px solid var(--borda);
   border-radius: 16px;
-  width: 90%;
-  max-width: 500px;
-  max-height: 90vh;
-  overflow-y: auto;
-  padding: 30px;
+  width: min(90vw, 500px);
+  max-height: 94dvh;
+  padding: 24px;
   position: relative;
-  transform: scale(0.95);
-  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-#modal-container.visivel .modal-conteudo {
-  transform: scale(1);
+/* Modal largo (projetos em iframe): ocupa quase a tela toda */
+.modal-conteudo.modal-largo {
+  width: min(96vw, 1200px);
+  height: min(94dvh, 900px);
+}
+
+#modal-corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 #modal-corpo h2 {
   padding-right: 30px;
+  margin-bottom: 0;
+}
+
+/* No modal largo, o bloco do iframe preenche o espaço que sobrar */
+.modal-largo #modal-corpo {
+  overflow: hidden;
+}
+
+.modal-largo #modal-corpo > div {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
 }
 
 .modal-fechar {
@@ -648,26 +799,17 @@ footer a:hover {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  transition: color var(--t-rapida);
 }
 
 .modal-fechar:hover {
   color: var(--titulo-h2);
 }
 
-.modal-oculto {
-  opacity: 0;
-  pointer-events: none;
-  visibility: hidden;
-}
-
-.modal-conteudo.modal-largo {
-  width: 95%;
-  max-width: 1000px;
-}
-
 .modal-iframe {
+  flex: 1;
+  min-height: 0;
   width: 100%;
-  height: 65vh;
   border: 1px solid var(--borda);
   border-radius: 8px;
   background: #ffffff;
@@ -675,5 +817,131 @@ footer a:hover {
 
 .modal-iframe + .card-link {
   display: block;
-  margin-top: 12px;
+  flex: none;
+}
+
+/* ---------- Movimento reduzido ----------
+   Remove só o MOVIMENTO (deslocamentos e zoom).
+   As transições de cor continuam suaves. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  .card-projeto:hover,
+  nav#menu a:hover,
+  nav#menu a:focus-visible,
+  nav#menu button:hover,
+  nav#menu button:focus-visible,
+  .tech-item:hover h3 {
+    transform: none;
+  }
+}
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 768px) {
+  header { padding: 0 16px; }
+  header h1 { font-size: 1.3em; }
+
+  nav#menu {
+    top: auto;
+    bottom: 10px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    padding: 8px;
+  }
+
+  nav#menu ul {
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  nav#menu a,
+  nav#menu button {
+    width: 46px;
+    height: 46px;
+  }
+
+  nav#menu a:hover,
+  nav#menu button:hover {
+    transform: scale(1.05);
+  }
+
+  main { padding: 85px 16px 100px; }
+  section#apresentacao p { text-align: left; }
+  .habilidades-bloco { padding: 30px 20px; }
+
+  .formulario-bloco { padding: 28px 20px; }
+  #form-contato { grid-template-columns: 1fr; }
+
+  .modo-carrossel .carrossel-btn { display: none; }
+
+  .modal-conteudo { padding: 18px; }
+  .modal-conteudo.modal-largo {
+    width: 98vw;
+    height: 96dvh;
+  }
+}
+
+/* ---------- Cards: imagem de capa ---------- */
+.card-imagem {
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--fundo-principal);
+}
+
+.card-imagem img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Espaço reservado quando a imagem não carrega */
+.card-imagem.sem-imagem {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--fundo-principal), var(--filtro-hover-fundo));
+}
+
+.card-imagem.sem-imagem::after {
+  content: '</>';
+  font-family: var(--font-titulos-secoes);
+  font-size: 2em;
+  font-weight: 700;
+  color: var(--titulo-h2);
+  opacity: 0.6;
+}
+
+/* ---------- Estados: vazio, erro e atributo hidden ---------- */
+[hidden] {
+  display: none !important;
+}
+
+.mensagem-vazia {
+  opacity: 0.75;
+  padding: 12px 0;
+}
+
+.grid-container > .mensagem-vazia,
+.grid-container > .estado-erro {
+  grid-column: 1 / -1;
+}
+
+.estado-erro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 18px;
+  background-color: var(--fundo-card);
+  border: 1px solid var(--borda);
+  border-left: 4px solid var(--titulo-h3);
+  border-radius: 10px;
+}
+
+.modo-carrossel .grid-container > .mensagem-vazia,
+.modo-carrossel .grid-container > .estado-erro {
+  flex: 1 0 100%;
 }

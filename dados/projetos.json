@@ -1,0 +1,12 @@
+[
+  {
+    "titulo": "Métrica Cine",
+    "categoria": "api",
+    "descricao": "Catálogo de filmes com busca (debounce), detalhes com elenco e trailer, e favoritos salvos no navegador. Consome a API do TMDB.",
+    "tecnologias": ["JavaScript", "Fetch API", "ES Modules", "AbortController", "localStorage", "CSS Grid"],
+    "imagem": "imagens/metrica-cine.png",
+    "imagemAlt": "Tela inicial do Métrica Cine com pôsteres de filmes em grade",
+    "link": "projetos/metrica-cine/index.html",
+    "repo": ""
+  }
+]

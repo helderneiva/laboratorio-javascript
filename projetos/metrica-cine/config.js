@@ -4,11 +4,15 @@ export const DEFAULT_BASE_URL = 'https://api.themoviedb.org/3';
 export const DEFAULT_MAX_CARDS = 10;
 export const IMAGE_URL = 'https://image.tmdb.org/t/p/w500';
 
+// Só estes hosts recebem o token (evita vazamento via URL personalizada)
+const HOSTS_PERMITIDOS = ['api.themoviedb.org'];
+
 export const STORAGE_KEYS = {
-    theme: 'theme',
+    theme: 'metrica_theme',
     apiUrl: 'metrica_api_url',
     maxCards: 'metrica_max_cards',
-    debug: 'metrica_debug'
+    debug: 'metrica_debug',
+    favorites: 'metrica_favorites'
 };
 
 export function lerStorage(chave) {
@@ -26,7 +30,7 @@ export function removerStorage(chave) {
 export function normalizarUrlApi(valor) {
     try {
         const url = new URL(String(valor ?? '').trim());
-        if (url.protocol !== 'https:') return null;
+        if (url.protocol !== 'https:' || !HOSTS_PERMITIDOS.includes(url.hostname)) return null;
         return url.href.replace(/\/+$/, '');
     } catch {
         return null;
@@ -51,6 +55,14 @@ export const ENDPOINTS = {
     trending: `${BASE_URL}/trending/movie/week?language=pt-BR`,
     upcoming: `${BASE_URL}/discover/movie?language=pt-BR&include_adult=false&primary_release_date.gte=${HOJE}&sort_by=popularity.desc&page=1`
 };
+
+// Busca por título (o termo é codificado para não quebrar a URL)
+export const urlBusca = (termo) =>
+    `${BASE_URL}/search/movie?language=pt-BR&include_adult=false&page=1&query=${encodeURIComponent(termo)}`;
+
+// Detalhes + vídeos + elenco numa única requisição
+export const urlDetalhe = (id) =>
+    `${BASE_URL}/movie/${encodeURIComponent(id)}?language=pt-BR&append_to_response=videos,credits&include_video_language=pt,en,null`;
 
 export const FETCH_OPTIONS = {
     method: 'GET',
