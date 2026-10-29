@@ -1,0 +1,409 @@
+@charset "UTF-8";
+
+/* Abertura inspirada na capa do projeto. */
+
+.apresentacao {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 48px;
+    margin: -56px calc(-1 * var(--margem-lateral)) 0;
+    padding: 72px var(--margem-lateral);
+    background:
+        radial-gradient(ellipse at top left, #614023 0, transparent 65%),
+        #291D16;
+    color: #F8F3E8;
+    border-bottom: 1px solid #6B5137;
+}
+
+.apresentacao .sobretitulo {
+    color: #F2C14E;
+}
+
+.apresentacao h1 {
+    max-width: 10ch;
+    margin-bottom: 24px;
+    font-size: clamp(3.2em, 7vw, 6.2em);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+}
+
+.apresentacao h1 span {
+    color: #F2C14E;
+}
+
+.apresentacao .hero-descricao {
+    max-width: 43ch;
+    color: #E3D3BD;
+    font-size: 1em;
+}
+
+.acoes-hero {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+}
+
+.apresentacao .botao {
+    background: #F2C14E;
+    color: #291D16;
+    border-color: #F2C14E;
+}
+
+.apresentacao .botao:hover {
+    background: #F8F3E8;
+    color: #291D16;
+    border-color: #F8F3E8;
+}
+
+.apresentacao .botao-secundario {
+    background: transparent;
+    color: #F8F3E8;
+    border-color: #A58D70;
+}
+
+.apresentacao :focus-visible {
+    outline-color: #F2C14E;
+}
+
+.hero-citacao {
+    position: relative;
+    padding: 28px 0 28px 32px;
+    border-left: 3px solid #F2C14E;
+}
+
+.hero-citacao::before {
+    display: block;
+    margin-bottom: 12px;
+    content: "“";
+    color: #F2C14E;
+    font-family: var(--fonte-titulo);
+    font-size: 5em;
+    line-height: 0.5;
+}
+
+.hero-citacao blockquote p {
+    font-size: clamp(1.2em, 2.4vw, 1.7em);
+    line-height: 1.6;
+}
+
+.hero-citacao figcaption {
+    margin-top: 24px;
+    color: #F2C14E;
+    font-size: 0.74em;
+    letter-spacing: 0.05em;
+}
+
+.hero-citacao cite {
+    display: block;
+    margin-top: 6px;
+    color: #E3D3BD;
+    font-style: normal;
+}
+
+/* Números do acervo. */
+
+.estatisticas {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin: 0 calc(-1 * var(--margem-lateral)) 72px;
+    padding: 28px var(--margem-lateral);
+    background: var(--superficie);
+    list-style: none;
+    border-bottom: 1px solid var(--borda);
+}
+
+.estatisticas li {
+    padding: 0 24px;
+    color: var(--texto-suave);
+    font-size: 0.8em;
+    border-left: 1px solid var(--borda);
+}
+
+.estatisticas li:first-child {
+    padding-left: 0;
+    border-left: 0;
+}
+
+.estatisticas strong {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--texto);
+    font-family: var(--fonte-titulo);
+    font-size: 3.3em;
+    line-height: 1;
+}
+
+/* Entradas para as três exposições. */
+
+.generos {
+    margin-bottom: 80px;
+    scroll-margin-top: 2em;
+}
+
+.cabecalho-secao {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 16px 32px;
+    margin-bottom: 32px;
+}
+
+.cabecalho-secao h2 {
+    margin-bottom: 0;
+}
+
+.cabecalho-secao > p {
+    max-width: 36ch;
+    color: var(--texto-suave);
+    font-size: 0.88em;
+}
+
+.lista-generos {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.lista-generos article {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 28px;
+    background: var(--cor-categoria);
+    color: var(--texto-categoria);
+    border-radius: var(--raio);
+}
+
+.lista-generos .lirico {
+    --cor-categoria: #F2C14E;
+    --texto-categoria: #291D16;
+}
+
+.lista-generos .satirico {
+    --cor-categoria: #A43D2D;
+    --texto-categoria: #FFF8EE;
+}
+
+.lista-generos .cordel {
+    --cor-categoria: #35465C;
+    --texto-categoria: #FFF8EE;
+}
+
+.numero-sala {
+    font-size: 0.72em;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.lista-generos img {
+    width: 100%;
+    aspect-ratio: 5 / 3;
+    margin: 24px 0;
+    object-fit: cover;
+    border: 1px solid #291D1626;
+    border-radius: 2px;
+}
+
+.lista-generos h3 {
+    margin-bottom: 16px;
+    font-size: 2.6em;
+}
+
+.lista-generos h3 a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.lista-generos h3 a::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+}
+
+.lista-generos article > p:not(.numero-sala) {
+    font-size: 0.86em;
+}
+
+.entrada-sala {
+    display: block;
+    margin-top: auto;
+    padding-top: 28px;
+    font-size: 0.8em;
+    font-weight: 700;
+}
+
+.lista-generos article:hover .entrada-sala {
+    text-decoration: underline;
+}
+
+@supports selector(:has(*)) {
+    .lista-generos article:has(a:focus-visible) {
+        outline: 3px solid var(--texto);
+        outline-offset: 6px;
+    }
+
+    .lista-generos h3 a:focus-visible {
+        outline: none;
+    }
+}
+
+/* Poema do dia: um destaque amplo, com versos. */
+
+.poema-do-dia {
+    display: grid;
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    align-items: start;
+    gap: 40px;
+    margin-bottom: 80px;
+    padding-top: 40px;
+    border-top: 1px solid var(--borda);
+}
+
+.poema-do-dia .lista-cards {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.poema-do-dia .card {
+    padding: 36px;
+}
+
+.poema-do-dia .card h3 {
+    font-size: 2.5em;
+}
+
+.poema-do-dia .card-categoria {
+    margin-bottom: 20px;
+}
+
+.poema-do-dia .card-trecho {
+    max-width: 40ch;
+}
+
+.destaque-intro > p:last-child {
+    max-width: 30ch;
+    color: var(--texto-suave);
+    font-size: 0.9em;
+}
+
+/* Sobre: texto editorial em vez de uma grade de caixas técnicas. */
+
+.sobre {
+    display: grid;
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    align-items: start;
+    gap: 40px;
+    padding-top: 40px;
+    border-top: 1px solid var(--borda);
+}
+
+.sobre-texto {
+    max-width: var(--medida);
+}
+
+.tecnologias {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+    list-style: none;
+}
+
+.tecnologias li {
+    padding: 6px 12px;
+    color: var(--texto-suave);
+    font-size: 0.76em;
+    border: 1px solid var(--borda);
+}
+
+@media (max-width: 60em) {
+    .apresentacao {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 48px;
+    }
+
+    .hero-citacao {
+        max-width: 38em;
+    }
+
+    .lista-generos {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .lista-generos article {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+        column-gap: 32px;
+    }
+
+    .lista-generos img {
+        grid-column: 1;
+        grid-row: 2 / 5;
+        margin-bottom: 0;
+    }
+
+    .lista-generos h3 {
+        grid-column: 2;
+        margin-top: 20px;
+    }
+
+    .lista-generos article > p:not(.numero-sala),
+    .entrada-sala {
+        grid-column: 2;
+    }
+}
+
+@media (max-width: 40em) {
+    .apresentacao {
+        margin-top: -36px;
+        padding-top: 48px;
+        padding-bottom: 48px;
+    }
+
+    .hero-citacao {
+        padding-left: 24px;
+    }
+
+    .estatisticas {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px;
+        margin-bottom: 48px;
+    }
+
+    .estatisticas li {
+        padding: 0;
+        border: 0;
+    }
+
+    .lista-generos article {
+        display: flex;
+        padding: 24px;
+    }
+
+    .lista-generos img {
+        margin: 24px 0;
+    }
+
+    .lista-generos h3 {
+        margin-top: 0;
+    }
+
+    .poema-do-dia,
+    .sobre {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+    }
+
+    .poema-do-dia .card {
+        padding: 24px;
+    }
+
+    .generos,
+    .poema-do-dia {
+        margin-bottom: 56px;
+    }
+}

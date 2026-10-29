@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+
+    <title>A Arte da Sátira | Museu da Poesia Digital</title>
+
+    <meta name="description" content="Conheça a história da sátira na poesia brasileira, de Gregório de Matos a Oswald de Andrade.">
+
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:site_name" content="Museu da Poesia Digital">
+    <meta property="og:title" content="A Arte da Sátira | Museu da Poesia Digital">
+    <meta property="og:description" content="Conheça a história da sátira na poesia brasileira, de Gregório de Matos a Oswald de Andrade.">
+
+    <link rel="icon" href="favicon.ico" sizes="32x32">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <meta name="theme-color" content="#4A2E16">
+
+    <link rel="preload" href="fontes/Grenze-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="fontes/Platypi-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
+
+    <link rel="modulepreload" href="scripts/util.js">
+    <link rel="modulepreload" href="dados/poemas.js">
+
+    <link rel="stylesheet" href="estilos/base.css">
+    <link rel="stylesheet" href="estilos/tema.css">
+    <link rel="stylesheet" href="estilos/cards.css">
+    <link rel="stylesheet" href="estilos/generos.css">
+
+    <script src="scripts/tema.js"></script>
+</head>
+
+<body data-genero="satirico">
+    <a href="#conteudo" class="skip-link">
+        Ir para o conteúdo principal
+    </a>
+
+    <header>
+        <a class="marca" href="index.html">
+            Museu da Poesia Digital
+        </a>
+
+        <nav class="menu" id="menu-principal" aria-label="Navegação principal">
+            <ul role="list">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="lirico.html">Lírico</a></li>
+                <li><a href="satirico.html" aria-current="page">Satírico</a></li>
+                <li><a href="cordel.html">Cordel</a></li>
+                <li><a href="index.html#sobre">Sobre</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="conteudo">
+        <h1 class="titulo-pagina">A Arte da Sátira</h1>
+
+        <div class="busca" id="busca" role="search" hidden>
+            <label for="busca-campo">Buscar nesta página</label>
+
+            <input
+                type="search"
+                id="busca-campo"
+                name="busca"
+                maxlength="120"
+                placeholder="Título, autor ou palavra do resumo"
+                autocomplete="off"
+            >
+
+            <p class="busca-status" id="busca-status" role="status"></p>
+        </div>
+
+        <section class="introducao" aria-label="Introdução">
+            <p>Entre o riso e a crítica, a sátira transforma os vícios e as contradições de uma sociedade em poesia. Na literatura brasileira, autores de diferentes épocas usaram a ironia e o humor para questionar costumes, poderes e valores.</p>
+
+            <img src="imagens/satirico.svg" alt="" width="600" height="360">
+        </section>
+
+        <section class="historia" aria-labelledby="historia-titulo">
+            <h2 id="historia-titulo">A Sátira no Brasil</h2>
+
+            <p>A tradição satírica brasileira dialoga com modelos da Antiguidade clássica e com as cantigas de escárnio e maldizer do Trovadorismo ibérico. No século XVII, Gregório de Matos tornou-se uma de suas principais vozes, dirigindo críticas a governadores, clérigos, comerciantes e aos costumes da Bahia.</p>
+
+            <p>No século XIX, Luís Gama fez da ironia uma arma contra o preconceito racial e as hipocrisias sociais. Na passagem para o século XX, Emílio de Menezes destacou-se pelo humor verbal e pelos trocadilhos. O Modernismo trouxe o poema-piada de Oswald de Andrade, que revisitou a história e os costumes brasileiros com concisão e irreverência.</p>
+
+            <h3 id="tempo-titulo">Em linha do tempo</h3>
+
+            <ol class="linha-do-tempo" role="list" aria-labelledby="tempo-titulo">
+                <li><strong>Antiguidade e Idade Média</strong> Tradições de sátira e epigrama, e as cantigas de escárnio e maldizer.</li>
+                <li><strong>Século XVII</strong> Gregório de Matos critica poderes e costumes da Bahia colonial.</li>
+                <li><strong>Fim do século XVIII</strong> As <cite>Cartas Chilenas</cite>, atribuídas a Tomás Antônio Gonzaga, satirizam a administração colonial.</li>
+                <li><strong>1859</strong> Luís Gama publica <cite>Primeiras Trovas Burlescas de Getulino</cite>.</li>
+                <li><strong>Virada para o século XX</strong> Emílio de Menezes destaca-se com versos satíricos e trocadilhos.</li>
+                <li><strong>Século XX</strong> Oswald de Andrade explora o poema-piada e a revisão crítica da história brasileira.</li>
+            </ol>
+        </section>
+
+        <section class="subgeneros" aria-labelledby="subgeneros-titulo">
+            <h2 id="subgeneros-titulo">Formas e Temas Satíricos</h2>
+
+            <p>A <strong>sátira de costumes</strong> retrata hábitos, vícios e contradições sociais. O <strong>epigrama</strong> concentra uma ideia em poucos versos e pode apresentar um desfecho irônico ou inesperado. As obras desta página foram aproximadas dessas tradições por suas características formais e temáticas.</p>
+        </section>
+
+        <p class="nota-curadoria">As obras foram organizadas por afinidade temática e formal. Algumas dialogam com mais de uma categoria.</p>
+
+        <nav class="indice-subgeneros" aria-label="Seções de poesia satírica">
+            <ul role="list">
+                <li><a href="#satira-de-costumes">Sátira de Costumes</a></li>
+                <li><a href="#epigrama">Epigrama</a></li>
+            </ul>
+        </nav>
+
+        <section id="satira-de-costumes" class="secao-subgenero" aria-labelledby="satira-de-costumes-titulo">
+            <h2 id="satira-de-costumes-titulo">Sátira de Costumes</h2>
+
+            <p>A vida cotidiana fornece à sátira assuntos como comércio, justiça, vaidade, hipocrisia e hierarquias sociais. Gregório de Matos explorou essas contradições na Bahia colonial. Luís Gama voltou sua crítica contra o preconceito e a desigualdade de uma sociedade escravista.</p>
+
+            <p id="lista-satira-de-costumes" class="chamada-lista">
+                Obras para explorar:
+            </p>
+
+            <ul class="lista-cards" id="cards-satira-de-costumes" role="list" aria-labelledby="lista-satira-de-costumes" data-sub="satira-de-costumes"></ul>
+
+            <noscript>
+                <p>Ative o JavaScript para visualizar o catálogo desta seção.</p>
+            </noscript>
+        </section>
+
+        <section id="epigrama" class="secao-subgenero" aria-labelledby="epigrama-titulo">
+            <h2 id="epigrama-titulo">Epigrama</h2>
+
+            <p>O epigrama esteve inicialmente ligado às inscrições em monumentos e túmulos. Sua tradição literária também desenvolveu poemas breves, por vezes satíricos, em que a concisão fortalece o efeito final. Os poemas curtos e irônicos de Oswald de Andrade dialogam com esse espírito.</p>
+
+            <p id="lista-epigrama" class="chamada-lista">
+                Obras para explorar:
+            </p>
+
+            <ul class="lista-cards" id="cards-epigrama" role="list" aria-labelledby="lista-epigrama" data-sub="epigrama"></ul>
+
+            <noscript>
+                <p>Ative o JavaScript para visualizar o catálogo desta seção.</p>
+            </noscript>
+        </section>
+
+        <nav class="outros-generos" aria-labelledby="outros-generos-titulo">
+            <h2 id="outros-generos-titulo">Continue explorando</h2>
+
+            <ul role="list">
+                <li><a href="lirico.html">Lírico</a></li>
+                <li><a href="cordel.html">Cordel</a></li>
+            </ul>
+        </nav>
+    </main>
+
+    <footer class="app-footer">
+        <p>
+            Projeto desenvolvido por
+            <a href="https://github.com/helderneiva" target="_blank" rel="noopener noreferrer">
+                Helder Neiva<span class="visually-hidden"> (abre em nova aba)</span>
+            </a>
+        </p>
+    </footer>
+
+    <script type="module" src="scripts/menu.js"></script>
+    <script type="module" src="scripts/cards.js"></script>
+    <script type="module" src="scripts/indice.js"></script>
+</body>
+</html>

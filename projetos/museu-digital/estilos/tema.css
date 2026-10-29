@@ -1,0 +1,125 @@
+@charset "UTF-8";
+
+:root {
+    color-scheme: light;
+}
+
+:root[data-tema="escuro"] {
+    color-scheme: dark;
+}
+
+body {
+    --cor-genero: #F2C14E;
+    --texto-genero: #291D16;
+    --genero-claro: var(--superficie);
+    --genero-escuro: var(--destaque);
+}
+
+[data-genero="lirico"] {
+    --cor-genero: #F2C14E;
+    --texto-genero: #291D16;
+    --genero-claro: #F4E8C7;
+    --genero-escuro: #76520C;
+    --destaque: #76520C;
+    --foco: #76520C;
+}
+
+[data-genero="satirico"] {
+    --cor-genero: #A43D2D;
+    --texto-genero: #FFF8EE;
+    --genero-claro: #F3DFD5;
+    --genero-escuro: #923326;
+    --destaque: #923326;
+    --foco: #923326;
+}
+
+[data-genero="cordel"] {
+    --cor-genero: #35465C;
+    --texto-genero: #FFF8EE;
+    --genero-claro: #DFE5EA;
+    --genero-escuro: #35465C;
+    --destaque: #35465C;
+    --foco: #35465C;
+}
+
+/* Tema escuro: preserva a mesma linguagem visual. */
+
+:root[data-tema="escuro"] body {
+    --fundo-principal: #1C1815;
+    --fundo-card: #26211C;
+    --superficie: #30291F;
+    --texto: #F4EBDC;
+    --texto-inverso: #291D16;
+    --texto-suave: #C6B8A5;
+    --destaque: #F2C14E;
+    --destaque-inverso: #F2C14E;
+    --borda: #5C4E3E;
+    --foco: #F2C14E;
+    --genero-claro: #30291F;
+    --genero-escuro: #F2C14E;
+}
+
+:root[data-tema="escuro"] [data-genero="lirico"] {
+    --cor-genero: #F2C14E;
+    --texto-genero: #291D16;
+    --genero-claro: #342C1C;
+    --genero-escuro: #F2C14E;
+    --destaque: #F2C14E;
+    --foco: #F2C14E;
+}
+
+:root[data-tema="escuro"] [data-genero="satirico"] {
+    --cor-genero: #A43D2D;
+    --texto-genero: #FFF8EE;
+    --genero-claro: #37231F;
+    --genero-escuro: #F1AB97;
+    --destaque: #F1AB97;
+    --foco: #F1AB97;
+}
+
+:root[data-tema="escuro"] [data-genero="cordel"] {
+    --cor-genero: #35465C;
+    --texto-genero: #FFF8EE;
+    --genero-claro: #222C38;
+    --genero-escuro: #B6CBE3;
+    --destaque: #B6CBE3;
+    --foco: #B6CBE3;
+}
+
+/* Botão inserido pelo tema.js. */
+
+.menu .tema-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 2.8em;
+    padding: 10px;
+    background: transparent;
+    color: #F8F3E8;
+    font-size: 0.88em;
+    font-weight: 600;
+    line-height: 1.4;
+    border: 1px solid #8B7357;
+    border-radius: var(--raio);
+}
+
+.menu .tema-toggle:hover {
+    background: #F2C14E;
+    color: #291D16;
+    border-color: #F2C14E;
+}
+
+.menu .tema-toggle svg {
+    flex-shrink: 0;
+    width: 1.2em;
+    height: 1.2em;
+    fill: currentColor;
+}
+
+@media (max-width: 64rem) {
+    .menu .tema-toggle {
+        width: 100%;
+        margin-top: 12px;
+        padding: 14px;
+    }
+}

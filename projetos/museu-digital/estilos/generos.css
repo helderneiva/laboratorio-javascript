@@ -1,0 +1,369 @@
+@charset "UTF-8";
+
+html {
+    scroll-padding-top: 7em;
+}
+
+.introducao {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 28px;
+    padding: 36px;
+    background: var(--cor-genero);
+    color: var(--texto-genero);
+    border-radius: var(--raio);
+}
+
+.introducao p {
+    max-width: 50ch;
+    font-size: 1.08em;
+    line-height: 1.8;
+}
+
+.introducao img {
+    width: 100%;
+    border: 1px solid #291D1626;
+    border-radius: 2px;
+}
+
+/* Ações e progresso. */
+
+.acoes-genero {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 40px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--borda);
+}
+
+.progresso {
+    flex: 1 1 16em;
+    max-width: 30em;
+}
+
+.progresso-texto {
+    margin-bottom: 12px;
+    color: var(--texto-suave);
+    font-size: 0.8em;
+}
+
+.progresso progress {
+    display: block;
+    width: 100%;
+    height: 0.5em;
+    accent-color: var(--genero-escuro);
+}
+
+.acoes-botoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* Busca. */
+
+.busca {
+    max-width: 40em;
+    margin-bottom: 32px;
+}
+
+.busca label {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--texto-suave);
+    font-size: 0.78em;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.busca input {
+    width: 100%;
+    min-height: 3em;
+    padding: 14px 18px;
+    background: var(--fundo-card);
+    color: var(--texto);
+    font-size: 0.9em;
+    border: 1px solid var(--genero-escuro);
+    border-radius: var(--raio);
+}
+
+.busca input::placeholder {
+    color: var(--texto-suave);
+    opacity: 1;
+}
+
+.busca-status {
+    min-height: 1.75em;
+    margin-top: 8px;
+    color: var(--texto-suave);
+    font-size: 0.78em;
+}
+
+/* Apresentação das formas e temas. */
+
+.subgeneros {
+    margin-bottom: 28px;
+}
+
+.subgeneros h2 {
+    font-size: 2em;
+}
+
+.subgeneros > p {
+    max-width: var(--medida);
+    color: var(--texto-suave);
+    font-size: 0.92em;
+}
+
+/* Índice fixo no topo durante a exploração das obras. */
+
+.indice-subgeneros {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    margin-bottom: 40px;
+    padding: 14px 0;
+    background: var(--fundo-principal);
+    border-bottom: 1px solid var(--borda);
+}
+
+.indice-subgeneros ul,
+.outros-generos ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+}
+
+.indice-subgeneros a,
+.outros-generos a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.8em;
+    padding: 10px 18px;
+    background: var(--fundo-card);
+    color: var(--texto);
+    font-size: 0.82em;
+    font-weight: 600;
+    line-height: 1.4;
+    text-decoration: none;
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+}
+
+.indice-subgeneros a:hover,
+.indice-subgeneros a[aria-current="location"] {
+    background: var(--genero-escuro);
+    color: var(--fundo-principal);
+    border-color: var(--genero-escuro);
+}
+
+.contagem {
+    margin-left: 10px;
+    font-size: 0.85em;
+}
+
+.secao-subgenero {
+    margin-bottom: 64px;
+    scroll-margin-top: 1em;
+}
+
+.secao-subgenero > h2 {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    font-size: 2.6em;
+}
+
+.secao-subgenero > h2::before {
+    flex-shrink: 0;
+    content: "";
+    width: 0.18em;
+    height: 0.8em;
+    background: var(--cor-genero);
+}
+
+.secao-subgenero > p {
+    max-width: var(--medida);
+}
+
+.chamada-lista {
+    margin-top: 24px;
+    margin-bottom: 20px;
+    color: var(--texto-suave);
+    font-size: 0.78em;
+    font-weight: 600;
+}
+
+/* Contexto de cada seleção e história completa. */
+
+.contexto-secao {
+    max-width: var(--medida);
+    margin-bottom: 24px;
+}
+
+.contexto-secao summary {
+    display: list-item;
+    width: fit-content;
+    padding: 8px 0;
+    color: var(--genero-escuro);
+    font-size: 0.85em;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.contexto-secao p {
+    margin-top: 16px;
+    color: var(--texto-suave);
+    font-size: 0.9em;
+}
+
+.historia {
+    margin: 40px 0;
+}
+
+.contexto-historico {
+    background: var(--superficie);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+}
+
+.contexto-historico > summary {
+    padding: 24px;
+    font-family: var(--fonte-titulo);
+    font-size: 1.65em;
+    font-weight: 700;
+    line-height: 1.3;
+    cursor: pointer;
+}
+
+.contexto-conteudo {
+    padding: 0 28px 28px;
+}
+
+.contexto-conteudo > p {
+    max-width: var(--medida);
+    font-size: 0.9em;
+}
+
+.contexto-conteudo h3 {
+    margin-top: 32px;
+}
+
+.linha-do-tempo {
+    max-width: var(--medida);
+    margin-top: 24px;
+    padding-left: 24px;
+    list-style: none;
+    border-left: 2px solid var(--genero-escuro);
+}
+
+.linha-do-tempo li {
+    position: relative;
+    padding-bottom: 24px;
+    font-size: 0.88em;
+}
+
+.linha-do-tempo li:last-child {
+    padding-bottom: 0;
+}
+
+.linha-do-tempo li::before {
+    position: absolute;
+    top: 0.5em;
+    left: -1.95em;
+    content: "";
+    width: 0.7em;
+    height: 0.7em;
+    background: var(--genero-escuro);
+    border-radius: 50%;
+}
+
+.linha-do-tempo strong {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--genero-escuro);
+}
+
+/* Outras categorias. */
+
+.outros-generos {
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid var(--borda);
+}
+
+.outros-generos h2 {
+    font-size: 1.7em;
+}
+
+.outros-generos a[href="lirico.html"]:hover {
+    background: #F2C14E;
+    color: #291D16;
+    border-color: #F2C14E;
+}
+
+.outros-generos a[href="satirico.html"]:hover {
+    background: #A43D2D;
+    color: #FFF8EE;
+    border-color: #A43D2D;
+}
+
+.outros-generos a[href="cordel.html"]:hover {
+    background: #35465C;
+    color: #FFF8EE;
+    border-color: #35465C;
+}
+
+/* Busca ativa: mantém os resultados em evidência. */
+
+.buscando .secao-subgenero > p:not(.chamada-lista),
+.buscando .contexto-secao {
+    display: none;
+}
+
+@media (max-width: 48em) {
+    .introducao {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+        padding: 24px;
+    }
+
+    .introducao p {
+        font-size: 1em;
+    }
+
+    .introducao img {
+        max-width: 25em;
+    }
+
+    .indice-subgeneros ul {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding: 7px;
+        margin: -7px;
+    }
+
+    .indice-subgeneros a {
+        white-space: nowrap;
+    }
+
+    .secao-subgenero {
+        margin-bottom: 48px;
+    }
+
+    .contexto-conteudo {
+        padding: 0 20px 24px;
+    }
+
+    .contexto-historico > summary {
+        padding: 20px;
+    }
+}

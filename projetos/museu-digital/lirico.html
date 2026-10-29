@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+
+    <title>O Lirismo Brasileiro | Museu da Poesia Digital</title>
+
+    <meta name="description" content="Conheça a história do lirismo brasileiro e explore odes, elegias, idílios e madrigais.">
+
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:site_name" content="Museu da Poesia Digital">
+    <meta property="og:title" content="O Lirismo Brasileiro | Museu da Poesia Digital">
+    <meta property="og:description" content="Conheça a história do lirismo brasileiro e explore odes, elegias, idílios e madrigais.">
+
+    <link rel="icon" href="favicon.ico" sizes="32x32">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <meta name="theme-color" content="#4A2E16">
+
+    <link rel="preload" href="fontes/Grenze-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="fontes/Platypi-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
+
+    <link rel="modulepreload" href="scripts/util.js">
+    <link rel="modulepreload" href="dados/poemas.js">
+
+    <link rel="stylesheet" href="estilos/base.css">
+    <link rel="stylesheet" href="estilos/tema.css">
+    <link rel="stylesheet" href="estilos/cards.css">
+    <link rel="stylesheet" href="estilos/generos.css">
+
+    <script src="scripts/tema.js"></script>
+</head>
+
+<body data-genero="lirico">
+    <a href="#conteudo" class="skip-link">
+        Ir para o conteúdo principal
+    </a>
+
+    <header>
+        <a class="marca" href="index.html">
+            Museu da Poesia Digital
+        </a>
+
+        <nav class="menu" id="menu-principal" aria-label="Navegação principal">
+            <ul role="list">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="lirico.html" aria-current="page">Lírico</a></li>
+                <li><a href="satirico.html">Satírico</a></li>
+                <li><a href="cordel.html">Cordel</a></li>
+                <li><a href="index.html#sobre">Sobre</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="conteudo">
+        <h1 class="titulo-pagina">O Lirismo Brasileiro</h1>
+
+        <div class="busca" id="busca" role="search" hidden>
+            <label for="busca-campo">Buscar nesta página</label>
+
+            <input
+                type="search"
+                id="busca-campo"
+                name="busca"
+                maxlength="120"
+                placeholder="Título, autor ou palavra do resumo"
+                autocomplete="off"
+            >
+
+            <p class="busca-status" id="busca-status" role="status"></p>
+        </div>
+
+        <section class="introducao" aria-label="Introdução">
+            <p>Entre sentimentos e palavras, o lirismo transforma experiências humanas em poesia. Na literatura brasileira, poetas de diferentes épocas deram voz ao amor, à saudade, à natureza e às inquietações da existência, construindo uma rica tradição de expressão e sensibilidade.</p>
+
+            <img src="imagens/lirico.svg" alt="" width="600" height="360">
+        </section>
+
+        <section class="historia" aria-labelledby="historia-titulo">
+            <h2 id="historia-titulo">O Lirismo no Brasil</h2>
+
+            <p>O lirismo chegou ao Brasil durante a colonização portuguesa, por meio das tradições poéticas europeias, adaptadas gradualmente à realidade local. No século XVII, o Barroco expressou conflitos humanos e religiosos com contrastes e linguagem elaborada; no século XVIII, o Arcadismo valorizou a simplicidade, o equilíbrio e a natureza. No século XIX, o Romantismo privilegiou os sentimentos, a imaginação e a identidade nacional. No final desse século, o Simbolismo explorou a musicalidade, a sugestão e a interioridade. No século XX, o Modernismo incorporou novas linguagens e a diversidade cultural brasileira.</p>
+
+            <p>Entre os principais nomes dessa tradição estão Gregório de Matos, Tomás Antônio Gonzaga, Gonçalves Dias, Castro Alves, Cecília Meireles e Carlos Drummond de Andrade. Com estilos distintos, esses autores contribuíram para transformar e enriquecer a expressão lírica brasileira.</p>
+
+            <h3 id="tempo-titulo">Em linha do tempo</h3>
+
+            <ol class="linha-do-tempo" role="list" aria-labelledby="tempo-titulo">
+                <li><strong>Século XVII</strong> Barroco: conflitos humanos e religiosos, com contrastes e linguagem elaborada. Gregório de Matos e Manuel Botelho de Oliveira.</li>
+                <li><strong>Século XVIII</strong> Arcadismo: simplicidade, equilíbrio e natureza. Tomás Antônio Gonzaga e <cite>Marília de Dirceu</cite>.</li>
+                <li><strong>Século XIX</strong> Romantismo: sentimento, imaginação e identidade nacional. Gonçalves Dias, Castro Alves e Fagundes Varela.</li>
+                <li><strong>Fim do século XIX e início do XX</strong> Simbolismo: musicalidade, sugestão e interioridade. Da Costa e Silva estreia em livro com <cite>Sangue</cite>, em 1908.</li>
+                <li><strong>Século XX</strong> Modernismo e renovação da linguagem poética. Mário de Andrade, Cecília Meireles e Carlos Drummond de Andrade.</li>
+            </ol>
+        </section>
+
+        <section class="subgeneros" aria-labelledby="subgeneros-titulo">
+            <h2 id="subgeneros-titulo">Formas e Temas Líricos</h2>
+
+            <p>A <strong>ode</strong> celebra pessoas, acontecimentos ou ideais; o <strong>idílio</strong> se associa a cenas campestres e sentimentos amorosos; a <strong>elegia</strong> manifesta luto, saudade ou reflexão sobre a perda; e o <strong>madrigal</strong> combina brevidade e delicadeza, frequentemente para expressar o amor. Essas formas e afinidades foram recriadas por autores de diferentes épocas.</p>
+        </section>
+
+        <p class="nota-curadoria">As obras foram organizadas por afinidade temática e formal. Algumas dialogam com mais de uma categoria; romances em prosa e coletâneas são identificados nos cards.</p>
+
+        <nav class="indice-subgeneros" aria-label="Seções do gênero lírico">
+            <ul role="list">
+                <li><a href="#ode">Ode</a></li>
+                <li><a href="#elegia">Elegia</a></li>
+                <li><a href="#idilio">Idílio</a></li>
+                <li><a href="#madrigal">Madrigal</a></li>
+            </ul>
+        </nav>
+
+        <section id="ode" class="secao-subgenero" aria-labelledby="ode-titulo">
+            <h2 id="ode-titulo">Ode</h2>
+
+            <p>Originária da Antiguidade Clássica, a ode se associa ao canto de celebração, à reflexão e à expressão de sentimentos elevados. Na literatura brasileira, essa tradição recebeu usos diversos: a exaltação cívica, o clamor social e até a inversão irônica de seu tom solene.</p>
+
+            <p id="lista-ode" class="chamada-lista">
+                Obras para explorar:
+            </p>
+
+            <ul class="lista-cards" id="cards-ode" role="list" aria-labelledby="lista-ode" data-sub="ode"></ul>
+
+            <noscript>
+                <p>Ative o JavaScript para visualizar o catálogo desta seção.</p>
+            </noscript>
+        </section>
+
+        <section id="elegia" class="secao-subgenero" aria-labelledby="elegia-titulo">
+            <h2 id="elegia-titulo">Elegia</h2>
+
+            <p>A elegia se dedica à perda, ao luto e à reflexão sobre a brevidade da vida. No Romantismo brasileiro, Fagundes Varela destacou-se com <cite>Cântico do Calvário</cite>, escrito em memória de seu filho. Em diferentes épocas, a poesia elegíaca também articulou a memória pessoal e o sofrimento coletivo.</p>
+
+            <p id="lista-elegia" class="chamada-lista">
+                Obras para explorar:
+            </p>
+
+            <ul class="lista-cards" id="cards-elegia" role="list" aria-labelledby="lista-elegia" data-sub="elegia"></ul>
+
+            <noscript>
+                <p>Ative o JavaScript para visualizar o catálogo desta seção.</p>
+            </noscript>
+        </section>
+
+        <section id="idilio" class="secao-subgenero" aria-labelledby="idilio-titulo">
+            <h2 id="idilio-titulo">Idílio</h2>
+
+            <p>O idílio se associa à representação de uma vida simples, harmoniosa e idealizada, frequentemente ligada à natureza e ao amor. A atmosfera idílica também aparece em narrativas em prosa. Esta seção reúne poemas e romances que dialogam com essas características, identificando o formato de cada obra.</p>
+
+            <p id="lista-idilio" class="chamada-lista">
+                Obras para explorar:
+            </p>
+
+            <ul class="lista-cards" id="cards-idilio" role="list" aria-labelledby="lista-idilio" data-sub="idilio"></ul>
+
+            <noscript>
+                <p>Ative o JavaScript para visualizar o catálogo desta seção.</p>
+            </noscript>
+        </section>
+
+        <section id="madrigal" class="secao-subgenero" aria-labelledby="madrigal-titulo">
+            <h2 id="madrigal-titulo">Madrigal</h2>
+
+            <p>De origem italiana, o madrigal se consolidou como uma composição breve, marcada pela musicalidade e pelo refinamento da expressão. Na poesia brasileira, aparece em autores como Manuel Botelho de Oliveira e recebe recriações modernas, como as de Mário de Andrade.</p>
+
+            <p id="lista-madrigal" class="chamada-lista">
+                Obras para explorar:
+            </p>
+
+            <ul class="lista-cards" id="cards-madrigal" role="list" aria-labelledby="lista-madrigal" data-sub="madrigal"></ul>
+
+            <noscript>
+                <p>Ative o JavaScript para visualizar o catálogo desta seção.</p>
+            </noscript>
+        </section>
+
+        <nav class="outros-generos" aria-labelledby="outros-generos-titulo">
+            <h2 id="outros-generos-titulo">Continue explorando</h2>
+
+            <ul role="list">
+                <li><a href="satirico.html">Satírico</a></li>
+                <li><a href="cordel.html">Cordel</a></li>
+            </ul>
+        </nav>
+    </main>
+
+    <footer class="app-footer">
+        <p>
+            Projeto desenvolvido por
+            <a href="https://github.com/helderneiva" target="_blank" rel="noopener noreferrer">
+                Helder Neiva<span class="visually-hidden"> (abre em nova aba)</span>
+            </a>
+        </p>
+    </footer>
+
+    <script type="module" src="scripts/menu.js"></script>
+    <script type="module" src="scripts/cards.js"></script>
+    <script type="module" src="scripts/indice.js"></script>
+</body>
+</html>

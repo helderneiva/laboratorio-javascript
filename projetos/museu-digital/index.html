@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+
+    <title>Museu da Poesia Digital | A história escrita em versos</title>
+
+    <meta
+        name="description"
+        content="Explore a poesia brasileira em um museu digital: descubra tradições líricas, sátiras e histórias de cordel, conheça autores e leia poemas."
+    >
+
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:site_name" content="Museu da Poesia Digital">
+    <meta
+        property="og:title"
+        content="Museu da Poesia Digital | A história escrita em versos"
+    >
+    <meta
+        property="og:description"
+        content="Três caminhos para descobrir a poesia brasileira: Lírico, Satírico e Cordel."
+    >
+
+    <meta name="theme-color" content="#352216">
+
+    <link rel="icon" href="favicon.ico" sizes="32x32">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <link
+        rel="preload"
+        href="fontes/Grenze-VariableFont_wght.ttf"
+        as="font"
+        type="font/ttf"
+        crossorigin
+    >
+    <link
+        rel="preload"
+        href="fontes/Platypi-VariableFont_wght.ttf"
+        as="font"
+        type="font/ttf"
+        crossorigin
+    >
+
+    <link rel="modulepreload" href="scripts/util.js">
+    <link rel="modulepreload" href="dados/poemas.js">
+
+    <link rel="stylesheet" href="estilos/base.css">
+    <link rel="stylesheet" href="estilos/tema.css">
+    <link rel="stylesheet" href="estilos/cards.css">
+    <link rel="stylesheet" href="estilos/home.css">
+
+    <script src="scripts/tema.js"></script>
+</head>
+<body>
+    <a class="skip-link" href="#conteudo">
+        Ir para o conteúdo principal
+    </a>
+
+    <header>
+        <a class="marca" href="index.html">
+            Museu da Poesia Digital
+        </a>
+
+        <nav
+            class="menu"
+            id="menu-principal"
+            aria-label="Navegação principal"
+        >
+            <ul role="list">
+                <li>
+                    <a href="index.html" aria-current="page">Início</a>
+                </li>
+                <li><a href="lirico.html">Lírico</a></li>
+                <li><a href="satirico.html">Satírico</a></li>
+                <li><a href="cordel.html">Cordel</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="conteudo">
+        <section
+            class="apresentacao"
+            aria-labelledby="apresentacao-titulo"
+        >
+            <div class="hero-texto">
+                <p class="sobretitulo">Museu literário digital</p>
+
+                <h1 id="apresentacao-titulo">
+                    A história escrita em <span>versos.</span>
+                </h1>
+
+                <p class="hero-descricao">
+                    Palavras que atravessam o tempo. Explore sentimentos,
+                    descubra a força da crítica e percorra histórias
+                    contadas pela poesia brasileira.
+                </p>
+
+                <div class="acoes-hero">
+                    <a class="botao" href="#generos">
+                        Explorar o museu
+                    </a>
+
+                    <button
+                        class="botao botao-secundario"
+                        id="poema-aleatorio"
+                        type="button"
+                        hidden
+                    >
+                        Descobrir um poema
+                    </button>
+                </div>
+            </div>
+
+            <figure class="hero-citacao">
+                <blockquote>
+                    <p>
+                        Minha terra tem palmeiras,<br>
+                        Onde canta o Sabiá;
+                    </p>
+                </blockquote>
+
+                <figcaption>
+                    GONÇALVES DIAS
+                    <cite>Canção do Exílio · Primeiros Cantos, 1846</cite>
+                </figcaption>
+            </figure>
+        </section>
+
+        <ul
+            class="estatisticas"
+            id="estatisticas"
+            role="list"
+            aria-label="O acervo em números"
+            hidden
+        ></ul>
+
+        <section
+            class="generos"
+            id="generos"
+            aria-labelledby="generos-titulo"
+        >
+            <div class="cabecalho-secao">
+                <div>
+                    <p class="sobretitulo">Percorra as exposições</p>
+                    <h2 id="generos-titulo">Três caminhos, muitas vozes.</h2>
+                </div>
+
+                <p>
+                    Escolha uma tradição e encontre obras,
+                    autores e formas de olhar o Brasil.
+                </p>
+            </div>
+
+            <div class="lista-generos">
+                <article class="lirico">
+                    <p class="numero-sala">Exposição 01</p>
+
+                    <img
+                        src="imagens/lirico.svg"
+                        alt=""
+                        width="600"
+                        height="360"
+                        loading="lazy"
+                    >
+
+                    <h3><a href="lirico.html">Lírico</a></h3>
+
+                    <p>
+                        Amor, saudade e memória. A experiência humana
+                        encontra nos versos uma forma de permanecer.
+                    </p>
+
+                    <span class="entrada-sala" aria-hidden="true">
+                        Entrar na exposição →
+                    </span>
+                </article>
+
+                <article class="satirico">
+                    <p class="numero-sala">Exposição 02</p>
+
+                    <img
+                        src="imagens/satirico.svg"
+                        alt=""
+                        width="600"
+                        height="360"
+                        loading="lazy"
+                    >
+
+                    <h3><a href="satirico.html">Satírico</a></h3>
+
+                    <p>
+                        Humor que provoca. Palavras que revelam costumes,
+                        desafiam o poder e expõem nossas contradições.
+                    </p>
+
+                    <span class="entrada-sala" aria-hidden="true">
+                        Entrar na exposição →
+                    </span>
+                </article>
+
+                <article class="cordel">
+                    <p class="numero-sala">Exposição 03</p>
+
+                    <img
+                        src="imagens/cordel.svg"
+                        alt=""
+                        width="600"
+                        height="360"
+                        loading="lazy"
+                    >
+
+                    <h3><a href="cordel.html">Cordel</a></h3>
+
+                    <p>
+                        Histórias que ganham voz. Aventuras, romances
+                        e desafios preservados pela força da rima.
+                    </p>
+
+                    <span class="entrada-sala" aria-hidden="true">
+                        Entrar na exposição →
+                    </span>
+                </article>
+            </div>
+        </section>
+
+        <section
+            class="poema-do-dia"
+            id="poema-do-dia"
+            aria-labelledby="poema-do-dia-titulo"
+            hidden
+        >
+            <div class="destaque-intro">
+                <p class="sobretitulo">Uma pausa para os versos</p>
+
+                <h2 id="poema-do-dia-titulo">Sua leitura de hoje.</h2>
+
+                <p>
+                    Um poema do acervo para conhecer ou reencontrar.
+                    Abra a obra e continue a leitura dentro do museu.
+                </p>
+            </div>
+
+            <ul class="lista-cards" role="list"></ul>
+        </section>
+
+        <section
+            class="sobre"
+            id="sobre"
+            aria-labelledby="sobre-titulo"
+        >
+            <div>
+                <p class="sobretitulo">Memória encontra tecnologia</p>
+                <h2 id="sobre-titulo">Um museu feito de palavras.</h2>
+            </div>
+
+            <div class="sobre-texto">
+                <p>
+                    O Museu da Poesia Digital reúne caminhos para
+                    descobrir a literatura brasileira. As obras são
+                    organizadas por afinidades temáticas e formais,
+                    acompanhadas de apresentações e contextos históricos.
+                </p>
+
+                <p>
+                    Parte do acervo pode ser lida aqui. Outras obras
+                    são acompanhadas de referências para consulta
+                    em fontes externas, identificadas nos cartões.
+                </p>
+
+                <p>
+                    Criado por Helder Neiva como projeto de portfólio,
+                    o museu explora como o desenvolvimento web pode
+                    aproximar pessoas, literatura e memória.
+                </p>
+
+                <ul
+                    class="tecnologias"
+                    role="list"
+                    aria-label="Tecnologias utilizadas"
+                >
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>JavaScript</li>
+                </ul>
+            </div>
+        </section>
+
+        <noscript>
+            <p>
+                Ative o JavaScript para carregar os cartões das obras
+                e utilizar os recursos interativos do museu.
+            </p>
+        </noscript>
+    </main>
+
+    <footer class="app-footer">
+        <p>
+            Projeto desenvolvido por
+            <a
+                href="https://github.com/helderneiva"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Helder Neiva
+                <span class="visually-hidden">
+                    (abre em nova aba)
+                </span>
+            </a>
+        </p>
+    </footer>
+
+    <script type="module" src="scripts/menu.js"></script>
+    <script type="module" src="scripts/cards.js"></script>
+</body>
+</html>

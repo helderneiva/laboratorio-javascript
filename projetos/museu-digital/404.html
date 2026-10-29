@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="robots" content="noindex">
+    <title>Página não encontrada | Museu da Poesia Digital</title>
+    <meta name="description" content="A página que você procurou não foi encontrada no Museu da Poesia Digital.">
+    <link rel="icon" href="favicon.ico" sizes="32x32">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <meta name="theme-color" content="#4A2E16">
+    <!-- Atenção: se o site for publicado em uma subpasta (por exemplo, usuario.github.io/museu/),
+         os caminhos relativos abaixo podem não funcionar quando o 404 for aberto em outra pasta.
+         Nesse caso, use caminhos que comecem com / (ex.: /museu/estilos/base.css). -->
+    <link rel="stylesheet" href="estilos/base.css">
+    <link rel="stylesheet" href="estilos/tema.css">
+    <link rel="stylesheet" href="estilos/home.css">
+    <script src="scripts/tema.js"></script>
+</head>
+<body>
+
+    <a href="#conteudo" class="skip-link">Ir para o conteúdo principal</a>
+
+    <header>
+        <a class="marca" href="index.html">Museu da Poesia Digital</a>
+        <nav class="menu" id="menu-principal" aria-label="Navegação principal">
+            <ul role="list">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="lirico.html">Lírico</a></li>
+                <li><a href="satirico.html">Satírico</a></li>
+                <li><a href="cordel.html">Cordel</a></li>
+                <li><a href="index.html#sobre">Sobre</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="conteudo">
+        <section class="apresentacao" aria-labelledby="erro-titulo">
+            <h1 id="erro-titulo">Página não encontrada</h1>
+            <p>Esse endereço não existe no museu, ou o poema que você procura mudou de sala. Volte ao <a href="index.html">início</a> ou escolha um dos gêneros: <a href="lirico.html">Lírico</a>, <a href="satirico.html">Satírico</a> ou <a href="cordel.html">Cordel</a>.</p>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p>Projeto desenvolvido por <a href="https://github.com/helderneiva" target="_blank" rel="noopener noreferrer">Helder Neiva<span class="visually-hidden"> (abre em nova aba)</span></a></p>
+    </footer>
+
+    <script type="module" src="scripts/menu.js"></script>
+</body>
+</html>

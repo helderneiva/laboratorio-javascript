@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" role="img" aria-label="Máscara de teatro sorridente">
+  <rect width="600" height="360" fill="#E1C7A4"/>
+  <circle cx="90" cy="300" r="70" fill="#FDFBF7" opacity="0.35"/>
+  <circle cx="525" cy="70" r="46" fill="#FDFBF7" opacity="0.35"/>
+  <!-- pena atrás da máscara -->
+  <g transform="translate(470 30) rotate(32)">
+    <path d="M0 0 C 34 36 34 100 0 150 C -34 100 -34 36 0 0 Z" fill="#4A2E16"/>
+    <path d="M0 12 L0 175" stroke="#E1C7A4" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <!-- máscara -->
+  <path d="M300 40 C 392 40 424 104 414 176 C 404 250 356 312 300 312 C 244 312 196 250 186 176 C 176 104 208 40 300 40 Z" fill="#FDFBF7" stroke="#2C1E11" stroke-width="7" stroke-linejoin="round"/>
+  <!-- sobrancelhas -->
+  <path d="M226 120 Q 252 96 284 116" fill="none" stroke="#2C1E11" stroke-width="8" stroke-linecap="round"/>
+  <path d="M374 120 Q 348 96 316 116" fill="none" stroke="#2C1E11" stroke-width="8" stroke-linecap="round"/>
+  <!-- olhos -->
+  <path d="M230 150 Q 256 126 284 150 Q 256 170 230 150 Z" fill="#2C1E11"/>
+  <path d="M370 150 Q 344 126 316 150 Q 344 170 370 150 Z" fill="#2C1E11"/>
+  <!-- bochechas -->
+  <circle cx="232" cy="206" r="16" fill="#E1C7A4"/>
+  <circle cx="368" cy="206" r="16" fill="#E1C7A4"/>
+  <!-- sorriso -->
+  <path d="M226 218 Q 300 306 374 218 Q 300 250 226 218 Z" fill="#2C1E11" stroke="#2C1E11" stroke-width="6" stroke-linejoin="round"/>
+</svg>

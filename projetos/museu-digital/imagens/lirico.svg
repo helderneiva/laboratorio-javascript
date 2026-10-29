@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" role="img" aria-label="Livro aberto com uma pena">
+  <rect width="600" height="360" fill="#FED15C"/>
+  <circle cx="470" cy="105" r="62" fill="#FDFBF7" opacity="0.65"/>
+  <circle cx="120" cy="70" r="5" fill="#FDFBF7"/>
+  <circle cx="190" cy="40" r="3" fill="#FDFBF7"/>
+  <circle cx="260" cy="85" r="4" fill="#FDFBF7"/>
+  <!-- livro aberto -->
+  <path d="M90 230 Q 190 195 300 232 L 300 318 Q 190 281 90 316 Z" fill="#FDFBF7" stroke="#2C1E11" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M510 230 Q 410 195 300 232 L 300 318 Q 410 281 510 316 Z" fill="#FDFBF7" stroke="#2C1E11" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M300 232 L300 318" stroke="#2C1E11" stroke-width="5"/>
+  <g stroke="#2C1E11" stroke-width="4" stroke-linecap="round" opacity="0.55">
+    <path d="M125 250 Q 190 232 265 256"/>
+    <path d="M125 268 Q 190 250 265 274"/>
+    <path d="M125 286 Q 190 268 240 286"/>
+    <path d="M335 256 Q 410 232 475 250"/>
+    <path d="M335 274 Q 410 250 475 268"/>
+    <path d="M335 292 Q 400 270 450 286"/>
+  </g>
+  <!-- pena -->
+  <g transform="translate(395 40) rotate(28)">
+    <path d="M0 0 C 40 40 40 110 0 170 C -40 110 -40 40 0 0 Z" fill="#2C1E11"/>
+    <path d="M0 14 L0 190" stroke="#FED15C" stroke-width="4" stroke-linecap="round"/>
+    <path d="M0 40 L-22 62 M0 62 L-26 86 M0 84 L-24 108 M0 40 L22 62 M0 62 L26 86 M0 84 L24 108" stroke="#FED15C" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+  </g>
+</svg>

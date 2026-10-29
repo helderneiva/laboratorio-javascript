@@ -1,0 +1,345 @@
+@charset "UTF-8";
+
+.migalhas,
+.poema,
+.anterior-proximo,
+.mais-poemas {
+    width: 100%;
+    max-width: 48em;
+    margin-inline: auto;
+}
+
+.migalhas {
+    margin-bottom: 36px;
+    font-size: 0.82em;
+}
+
+.migalhas a {
+    font-weight: 600;
+}
+
+.poema {
+    padding: 40px;
+    background: var(--fundo-card);
+    border: 1px solid var(--borda);
+    border-top: 6px solid var(--cor-genero);
+    border-radius: var(--raio);
+}
+
+.poema-titulo {
+    margin-bottom: 16px;
+    font-size: clamp(2.3em, 5vw, 4em);
+    line-height: 1.05;
+    overflow-wrap: anywhere;
+}
+
+.poema-autor {
+    color: var(--genero-escuro);
+    font-size: 0.95em;
+}
+
+.poema-tag {
+    display: inline-block;
+    margin: 24px 0;
+    padding: 5px 12px;
+    background: var(--genero-claro);
+    color: var(--genero-escuro);
+    font-size: 0.72em;
+    font-weight: 600;
+    border: 1px solid var(--borda);
+}
+
+.ferramentas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding-top: 24px;
+    border-top: 1px solid var(--borda);
+}
+
+.ferramentas button {
+    min-width: 2.8em;
+    min-height: 2.8em;
+    padding: 10px 14px;
+    background: transparent;
+    color: var(--texto);
+    font-size: 0.78em;
+    font-weight: 600;
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+}
+
+.ferramentas button:hover:not(:disabled),
+.ferramentas button[aria-pressed="true"] {
+    background: var(--genero-escuro);
+    color: var(--fundo-principal);
+    border-color: var(--genero-escuro);
+}
+
+.ferramentas button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.ferramentas button[aria-pressed="true"]::before {
+    content: "✓ ";
+    content: "✓ " / "";
+}
+
+.ferramentas-status {
+    min-height: 1.75em;
+    margin-top: 12px;
+    margin-bottom: 32px;
+    color: var(--texto-suave);
+    font-size: 0.78em;
+    overflow-wrap: anywhere;
+}
+
+/* A variável continua sendo controlada pelos botões A+ e A−. */
+
+.versos {
+    padding: 12px 0 24px;
+    font-size: var(--tamanho-versos, 1.15em);
+    line-height: 1.95;
+}
+
+.versos p {
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+
+.versos p + p {
+    margin-top: 32px;
+}
+
+.versos.numerado {
+    counter-reset: estrofe;
+    padding-left: 32px;
+}
+
+.versos.numerado p {
+    position: relative;
+    counter-increment: estrofe;
+}
+
+.versos.numerado p::before {
+    position: absolute;
+    top: 0.5em;
+    left: -2.3em;
+    content: counter(estrofe);
+    content: counter(estrofe) / "";
+    color: var(--genero-escuro);
+    font-size: 0.6em;
+    font-weight: 600;
+}
+
+.versos-figura {
+    text-align: center;
+}
+
+.versos-figura p {
+    line-height: 1.8;
+}
+
+.poema-resumo {
+    max-width: var(--medida);
+    margin-bottom: 24px;
+    line-height: 1.9;
+}
+
+.poema-fonte,
+.poema-nota {
+    margin-top: 24px;
+    color: var(--texto-suave);
+    font-size: 0.8em;
+    overflow-wrap: anywhere;
+}
+
+.poema-fonte {
+    padding-top: 24px;
+    border-top: 1px solid var(--borda);
+}
+
+.botao-leitura {
+    display: inline-flex;
+    align-items: center;
+    min-height: 3em;
+    margin-top: 12px;
+    padding: 14px 20px;
+    background: var(--genero-escuro);
+    color: var(--fundo-principal);
+    font-size: 0.88em;
+    font-weight: 700;
+    text-decoration: none;
+    border: 1px solid var(--genero-escuro);
+    border-radius: var(--raio);
+}
+
+.botao-leitura:hover {
+    background: transparent;
+    color: var(--genero-escuro);
+}
+
+.anterior-proximo {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 28px;
+}
+
+.anterior-proximo a {
+    padding: 20px;
+    color: var(--texto);
+    font-size: 0.88em;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    overflow-wrap: anywhere;
+}
+
+.anterior-proximo a:hover {
+    background: var(--genero-claro);
+    border-color: var(--genero-escuro);
+}
+
+.anterior-proximo a[rel="next"] {
+    grid-column: 2;
+    text-align: right;
+}
+
+.anterior-proximo small {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--texto-suave);
+    font-size: 0.8em;
+    font-weight: 400;
+}
+
+.mais-poemas {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--borda);
+}
+
+.mais-poemas h2 {
+    font-size: 1.8em;
+}
+
+.mais-poemas ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+}
+
+.mais-poemas a {
+    display: inline-block;
+    padding: 10px 14px;
+    background: var(--fundo-card);
+    color: var(--texto);
+    font-size: 0.8em;
+    text-decoration: none;
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+}
+
+.mais-poemas a:hover {
+    border-color: var(--genero-escuro);
+    color: var(--genero-escuro);
+}
+
+@media (max-width: 40em) {
+    .poema {
+        padding: 24px 20px;
+    }
+
+    .poema-titulo {
+        font-size: 2.4em;
+    }
+
+    .versos {
+        line-height: 1.85;
+    }
+
+    .versos.numerado {
+        padding-left: 24px;
+    }
+
+    .anterior-proximo {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .anterior-proximo a[rel="next"] {
+        grid-column: auto;
+    }
+}
+
+@media print {
+    @page {
+        margin: 2cm;
+    }
+
+    .skip-link,
+    body > header,
+    .app-footer,
+    .migalhas,
+    .ferramentas,
+    .ferramentas-status,
+    .anterior-proximo,
+    .mais-poemas {
+        display: none !important;
+    }
+
+    body {
+        display: block;
+        background: #FFFFFF;
+        color: #000000;
+    }
+
+    main {
+        padding: 0;
+    }
+
+    .poema {
+        max-width: none;
+        padding: 0;
+        background: #FFFFFF;
+        color: #000000;
+        border: 0;
+    }
+
+    .poema-autor,
+    .poema-tag,
+    .poema-fonte,
+    .poema-nota,
+    .versos.numerado p::before {
+        color: #000000;
+    }
+
+    .poema-tag {
+        padding: 0;
+        background: transparent;
+        border: 0;
+    }
+
+    .versos {
+        font-size: 12pt;
+    }
+
+    .versos p {
+        break-inside: avoid;
+    }
+
+    .botao-leitura {
+        background: transparent;
+        color: #000000;
+        border: 0;
+    }
+
+    .botao-leitura::after {
+        content: " (" attr(href) ")";
+        font-weight: 400;
+    }
+}

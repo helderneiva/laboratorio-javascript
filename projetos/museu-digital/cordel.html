@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+
+    <title>O Brasil em Cordel | Museu da Poesia Digital</title>
+
+    <meta name="description" content="Explore romances, pelejas e narrativas de cangaço na literatura de cordel brasileira.">
+
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:site_name" content="Museu da Poesia Digital">
+    <meta property="og:title" content="O Brasil em Cordel | Museu da Poesia Digital">
+    <meta property="og:description" content="Explore romances, pelejas e narrativas de cangaço na literatura de cordel brasileira.">
+
+    <link rel="icon" href="favicon.ico" sizes="32x32">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <meta name="theme-color" content="#4A2E16">
+
+    <link rel="preload" href="fontes/Grenze-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="fontes/Platypi-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
+
+    <link rel="modulepreload" href="scripts/util.js">
+    <link rel="modulepreload" href="dados/poemas.js">
+
+    <link rel="stylesheet" href="estilos/base.css">
+    <link rel="stylesheet" href="estilos/tema.css">
+    <link rel="stylesheet" href="estilos/cards.css">
+    <link rel="stylesheet" href="estilos/generos.css">
+
+    <script src="scripts/tema.js"></script>
+</head>
+
+<body data-genero="cordel">
+    <a href="#conteudo" class="skip-link">
+        Ir para o conteúdo principal
+    </a>
+
+    <header>
+        <a class="marca" href="index.html">
+            Museu da Poesia Digital
+        </a>
+
+        <nav class="menu" id="menu-principal" aria-label="Navegação principal">
+            <ul role="list">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="lirico.html">Lírico</a></li>
+                <li><a href="satirico.html">Satírico</a></li>
+                <li><a href="cordel.html" aria-current="page">Cordel</a></li>
+                <li><a href="index.html#sobre">Sobre</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="conteudo">
+        <h1 class="titulo-pagina">O Brasil em Cordel</h1>
+
+        <div class="busca" id="busca" role="search" hidden>
+            <label for="busca-campo">Buscar nesta página</label>
+
+            <input
+                type="search"
+                id="busca-campo"
+                name="busca"
+                maxlength="120"
+                placeholder="Título, autor ou palavra do resumo"
+                autocomplete="off"
+            >
+
+            <p class="busca-status" id="busca-status" role="status"></p>
+        </div>
+
+        <section class="introducao" aria-label="Introdução">
+            <p>Em versos rimados, a literatura de cordel conta histórias de amor e coragem, desafios de cantadores e episódios da vida e da história do sertão. Seus folhetos unem criação poética, circulação popular e memória.</p>
+
+            <img src="imagens/cordel.svg" alt="" width="600" height="360">
+        </section>
+
+        <section class="historia" aria-labelledby="historia-titulo">
+            <h2 id="historia-titulo">O Cordel no Brasil</h2>
+
+            <p>A literatura de cordel brasileira dialoga com tradições narrativas e poéticas de diferentes origens. No Nordeste, consolidou uma trajetória própria, ligada à produção e à circulação de folhetos, às práticas de leitura e às relações com a oralidade. Entre o fim do século XIX e o início do XX, autores e editores ampliaram sua presença nas feiras e em outros espaços populares.</p>
+
+            <p>Silvino Pirauá de Lima, Leandro Gomes de Barros, Francisco das Chagas Batista e José Pacheco estão entre os nomes associados a essa história. Os folhetos narram aventuras, romances, desafios, acontecimentos e conflitos. A xilogravura tornou-se uma de suas expressões visuais mais conhecidas, e a produção continua viva em diferentes meios.</p>
+
+            <h3 id="tempo-titulo">Em linha do tempo</h3>
+
+            <ol class="linha-do-tempo" role="list" aria-labelledby="tempo-titulo">
+                <li><strong>Tradições narrativas e poéticas</strong> Histórias, formas de versificação e práticas de circulação encontram novos usos no Brasil.</li>
+                <li><strong>Fim do século XIX e início do XX</strong> Expansão da produção e circulação de folhetos no Nordeste.</li>
+                <li><strong>Primeiras décadas do século XX</strong> Autores e editores como Leandro Gomes de Barros e Francisco das Chagas Batista ampliam o repertório e a circulação.</li>
+                <li><strong>Ao longo do século XX</strong> Romances, pelejas, humor, acontecimentos e cangaço permanecem entre os temas dos folhetos.</li>
+                <li><strong>Atualidade</strong> Poetas seguem criando e publicando, também em ambientes digitais.</li>
+            </ol>
+        </section>
+
+        <section class="subgeneros" aria-labelledby="subgeneros-titulo">
+            <h2 id="subgeneros-titulo">Caminhos do Cordel</h2>
+
+            <p>Esta página organiza o acervo em três caminhos: o <strong>romance</strong>, com narrativas de aventura, amor e maravilhas; a <strong>peleja</strong>, ligada aos desafios de cantoria; e as histórias de <strong>cangaço e conflito</strong>, agrupadas por afinidade temática.</p>
+        </section>
+
+        <p class="nota-curadoria">As obras foram organizadas por afinidade temática e formal. Essas seções representam escolhas de curadoria, e algumas obras dialogam com mais de uma delas.</p>
+
+        <nav class="indice-subgeneros" aria-label="Seções de cordel">
+            <ul role="list">
+                <li><a href="#romance">Romance</a></li>
+                <li><a href="#peleja">Peleja</a></li>
+                <li><a href="#cangaco-conflito">Cangaço e Conflito</a></li>
+            </ul>
+        </nav>
+
+        <section id="romance" class="secao-subgenero" aria-labelledby="romance-titulo">
+            <h2 id="romance-titulo">Romance em Versos</h2>
+
+            <p>O romance em versos aproxima o cordel das narrativas de aventura e dos contos tradicionais. Heróis, princesas, dragões e provas de coragem aparecem em histórias recriadas por poetas e transmitidas em folhetos e leituras.</p>
+
+            <p id="lista-romance" class="chamada-lista">
+                Obras para explorar:
+            </p>
+
+            <ul class="lista-cards" id="cards-romance" role="list" aria-labelledby="lista-romance" data-sub="romance"></ul>
+
+            <noscript>
+                <p>Ative o JavaScript para visualizar o catálogo desta seção.</p>
+            </noscript>
+        </section>
+
+        <section id="peleja" class="secao-subgenero" aria-labelledby="peleja-titulo">
+            <h2 id="peleja-titulo">Peleja</h2>
+
+            <p>A peleja se relaciona aos desafios de cantoria: dois participantes respondem um ao outro por meio de versos. Nos folhetos, esses encontros podem recriar disputas ou apresentar duelos imaginários, explorando humor, conhecimento e habilidade verbal.</p>
+
+            <p id="lista-peleja" class="chamada-lista">
+                Obras para explorar:
+            </p>
+
+            <ul class="lista-cards" id="cards-peleja" role="list" aria-labelledby="lista-peleja" data-sub="peleja"></ul>
+
+            <noscript>
+                <p>Ative o JavaScript para visualizar o catálogo desta seção.</p>
+            </noscript>
+        </section>
+
+        <section id="cangaco-conflito" class="secao-subgenero" aria-labelledby="cangaco-conflito-titulo">
+            <h2 id="cangaco-conflito-titulo">Cangaço e Conflito</h2>
+
+            <p>Os folhetos de cangaço registram e recriam histórias de figuras como Antônio Silvino e Lampião. Entre crônica, memória, humor e fantasia, essas narrativas apresentam diferentes perspectivas sobre personagens e conflitos do sertão.</p>
+
+            <p id="lista-cangaco-conflito" class="chamada-lista">
+                Obras para explorar:
+            </p>
+
+            <ul class="lista-cards" id="cards-cangaco-conflito" role="list" aria-labelledby="lista-cangaco-conflito" data-sub="cangaco-conflito"></ul>
+
+            <noscript>
+                <p>Ative o JavaScript para visualizar o catálogo desta seção.</p>
+            </noscript>
+        </section>
+
+        <nav class="outros-generos" aria-labelledby="outros-generos-titulo">
+            <h2 id="outros-generos-titulo">Continue explorando</h2>
+
+            <ul role="list">
+                <li><a href="lirico.html">Lírico</a></li>
+                <li><a href="satirico.html">Satírico</a></li>
+            </ul>
+        </nav>
+    </main>
+
+    <footer class="app-footer">
+        <p>
+            Projeto desenvolvido por
+            <a href="https://github.com/helderneiva" target="_blank" rel="noopener noreferrer">
+                Helder Neiva<span class="visually-hidden"> (abre em nova aba)</span>
+            </a>
+        </p>
+    </footer>
+
+    <script type="module" src="scripts/menu.js"></script>
+    <script type="module" src="scripts/cards.js"></script>
+    <script type="module" src="scripts/indice.js"></script>
+</body>
+</html>

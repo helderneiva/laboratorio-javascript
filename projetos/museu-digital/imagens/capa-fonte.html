@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Capa (og:image) do Museu da Poesia Digital</title>
+<!-- Fonte da imagem capa.png (1200 x 630 px).
+     Para reexportar com as fontes do site: coloque este arquivo em imagens/, abra pelo
+     Live Server, deixe a janela com 1200 x 630 px e tire um print (ou use o DevTools:
+     Ctrl+Shift+P > "Capture node screenshot" com o elemento .capa selecionado). -->
+<style>
+  @font-face { font-family: 'GrenzeSite'; src: url('../fontes/Grenze-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'PlatypiSite'; src: url('../fontes/Platypi-VariableFont_wght.ttf') format('truetype'); font-weight: 100 900; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #2C1E11; }
+  .capa {
+    position: relative; width: 1200px; height: 630px; overflow: hidden;
+    background: linear-gradient(160deg, #4A2E16 0%, #2C1E11 70%);
+    color: #FDFBF7;
+    font-family: 'PlatypiSite', 'Bitstream Charter', Charter, Georgia, serif;
+  }
+  .topo { position: absolute; left: 80px; top: 62px; right: 80px; }
+  .selo {
+    font-size: 21px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 700;
+    color: #FED15C;
+  }
+  h1 {
+    margin-top: 22px;
+    font-family: 'GrenzeSite', 'Bitstream Charter', Charter, Georgia, serif;
+    font-size: 112px; line-height: 1.02; font-weight: 800; letter-spacing: -0.01em;
+  }
+  .sub {
+    margin-top: 26px; font-style: italic; font-size: 38px; color: #E1C7A4;
+  }
+  .verso {
+    position: absolute; left: 790px; top: 126px; white-space: nowrap;
+    padding-left: 24px; border-left: 4px solid #FED15C;
+    font-style: italic; font-size: 26px; line-height: 1.55; color: #F0E6D6;
+  }
+  .verso small { display: block; margin-top: 12px; font-style: normal; font-size: 17px; letter-spacing: 0.08em; color: #E1C7A4; }
+  .generos { position: absolute; left: 0; right: 0; bottom: 0; height: 150px; display: grid; grid-template-columns: repeat(3, 1fr); }
+  .generos div { padding: 26px 24px 0 48px; }
+  .generos div:first-child { padding-left: 80px; }
+  .generos b { display: block; font-family: 'GrenzeSite', 'Bitstream Charter', Charter, Georgia, serif; font-size: 44px; line-height: 1.1; }
+  .generos span { display: block; margin-top: 6px; font-size: 18px; line-height: 1.35; }
+  .l { background: #FED15C; color: #28200C; }
+  .s { background: #E1C7A4; color: #2A1F11; }
+  .c { background: #424453; color: #FBFBFE; }
+</style>
+</head>
+<body>
+<div class="capa">
+  <div class="topo">
+    <div class="selo">Museu literário digital</div>
+    <h1>Museu da<br>Poesia Digital</h1>
+    <div class="sub">A história escrita em versos</div>
+  </div>
+  <div class="verso">Minha terra tem palmeiras,<br>Onde canta o Sabiá;<small>GONÇALVES DIAS, 1846</small></div>
+  <div class="generos">
+    <div class="l"><b>Lírico</b><span>odes, elegias, idílios e madrigais</span></div>
+    <div class="s"><b>Satírico</b><span>sátira de costumes e epigramas</span></div>
+    <div class="c"><b>Cordel</b><span>romances, pelejas e cangaço</span></div>
+  </div>
+</div>
+</body>
+</html>
