@@ -1,5 +1,6 @@
-// DICA: troque o e-mail por um código alias do FormSubmit para não expô-lo.
-const ENDPOINT_CONTATO = 'https://formsubmit.co/ajax/helderneiva07@gmail.com';
+// Ative o formulário no FormSubmit, copie o código alias que ele gera
+// e cole no lugar de SEU_CODIGO_ALIAS (assim seu e-mail não fica exposto).
+const ENDPOINT_CONTATO = 'https://formsubmit.co/ajax/SEU_CODIGO_ALIAS';
 
 const URL_PROJETOS = 'dados/projetos.json'; // relativo ao index.html
 const CHAVE_TEMA = 'laboratorio-tema';

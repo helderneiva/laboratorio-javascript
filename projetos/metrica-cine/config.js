@@ -1,4 +1,6 @@
-export const TMDB_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1OTkyY2MzYjRlZjNkZTIzM2I2MWJiYmU0OWRiYWQ1OSIsIm5iZiI6MTc5MDQ0NDQzOC4yODE5OTk4LCJzdWIiOiI2YWI4MDM5NjAxNTRhYWQ1N2VhZGE1YzciLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.-EzFkKXcjPyor-xa-6ux7C9WtSRP4pPDOGavtiV-8ps';
+// Cole aqui o NOVO token ("Token de Leitura da API") gerado no painel do TMDB.
+// O token antigo foi exposto e deve ser revogado no TMDB.
+export const TMDB_TOKEN = 'COLE_AQUI_SEU_NOVO_TOKEN';
 
 export const DEFAULT_BASE_URL = 'https://api.themoviedb.org/3';
 export const DEFAULT_MAX_CARDS = 10;
