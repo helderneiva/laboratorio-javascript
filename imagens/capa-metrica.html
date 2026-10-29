@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Capa — Métrica Cine</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #121212;
+        }
+
+        .capa {
+            position: relative;
+            width: 1200px;
+            height: 675px;
+            overflow: hidden;
+
+            background: linear-gradient(
+                135deg,
+                #291113 0%,
+                #121212 65%
+            );
+
+            color: #f5f0eb;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .topo {
+            position: absolute;
+            top: 65px;
+            left: 70px;
+        }
+
+        .selo {
+            color: #ff626a;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin-top: 28px;
+
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 112px;
+            font-weight: 700;
+            line-height: 1.02;
+            letter-spacing: -0.045em;
+        }
+
+        h1 span {
+            color: #ff3440;
+        }
+
+        .subtitulo {
+            margin-top: 30px;
+
+            color: #dfcfcd;
+            font-size: 29px;
+        }
+
+        .destaque {
+            position: absolute;
+            top: 166px;
+            left: 770px;
+
+            width: 360px;
+            padding-left: 25px;
+            border-left: 4px solid #e50914;
+        }
+
+        .destaque p {
+            font-size: 27px;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .destaque small {
+            display: block;
+            margin-top: 18px;
+
+            color: #d9a6aa;
+            font-size: 14px;
+            letter-spacing: 0.14em;
+        }
+
+        .recursos {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            height: 155px;
+        }
+
+        .recurso {
+            padding: 29px 30px 25px 44px;
+        }
+
+        .recurso:first-child {
+            padding-left: 70px;
+            background-color: #e50914;
+            color: #ffffff;
+        }
+
+        .recurso:nth-child(2) {
+            background-color: #f5f0eb;
+            color: #191919;
+        }
+
+        .recurso:nth-child(3) {
+            background-color: #28282d;
+            color: #f5f0eb;
+        }
+
+        .recurso b {
+            display: block;
+
+            font-size: 34px;
+            letter-spacing: -0.025em;
+        }
+
+        .recurso span {
+            display: block;
+            margin-top: 11px;
+
+            font-size: 17px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="capa">
+        <div class="topo">
+            <p class="selo">Catálogo de filmes</p>
+
+            <h1>
+                Métrica<br>
+                <span>Cine</span>
+            </h1>
+
+            <p class="subtitulo">Do Código à Tela</p>
+        </div>
+
+        <div class="destaque">
+            <p>
+                Explore histórias.<br>
+                Descubra favoritos.
+            </p>
+
+            <small>CINEMA EM CADA DETALHE</small>
+        </div>
+
+        <div class="recursos">
+            <div class="recurso">
+                <b>Explore</b>
+                <span>bilheterias e filmes em alta</span>
+            </div>
+
+            <div class="recurso">
+                <b>Descubra</b>
+                <span>sinopses, elenco e trailers</span>
+            </div>
+
+            <div class="recurso">
+                <b>Favorite</b>
+                <span>suas escolhas sempre por perto</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

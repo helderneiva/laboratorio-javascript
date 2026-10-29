@@ -3,81 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Métrica Cine</title>
-    <meta name="description" content="Métrica Cine: catálogo de filmes com busca, detalhes e favoritos usando a API do TMDB, feito com JavaScript puro.">
+
+    <meta
+        name="description"
+        content="Métrica Cine: catálogo de filmes com busca, detalhes e favoritos usando a API do TMDB, feito com JavaScript puro."
+    >
 
     <script>
-      try {
-        var tema = localStorage.getItem('metrica_theme');
-        if (tema === 'light' || tema === 'dark') {
-          document.documentElement.dataset.theme = tema;
-        }
-      } catch (e) {}
+        try {
+            const tema = localStorage.getItem('metrica_theme');
+
+            if (tema === 'light' || tema === 'dark') {
+                document.documentElement.dataset.theme = tema;
+            }
+        } catch (e) {}
     </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://kit.fontawesome.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rye&display=swap" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rye&display=swap"
+        rel="stylesheet"
+    >
 
     <link rel="stylesheet" href="estilos/style.css">
 
-    <script src="https://kit.fontawesome.com/2fb14b2086.js" crossorigin="anonymous"></script>
+    <script
+        src="https://kit.fontawesome.com/2fb14b2086.js"
+        crossorigin="anonymous"
+    ></script>
 </head>
+
 <body>
+    <a class="skip-link" href="#conteudo-principal">
+        Ir para o conteúdo principal
+    </a>
 
     <nav class="floating-nav" aria-label="Navegação principal">
-        <button type="button" class="menu-toggle" id="menuToggle" aria-label="Abrir menu de navegação" aria-expanded="false">
+        <button
+            type="button"
+            class="menu-toggle"
+            id="menuToggle"
+            aria-label="Abrir menu de navegação"
+            aria-expanded="false"
+            aria-controls="lista-menu"
+        >
             <i class="fa-solid fa-bars" aria-hidden="true"></i>
         </button>
-        <ul>
+
+        <ul id="lista-menu">
             <li>
-                <button type="button" class="nav-btn" data-alvo="#inicio" data-tooltip="Início" aria-label="Ir para o início">
+                <button type="button" class="nav-btn"
+                    data-alvo="#inicio" data-tooltip="Início"
+                    aria-label="Ir para o início">
                     <i class="fa-solid fa-house" aria-hidden="true"></i>
                 </button>
             </li>
+
             <li>
-                <button type="button" class="nav-btn" data-alvo="#busca" data-tooltip="Buscar Filmes" aria-label="Ir para a busca">
+                <button type="button" class="nav-btn"
+                    data-alvo="#busca" data-tooltip="Buscar filmes"
+                    aria-label="Ir para a busca">
                     <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
                 </button>
             </li>
+
             <li>
-                <button type="button" class="nav-btn" data-alvo="#bilheterias" data-tooltip="Maiores Bilheterias" aria-label="Ir para Maiores Bilheterias">
+                <button type="button" class="nav-btn"
+                    data-alvo="#bilheterias" data-tooltip="Maiores bilheterias"
+                    aria-label="Ir para maiores bilheterias">
                     <i class="fa-solid fa-money-bill-trend-up" aria-hidden="true"></i>
                 </button>
             </li>
+
             <li>
-                <button type="button" class="nav-btn" data-alvo="#bem-avaliados" data-tooltip="Mais Bem Avaliados" aria-label="Ir para Mais Bem Avaliados">
+                <button type="button" class="nav-btn"
+                    data-alvo="#bem-avaliados" data-tooltip="Mais bem avaliados"
+                    aria-label="Ir para mais bem avaliados">
                     <i class="fa-solid fa-crown" aria-hidden="true"></i>
                 </button>
             </li>
+
             <li>
-                <button type="button" class="nav-btn" data-alvo="#brasil" data-tooltip="Mais Assistidos no Brasil" aria-label="Ir para Mais Assistidos no Brasil">
+                <button type="button" class="nav-btn"
+                    data-alvo="#populares" data-tooltip="Populares no TMDB"
+                    aria-label="Ir para populares no TMDB">
                     <i class="fa-solid fa-users" aria-hidden="true"></i>
                 </button>
             </li>
+
             <li>
-                <button type="button" class="nav-btn" data-alvo="#em-alta" data-tooltip="Filmes em Alta" aria-label="Ir para Filmes em Alta">
+                <button type="button" class="nav-btn"
+                    data-alvo="#em-alta" data-tooltip="Filmes em alta"
+                    aria-label="Ir para filmes em alta">
                     <i class="fa-solid fa-fire" aria-hidden="true"></i>
                 </button>
             </li>
+
             <li>
-                <button type="button" class="nav-btn" data-alvo="#lancamentos" data-tooltip="Próximos Lançamentos" aria-label="Ir para Próximos Lançamentos">
+                <button type="button" class="nav-btn"
+                    data-alvo="#lancamentos" data-tooltip="Próximos lançamentos"
+                    aria-label="Ir para próximos lançamentos">
                     <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
                 </button>
             </li>
+
             <li>
-                <button type="button" class="nav-btn" data-alvo="#favoritos" data-tooltip="Meus Favoritos" aria-label="Ir para Meus Favoritos">
+                <button type="button" class="nav-btn"
+                    data-alvo="#favoritos" data-tooltip="Meus favoritos"
+                    aria-label="Ir para meus favoritos">
                     <i class="fa-solid fa-heart" aria-hidden="true"></i>
                 </button>
             </li>
+
             <li>
-                <button type="button" class="nav-btn" id="themeToggle" data-tooltip="Alterar Tema" aria-label="Alternar tema claro e escuro">
+                <button type="button" class="nav-btn" id="themeToggle"
+                    data-tooltip="Alterar tema"
+                    aria-label="Alternar tema claro e escuro">
                     <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
                 </button>
             </li>
+
             <li>
-                <button type="button" class="nav-btn" id="settingsToggle" data-tooltip="Configurações" aria-label="Abrir configurações">
+                <button type="button" class="nav-btn" id="settingsToggle"
+                    data-tooltip="Configurações"
+                    aria-label="Abrir configurações">
                     <i class="fa-solid fa-gear" aria-hidden="true"></i>
                 </button>
             </li>
@@ -88,92 +142,162 @@
         <h1>Métrica Cine</h1>
     </header>
 
-    <main class="app-main">
-
+    <main id="conteudo-principal" class="app-main" tabindex="-1">
         <section id="inicio" class="apresentacao" aria-labelledby="hero-title">
             <h2 id="hero-title">Do Código à Tela</h2>
+
             <p>O <strong>Métrica Cine</strong> é uma aplicação que demonstra a manipulação do DOM com requisições assíncronas à API do TMDB. Busque filmes com <em>debounce</em>, veja detalhes, elenco e trailer, e salve seus favoritos no <em>localStorage</em>.</p>
         </section>
 
         <div class="conteudo-container">
-
             <section id="busca" class="movies-section" aria-labelledby="titulo-busca">
                 <h2 id="titulo-busca">Buscar filmes</h2>
+
                 <form id="form-busca" class="form-busca" role="search" autocomplete="off">
                     <label for="campo-busca" class="sr-only">Título do filme</label>
+
                     <i class="fa-solid fa-magnifying-glass icone-busca" aria-hidden="true"></i>
-                    <input type="search" id="campo-busca" placeholder="Digite o título de um filme..." maxlength="100">
-                    <button type="button" id="limpar-busca" class="btn-limpar" aria-label="Limpar busca" hidden>&times;</button>
+
+                    <input
+                        type="search"
+                        id="campo-busca"
+                        name="busca"
+                        placeholder="Digite o título de um filme..."
+                        maxlength="100"
+                    >
+
+                    <button
+                        type="button"
+                        id="limpar-busca"
+                        class="btn-limpar"
+                        aria-label="Limpar busca"
+                        hidden
+                    >&times;</button>
                 </form>
             </section>
 
-            <section id="resultados" class="movies-section" aria-labelledby="titulo-resultados" hidden>
+            <section id="resultados" class="movies-section"
+                aria-labelledby="titulo-resultados" hidden>
                 <h2 id="titulo-resultados">Resultados</h2>
                 <div id="resultados-list" class="movies-grid" aria-live="polite"></div>
             </section>
 
-            <section id="bilheterias" class="movies-section" aria-labelledby="title-box-office">
+            <section id="bilheterias" class="movies-section"
+                aria-labelledby="title-box-office">
                 <h2 id="title-box-office">Maiores bilheterias</h2>
                 <div id="box-office-list" class="movies-grid" aria-live="polite"></div>
             </section>
 
-            <section id="bem-avaliados" class="movies-section" aria-labelledby="title-top-rated">
+            <section id="bem-avaliados" class="movies-section"
+                aria-labelledby="title-top-rated">
                 <h2 id="title-top-rated">Mais bem avaliados</h2>
                 <div id="top-rated-list" class="movies-grid" aria-live="polite"></div>
             </section>
 
-            <section id="brasil" class="movies-section" aria-labelledby="title-popular-br">
-                <h2 id="title-popular-br">Mais vistos no Brasil</h2>
-                <div id="popular-br-list" class="movies-grid" aria-live="polite"></div>
+            <section id="populares" class="movies-section"
+                aria-labelledby="title-popular">
+                <h2 id="title-popular">Populares no TMDB</h2>
+                <div id="popular-list" class="movies-grid" aria-live="polite"></div>
             </section>
 
-            <section id="em-alta" class="movies-section" aria-labelledby="title-trending">
+            <section id="em-alta" class="movies-section"
+                aria-labelledby="title-trending">
                 <h2 id="title-trending">Em alta</h2>
                 <div id="trending-list" class="movies-grid" aria-live="polite"></div>
             </section>
 
-            <section id="lancamentos" class="movies-section" aria-labelledby="title-upcoming">
-                <h2 id="title-upcoming">Lançamentos mais esperados</h2>
+            <section id="lancamentos" class="movies-section"
+                aria-labelledby="title-upcoming">
+                <h2 id="title-upcoming">Próximos lançamentos em destaque</h2>
                 <div id="upcoming-list" class="movies-grid" aria-live="polite"></div>
             </section>
 
-            <section id="favoritos" class="movies-section" aria-labelledby="title-favoritos">
-                <h2 id="title-favoritos">Meus favoritos <span id="favoritos-contagem" class="contagem"></span></h2>
+            <section id="favoritos" class="movies-section"
+                aria-labelledby="title-favoritos">
+                <h2 id="title-favoritos">
+                    Meus favoritos
+                    <span id="favoritos-contagem" class="contagem"></span>
+                </h2>
+
                 <div id="favoritos-list" class="movies-grid" aria-live="polite"></div>
             </section>
-
         </div>
     </main>
 
     <footer class="app-footer">
-        <p>Projeto desenvolvido por <a href="https://github.com/helderneiva" target="_blank" rel="noopener noreferrer">Helder Neiva</a></p>
+        <p>
+            Projeto desenvolvido por
+            <a href="https://github.com/helderneiva"
+                target="_blank" rel="noopener noreferrer">
+                Helder Neiva
+            </a>
+        </p>
+
+        <section class="creditos-tmdb" aria-labelledby="titulo-creditos">
+            <h2 id="titulo-creditos">Créditos</h2>
+
+            <a href="https://www.themoviedb.org"
+                target="_blank" rel="noopener noreferrer">
+                <img
+                    src="https://www.themoviedb.org/assets/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg"
+                    alt="TMDB"
+                    width="154"
+                    height="20"
+                    loading="lazy"
+                >
+            </a>
+
+            <p>Dados e imagens fornecidos pelo TMDB.</p>
+
+            <p lang="en">
+                This product uses the TMDB API but is not endorsed or certified by TMDB.
+            </p>
+        </section>
     </footer>
 
-    <!-- Detalhes do filme (<dialog> nativo: foco, Esc e fundo já vêm prontos) -->
     <dialog id="detalheModal" class="detalhe-modal" aria-labelledby="detalheTitulo">
         <div class="detalhe-conteudo">
-            <button type="button" id="fecharDetalhe" class="close-btn detalhe-fechar" aria-label="Fechar detalhes">&times;</button>
+            <button
+                type="button"
+                id="fecharDetalhe"
+                class="close-btn detalhe-fechar"
+                aria-label="Fechar detalhes"
+            >&times;</button>
+
             <div id="detalheCorpo"></div>
         </div>
     </dialog>
 
-    <!-- Configurações -->
-    <div id="settingsModal" class="settings-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <dialog id="settingsModal" class="settings-modal" aria-labelledby="settingsTitle">
         <div class="settings-content">
             <header class="settings-header">
                 <h2 id="settingsTitle">Configurações</h2>
-                <button type="button" id="closeSettings" class="close-btn" aria-label="Fechar configurações">&times;</button>
+
+                <button type="button" id="closeSettings"
+                    class="close-btn" aria-label="Fechar configurações">
+                    &times;
+                </button>
             </header>
 
             <div class="settings-body">
                 <div class="control-group">
                     <label for="apiUrlInput">URL base da API:</label>
-                    <input type="url" id="apiUrlInput" autocomplete="off" placeholder="https://api.themoviedb.org/3">
-                    <small class="dica-campo">Somente a API oficial do TMDB é aceita.</small>
+
+                    <input
+                        type="url"
+                        id="apiUrlInput"
+                        autocomplete="off"
+                        placeholder="https://api.themoviedb.org/3"
+                    >
+
+                    <small class="dica-campo">
+                        Endereço permitido: https://api.themoviedb.org/3
+                    </small>
                 </div>
 
                 <div class="control-group">
                     <label for="maxCardsSelect">Filmes por seção:</label>
+
                     <select id="maxCardsSelect">
                         <option value="5">5 filmes</option>
                         <option value="10">10 filmes</option>
@@ -184,17 +308,23 @@
 
                 <div class="control-group checkbox-group">
                     <label>
-                        <input type="checkbox" id="debugModeCheckbox"> Ativar modo debug no console
+                        <input type="checkbox" id="debugModeCheckbox">
+                        Ativar modo debug no console
                     </label>
                 </div>
 
                 <p id="settingsErro" class="form-erro" role="alert" hidden></p>
 
-                <button type="button" id="saveSettingsBtn" class="save-btn">Salvar configurações</button>
-                <button type="button" id="resetSettingsBtn" class="reset-btn">Restaurar padrão</button>
+                <button type="button" id="saveSettingsBtn" class="save-btn">
+                    Salvar configurações
+                </button>
+
+                <button type="button" id="resetSettingsBtn" class="reset-btn">
+                    Restaurar padrão
+                </button>
             </div>
         </div>
-    </div>
+    </dialog>
 
     <script src="script.js" type="module"></script>
 </body>

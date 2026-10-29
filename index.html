@@ -3,103 +3,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Laboratório JavaScript | Helder Neiva</title>
+
     <meta name="description" content="Laboratório com meus experimentos em JavaScript: manipulação do DOM, AJAX, async e lógica. Projetos de Helder Neiva, estudante de Sistemas de Informação.">
+
     <meta property="og:title" content="Laboratório JavaScript">
     <meta property="og:description" content="Meus experimentos e projetos em JavaScript.">
     <meta property="og:type" content="website">
+
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
     <script>
-      try {
-        if (localStorage.getItem('laboratorio-tema') === 'light') {
-          document.documentElement.classList.add('light-mode');
-        }
-      } catch (e) {}
+        try {
+            if (localStorage.getItem('laboratorio-tema') === 'light') {
+                document.documentElement.classList.add('light-mode');
+            }
+        } catch (e) {}
     </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&display=swap"
+        rel="stylesheet"
+    >
+
     <link rel="stylesheet" href="estilos/principal.css">
 
     <script src="scripts/lucide.js" defer></script>
     <script src="scripts/script.js" type="module"></script>
 </head>
-<body>
 
+<body>
     <header>
         <h1>Laboratório JavaScript</h1>
     </header>
 
     <nav id="menu" aria-label="Menu principal">
         <ul>
-            <li><a href="#apresentacao" aria-label="Início"><i data-lucide="house-plus"></i></a></li>
-            <li><a href="#painel-controle" aria-label="Meus experimentos"><i data-lucide="flask-conical"></i></a></li>
-            <li><a href="#experiencia" aria-label="Minha proficiência"><i data-lucide="square-code"></i></a></li>
-            <li><a href="#contato" aria-label="Contato"><i data-lucide="contact-round"></i></a></li>
-            <li><button type="button" class="btn-tema" aria-label="Alternar tema claro/escuro"><i data-lucide="moon-star"></i></button></li>
+            <li>
+                <a href="#apresentacao" aria-label="Início">
+                    <i data-lucide="house-plus"></i>
+                </a>
+            </li>
+
+            <li>
+                <a href="#painel-controle" aria-label="Meus experimentos">
+                    <i data-lucide="flask-conical"></i>
+                </a>
+            </li>
+
+            <li>
+                <a href="#experiencia" aria-label="Minha proficiência">
+                    <i data-lucide="square-code"></i>
+                </a>
+            </li>
+
+            <li>
+                <a href="#contato" aria-label="Contato">
+                    <i data-lucide="contact-round"></i>
+                </a>
+            </li>
+
+            <li>
+                <button
+                    type="button"
+                    class="btn-tema"
+                    aria-label="Alternar tema claro/escuro"
+                >
+                    <i data-lucide="moon-star"></i>
+                </button>
+            </li>
         </ul>
     </nav>
 
     <main>
         <section id="apresentacao">
             <h2>Seja Bem-Vindo</h2>
+
             <p>Este site é um projeto por si só: um espaço que criei para centralizar, testar e documentar todas as minhas aplicações com JS. Mais do que um índice estático, esta página é um ecossistema vivo que reflete minha evolução lógica e técnica. Aqui valido meus algoritmos e testo conceitos de manipulação de dados em tempo real, transformando linhas de código estáticas em recursos web dinâmicos e funcionais. Cada projeto publicado funciona como um experimento que consolida minha evolução lógica e visual.</p>
         </section>
 
-        <section id="painel-controle" class="lab" aria-labelledby="titulo-experimentos">
+        <section
+            id="painel-controle"
+            class="lab"
+            aria-labelledby="titulo-experimentos"
+        >
             <div class="painel-barra-horizontal">
                 <h2 id="titulo-experimentos">Meus Experimentos</h2>
 
-                <div class="filtros" role="group" aria-label="Filtrar experimentos">
-                    <button type="button" class="btn-filtro active" data-categoria="todos">Todos</button>
-                    <button type="button" class="btn-filtro" data-categoria="dom">Manipulação DOM</button>
-                    <button type="button" class="btn-filtro" data-categoria="api">AJAX</button>
-                    <button type="button" class="btn-filtro" data-categoria="async">Async</button>
-                    <button type="button" class="btn-filtro" data-categoria="data">Data</button>
-                    <button type="button" class="btn-filtro" data-categoria="logica">Lógica Pura</button>
+                <div
+                    class="filtros"
+                    role="group"
+                    aria-label="Filtrar experimentos"
+                >
+                    <button
+                        type="button"
+                        class="btn-filtro active"
+                        data-categoria="todos"
+                    >
+                        Todos
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn-filtro"
+                        data-categoria="dom"
+                    >
+                        Manipulação DOM
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn-filtro"
+                        data-categoria="api"
+                    >
+                        AJAX
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn-filtro"
+                        data-categoria="async"
+                    >
+                        Async
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn-filtro"
+                        data-categoria="data"
+                    >
+                        Data
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn-filtro"
+                        data-categoria="logica"
+                    >
+                        Lógica Pura
+                    </button>
                 </div>
             </div>
 
             <div class="carrossel">
-                <button type="button" class="carrossel-btn" id="carrossel-anterior" aria-label="Experimentos anteriores">
+                <button
+                    type="button"
+                    class="carrossel-btn"
+                    id="carrossel-anterior"
+                    aria-label="Experimentos anteriores"
+                >
                     <i data-lucide="chevron-left"></i>
                 </button>
-                <div id="grid-projetos" class="grid-container" role="region" aria-label="Lista de experimentos"></div>
-                <button type="button" class="carrossel-btn" id="carrossel-proximo" aria-label="Próximos experimentos">
+
+                <div
+                    id="grid-projetos"
+                    class="grid-container"
+                    role="region"
+                    aria-label="Lista de experimentos"
+                ></div>
+
+                <button
+                    type="button"
+                    class="carrossel-btn"
+                    id="carrossel-proximo"
+                    aria-label="Próximos experimentos"
+                >
                     <i data-lucide="chevron-right"></i>
                 </button>
             </div>
         </section>
 
-        <section id="experiencia" class="experiencia-container" aria-labelledby="titulo-experiencia">
+        <section
+            id="experiencia"
+            class="experiencia-container"
+            aria-labelledby="titulo-experiencia"
+        >
             <h2 id="titulo-experiencia">Minha Proficiência com JS</h2>
-            <p class="nota-habilidades">Níveis atuais de estudo, em evolução constante.</p>
+
+            <p class="nota-habilidades">
+                Níveis atuais de estudo, em evolução constante.
+            </p>
+
             <div class="habilidades-bloco">
                 <div class="tech-item">
                     <h3>JS (ES6+)</h3>
-                    <div class="barra-progresso"><div class="progresso-interno" data-nivel="70"></div></div>
+
+                    <div class="barra-progresso">
+                        <div
+                            class="progresso-interno"
+                            data-nivel="70"
+                        ></div>
+                    </div>
                 </div>
+
                 <div class="tech-item">
                     <h3>Manipulação DOM</h3>
-                    <div class="barra-progresso"><div class="progresso-interno" data-nivel="75"></div></div>
+
+                    <div class="barra-progresso">
+                        <div
+                            class="progresso-interno"
+                            data-nivel="75"
+                        ></div>
+                    </div>
                 </div>
+
                 <div class="tech-item">
                     <h3>AJAX</h3>
-                    <div class="barra-progresso"><div class="progresso-interno" data-nivel="60"></div></div>
+
+                    <div class="barra-progresso">
+                        <div
+                            class="progresso-interno"
+                            data-nivel="60"
+                        ></div>
+                    </div>
                 </div>
+
                 <div class="tech-item">
                     <h3>Async (Promises / APIs)</h3>
-                    <div class="barra-progresso"><div class="progresso-interno" data-nivel="60"></div></div>
+
+                    <div class="barra-progresso">
+                        <div
+                            class="progresso-interno"
+                            data-nivel="60"
+                        ></div>
+                    </div>
                 </div>
+
                 <div class="tech-item">
                     <h3>Data (Estruturas e Storage)</h3>
-                    <div class="barra-progresso"><div class="progresso-interno" data-nivel="55"></div></div>
+
+                    <div class="barra-progresso">
+                        <div
+                            class="progresso-interno"
+                            data-nivel="55"
+                        ></div>
+                    </div>
                 </div>
+
                 <div class="tech-item">
                     <h3>Lógica Pura</h3>
-                    <div class="barra-progresso"><div class="progresso-interno" data-nivel="70"></div></div>
+
+                    <div class="barra-progresso">
+                        <div
+                            class="progresso-interno"
+                            data-nivel="70"
+                        ></div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -107,34 +260,90 @@
         <section id="contato" class="contato-container">
             <div class="formulario-bloco">
                 <h2>Iniciar Conexão</h2>
+
                 <form id="form-contato">
                     <div class="input-grupo campo-nome">
                         <label for="nome">Nome</label>
-                        <input type="text" id="nome" name="nome" autocomplete="name" required placeholder="Seu nome...">
+
+                        <input
+                            type="text"
+                            id="nome"
+                            name="nome"
+                            maxlength="100"
+                            autocomplete="name"
+                            required
+                            placeholder="Seu nome..."
+                        >
                     </div>
+
                     <div class="input-grupo campo-email">
                         <label for="email">E-mail</label>
-                        <input type="email" id="email" name="email" autocomplete="email" required placeholder="seu@email.com">
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            maxlength="254"
+                            autocomplete="email"
+                            required
+                            placeholder="seu@email.com"
+                        >
                     </div>
+
                     <div class="input-grupo campo-mensagem">
                         <label for="mensagem">Mensagem</label>
-                        <textarea id="mensagem" name="mensagem" rows="4" required placeholder="Digite sua mensagem técnica..."></textarea>
+
+                        <textarea
+                            id="mensagem"
+                            name="mensagem"
+                            maxlength="5000"
+                            rows="4"
+                            required
+                            placeholder="Digite sua mensagem técnica..."
+                        ></textarea>
                     </div>
-                    <!-- Honeypot anti-spam: humanos não veem, robôs preenchem -->
-                    <input type="text" name="_honey" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
-                    <button type="submit" class="btn-enviar">Transmitir Dados</button>
+
+                    <!-- Campo antispam: deve permanecer oculto e desmarcado. -->
+                    <input
+                        type="checkbox"
+                        name="botcheck"
+                        hidden
+                        tabindex="-1"
+                        autocomplete="off"
+                    >
+
+                    <button type="submit" class="btn-enviar">
+                        Transmitir Dados
+                    </button>
                 </form>
             </div>
         </section>
     </main>
 
     <footer>
-        <p>Laboratório desenvolvido por <a href="https://github.com/helderneiva" target="_blank" rel="noopener noreferrer">Helder Neiva</a></p>
+        <p>
+            Laboratório desenvolvido por
+            <a
+                href="https://github.com/helderneiva"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Helder Neiva
+            </a>
+        </p>
     </footer>
 
     <dialog id="modal" aria-labelledby="modal-titulo">
         <div class="modal-conteudo">
-            <button id="btn-fechar-modal" class="modal-fechar" type="button" aria-label="Fechar"><i data-lucide="x"></i></button>
+            <button
+                id="btn-fechar-modal"
+                class="modal-fechar"
+                type="button"
+                aria-label="Fechar"
+            >
+                <i data-lucide="x"></i>
+            </button>
+
             <div id="modal-corpo"></div>
         </div>
     </dialog>

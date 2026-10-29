@@ -1,839 +1,1104 @@
 import {
-    ENDPOINTS,
-    FETCH_OPTIONS,
-    IMAGE_URL,
-    BASE_URL,
-    MAX_CARDS,
-    DEBUG,
-    DEFAULT_MAX_CARDS,
-    STORAGE_KEYS,
-    lerStorage,
-    gravarStorage,
-    removerStorage,
-    normalizarUrlApi,
-    urlBusca,
-    urlDetalhe
+  ENDPOINTS,
+  FETCH_OPTIONS,
+  IMAGE_URL,
+  BASE_URL,
+  MAX_CARDS,
+  DEBUG,
+  STORAGE_KEYS,
+  lerStorage,
+  gravarStorage,
+  removerStorage,
+  normalizarUrlApi,
+  urlBusca,
+  urlDetalhe
 } from './config.js';
 
 const raiz = document.documentElement;
-const POSTER_VAZIO = 'https://placehold.co/500x750/1c1c1e/ffffff?text=Sem+Poster';
-const TEMPO_CACHE_MS = 10 * 60 * 1000;   // 10 minutos
-const ATRASO_BUSCA_MS = 400;             // debounce da busca
+const TEMPO_CACHE_MS = 10 * 60 * 1000;
+const ATRASO_BUSCA_MS = 400;
 const MIN_CARACTERES_BUSCA = 2;
 const MAX_RESULTADOS = 20;
-const MSG_VAZIO_PADRAO = 'Nenhum filme para exibir.';
+const PREFIXO_CACHE = 'metrica_cache2:';
+
+const POSTER_VAZIO = 'data:image/svg+xml;charset=utf-8,' +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="500" height="750" viewBox="0 0 500 750"><rect width="500" height="750" fill="#1c1c1e"/><text x="250" y="375" fill="#f5f0eb" font-family="sans-serif" font-size="30" text-anchor="middle">Sem pôster</text></svg>'
+  );
 
 const log = (...args) => {
-    if (DEBUG) console.log('[Métrica Cine]', ...args);
+  if (DEBUG) console.log('[Métrica Cine]', ...args);
 };
 
 const prefereMenosMovimento = () =>
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/* =========================================================
-   Menu e navegação
-   ========================================================= */
+/* ---------- Menu ---------- */
+
 function configurarMenu() {
-    const menuToggle = document.getElementById('menuToggle');
-    const nav = document.querySelector('.floating-nav');
-    if (!menuToggle || !nav) return () => {};
+  const menuToggle = document.getElementById('menuToggle');
+  const nav = document.querySelector('.floating-nav');
+  const lista = document.getElementById('lista-menu');
 
-    const definirMenu = (aberto) => {
-        nav.classList.toggle('active', aberto);
-        menuToggle.setAttribute('aria-expanded', String(aberto));
-        menuToggle.setAttribute('aria-label', aberto ? 'Fechar menu de navegação' : 'Abrir menu de navegação');
+  if (!menuToggle || !nav || !lista) return () => {};
 
-        const icone = menuToggle.querySelector('i');
-        if (icone) {
-            icone.classList.toggle('fa-bars', !aberto);
-            icone.classList.toggle('fa-xmark', aberto);
-        }
-    };
+  const telaMovel = window.matchMedia('(max-width: 768px)');
 
-    menuToggle.addEventListener('click', () => {
-        definirMenu(!nav.classList.contains('active'));
-    });
+  const definirMenu = aberto => {
+    const expandido = telaMovel.matches && aberto;
 
-    return definirMenu;
+    nav.classList.toggle('active', expandido);
+    menuToggle.setAttribute('aria-expanded', String(expandido));
+    menuToggle.setAttribute(
+      'aria-label',
+      expandido ? 'Fechar menu de navegação' : 'Abrir menu de navegação'
+    );
+
+    // Impede Tab nos botões do menu móvel fechado.
+    lista.inert = telaMovel.matches && !expandido;
+
+    const icone = menuToggle.querySelector('i');
+
+    if (icone) {
+      icone.classList.toggle('fa-bars', !expandido);
+      icone.classList.toggle('fa-xmark', expandido);
+    }
+  };
+
+  menuToggle.addEventListener('click', () => {
+    definirMenu(!nav.classList.contains('active'));
+  });
+
+  telaMovel.addEventListener('change', () => {
+    const focoNaLista = lista.contains(document.activeElement);
+
+    definirMenu(false);
+
+    if (telaMovel.matches && focoNaLista) {
+      menuToggle.focus();
+    }
+  });
+
+  nav.addEventListener('keydown', evento => {
+    if (
+      evento.key === 'Escape' &&
+      nav.classList.contains('active')
+    ) {
+      definirMenu(false);
+      menuToggle.focus();
+    }
+  });
+
+  definirMenu(false);
+
+  return definirMenu;
 }
 
 function configurarNavegacao(definirMenu) {
-    const botoes = document.querySelectorAll('.nav-btn[data-alvo]');
+  document.querySelectorAll('.nav-btn[data-alvo]').forEach(botao => {
+    botao.addEventListener('click', () => {
+      const alvo = document.querySelector(botao.dataset.alvo);
 
-    botoes.forEach(botao => {
-        botao.addEventListener('click', () => {
-            const alvo = document.querySelector(botao.dataset.alvo);
-            if (!alvo) return;
+      if (!alvo) return;
 
-            alvo.scrollIntoView({
-                behavior: prefereMenosMovimento() ? 'auto' : 'smooth',
-                block: 'start'
-            });
+      alvo.scrollIntoView({
+        behavior: prefereMenosMovimento() ? 'auto' : 'smooth',
+        block: 'start'
+      });
 
-            alvo.setAttribute('tabindex', '-1');
-            alvo.focus({ preventScroll: true });
+      alvo.setAttribute('tabindex', '-1');
+      alvo.focus({ preventScroll: true });
 
-            definirMenu(false);
-        });
+      definirMenu(false);
     });
+  });
 }
 
 function configurarObservadorDeSecao() {
-    const botoes = [...document.querySelectorAll('.nav-btn[data-alvo]')];
-    const secoes = botoes
-        .map(botao => document.querySelector(botao.dataset.alvo))
-        .filter(Boolean);
+  const botoes = [...document.querySelectorAll('.nav-btn[data-alvo]')];
 
-    if (!('IntersectionObserver' in window) || secoes.length === 0) return;
+  const secoes = botoes
+    .map(botao => document.querySelector(botao.dataset.alvo))
+    .filter(Boolean);
 
-    const observador = new IntersectionObserver((entradas) => {
-        entradas.forEach(entrada => {
-            if (!entrada.isIntersecting) return;
+  if (!('IntersectionObserver' in window) || !secoes.length) return;
 
-            const alvoAtual = `#${entrada.target.id}`;
-            botoes.forEach(botao => {
-                const ativo = botao.dataset.alvo === alvoAtual;
-                botao.classList.toggle('active-nav', ativo);
-                if (ativo) {
-                    botao.setAttribute('aria-current', 'true');
-                } else {
-                    botao.removeAttribute('aria-current');
-                }
-            });
-        });
-    }, {
-        root: null,
-        rootMargin: '-20% 0px -60% 0px',
-        threshold: 0
+  const observador = new IntersectionObserver(entradas => {
+    entradas.forEach(entrada => {
+      if (!entrada.isIntersecting) return;
+
+      const alvoAtual = `#${entrada.target.id}`;
+
+      botoes.forEach(botao => {
+        const ativo = botao.dataset.alvo === alvoAtual;
+
+        botao.classList.toggle('active-nav', ativo);
+
+        if (ativo) {
+          botao.setAttribute('aria-current', 'true');
+        } else {
+          botao.removeAttribute('aria-current');
+        }
+      });
     });
+  }, {
+    rootMargin: '-20% 0px -60% 0px',
+    threshold: 0
+  });
 
-    secoes.forEach(secao => observador.observe(secao));
+  secoes.forEach(secao => observador.observe(secao));
 }
 
-/* =========================================================
-   Tema
-   ========================================================= */
+/* ---------- Tema ---------- */
+
 function temaAtual() {
-    if (raiz.dataset.theme) return raiz.dataset.theme;
-    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  if (raiz.dataset.theme) return raiz.dataset.theme;
+
+  return window.matchMedia('(prefers-color-scheme: light)').matches
+    ? 'light'
+    : 'dark';
 }
 
 function configurarTema() {
-    const botao = document.getElementById('themeToggle');
-    if (!botao) return;
+  const botao = document.getElementById('themeToggle');
 
-    botao.addEventListener('click', () => {
-        const novoTema = temaAtual() === 'light' ? 'dark' : 'light';
-        raiz.dataset.theme = novoTema;
-        gravarStorage(STORAGE_KEYS.theme, novoTema);
-        log('Tema alterado para', novoTema);
-    });
+  if (!botao) return;
+
+  const atualizarRotulo = () => {
+    botao.setAttribute(
+      'aria-label',
+      temaAtual() === 'light' ? 'Ativar tema escuro' : 'Ativar tema claro'
+    );
+  };
+
+  atualizarRotulo();
+
+  window.matchMedia('(prefers-color-scheme: light)')
+    .addEventListener('change', atualizarRotulo);
+
+  botao.addEventListener('click', () => {
+    const novoTema = temaAtual() === 'light' ? 'dark' : 'light';
+
+    raiz.dataset.theme = novoTema;
+    gravarStorage(STORAGE_KEYS.theme, novoTema);
+    atualizarRotulo();
+  });
 }
 
-/* =========================================================
-   Painel de configurações
-   ========================================================= */
+/* ---------- Configurações ---------- */
+
 function configurarPainelDeConfiguracoes() {
-    const modal = document.getElementById('settingsModal');
-    const btnAbrir = document.getElementById('settingsToggle');
-    const btnFechar = document.getElementById('closeSettings');
-    const btnSalvar = document.getElementById('saveSettingsBtn');
-    const btnRestaurar = document.getElementById('resetSettingsBtn');
-    const inputUrl = document.getElementById('apiUrlInput');
-    const selectMax = document.getElementById('maxCardsSelect');
-    const checkDebug = document.getElementById('debugModeCheckbox');
-    const erro = document.getElementById('settingsErro');
+  const modal = document.getElementById('settingsModal');
+  const btnAbrir = document.getElementById('settingsToggle');
+  const btnFechar = document.getElementById('closeSettings');
+  const btnSalvar = document.getElementById('saveSettingsBtn');
+  const btnRestaurar = document.getElementById('resetSettingsBtn');
+  const inputUrl = document.getElementById('apiUrlInput');
+  const selectMax = document.getElementById('maxCardsSelect');
+  const checkDebug = document.getElementById('debugModeCheckbox');
+  const erro = document.getElementById('settingsErro');
 
-    if (!modal || !btnAbrir) return;
+  if (
+    !modal || !btnAbrir || !btnFechar || !btnSalvar ||
+    !btnRestaurar || !inputUrl || !selectMax || !checkDebug || !erro
+  ) return;
 
-    const mostrarErro = (mensagem) => {
-        erro.textContent = mensagem;
-        erro.hidden = !mensagem;
-    };
+  const mostrarErro = mensagem => {
+    erro.textContent = mensagem;
+    erro.hidden = !mensagem;
+  };
 
-    const abrir = () => {
-        inputUrl.value = BASE_URL;
-        selectMax.value = String(MAX_CARDS);
-        checkDebug.checked = DEBUG;
-        mostrarErro('');
+  btnAbrir.addEventListener('click', () => {
+    inputUrl.value = BASE_URL;
+    selectMax.value = String(MAX_CARDS);
+    checkDebug.checked = DEBUG;
 
-        modal.classList.add('active');
-        modal.setAttribute('aria-hidden', 'false');
-        inputUrl.focus();
-    };
+    mostrarErro('');
 
-    const fechar = () => {
-        modal.classList.remove('active');
-        modal.setAttribute('aria-hidden', 'true');
-        btnAbrir.focus();
-    };
+    if (!modal.open) modal.showModal();
 
-    btnAbrir.addEventListener('click', abrir);
-    btnFechar.addEventListener('click', fechar);
+    inputUrl.focus();
+  });
 
-    modal.addEventListener('click', (evento) => {
-        if (evento.target === modal) fechar();
-    });
+  btnFechar.addEventListener('click', () => modal.close());
 
-    document.addEventListener('keydown', (evento) => {
-        if (evento.key === 'Escape' && modal.classList.contains('active')) fechar();
-    });
+  modal.addEventListener('click', evento => {
+    if (evento.target === modal) modal.close();
+  });
 
-    btnSalvar.addEventListener('click', () => {
-        const url = normalizarUrlApi(inputUrl.value);
-        if (!url) {
-            mostrarErro('Informe uma URL https válida do TMDB (api.themoviedb.org).');
-            inputUrl.focus();
-            return;
-        }
+  modal.addEventListener('close', () => btnAbrir.focus());
 
-        gravarStorage(STORAGE_KEYS.apiUrl, url);
-        gravarStorage(STORAGE_KEYS.maxCards, selectMax.value);
-        gravarStorage(STORAGE_KEYS.debug, String(checkDebug.checked));
+  btnSalvar.addEventListener('click', () => {
+    const url = normalizarUrlApi(inputUrl.value);
+    const maximo = Number(selectMax.value);
 
-        window.location.reload();
-    });
+    if (!url) {
+      mostrarErro('Use exatamente https://api.themoviedb.org/3.');
+      inputUrl.focus();
+      return;
+    }
 
-    btnRestaurar.addEventListener('click', () => {
-        removerStorage(STORAGE_KEYS.apiUrl);
-        removerStorage(STORAGE_KEYS.maxCards);
-        removerStorage(STORAGE_KEYS.debug);
-        window.location.reload();
-    });
+    if (![5, 10, 15, 20].includes(maximo)) {
+      mostrarErro('Escolha uma quantidade válida de filmes.');
+      selectMax.focus();
+      return;
+    }
+
+    const salvos = [
+      gravarStorage(STORAGE_KEYS.apiUrl, url),
+      gravarStorage(STORAGE_KEYS.maxCards, String(maximo)),
+      gravarStorage(STORAGE_KEYS.debug, String(checkDebug.checked))
+    ];
+
+    if (salvos.includes(false)) {
+      mostrarErro('O navegador não permitiu salvar as configurações.');
+      return;
+    }
+
+    window.location.reload();
+  });
+
+  btnRestaurar.addEventListener('click', () => {
+    removerStorage(STORAGE_KEYS.apiUrl);
+    removerStorage(STORAGE_KEYS.maxCards);
+    removerStorage(STORAGE_KEYS.debug);
+
+    window.location.reload();
+  });
 }
 
-/* =========================================================
-   Cache (sessionStorage)
-   ========================================================= */
-const PREFIXO_CACHE = 'metrica_cache2:';
+/* ---------- Cache ---------- */
 
 function lerCache(url) {
-    try {
-        const bruto = sessionStorage.getItem(PREFIXO_CACHE + url);
-        if (!bruto) return null;
-        const { quando, dados } = JSON.parse(bruto);
-        return Date.now() - quando < TEMPO_CACHE_MS ? dados : null;
-    } catch {
-        return null;
-    }
+  try {
+    const bruto = sessionStorage.getItem(PREFIXO_CACHE + url);
+
+    if (!bruto) return null;
+
+    const { quando, dados } = JSON.parse(bruto);
+    const idade = Date.now() - quando;
+
+    return idade >= 0 && idade < TEMPO_CACHE_MS ? dados : null;
+  } catch {
+    return null;
+  }
 }
 
 function gravarCache(url, dados) {
-    try {
-        sessionStorage.setItem(PREFIXO_CACHE + url, JSON.stringify({ quando: Date.now(), dados }));
-    } catch { /* cache é opcional */ }
+  try {
+    sessionStorage.setItem(
+      PREFIXO_CACHE + url,
+      JSON.stringify({ quando: Date.now(), dados })
+    );
+  } catch {
+    // O cache é opcional.
+  }
 }
 
-/* =========================================================
-   Camada de API com erros classificados
-   ========================================================= */
+/* ---------- API ---------- */
+
 class ErroApi extends Error {
-    constructor(tipo, status) {
-        super(tipo);
-        this.tipo = tipo;
-        this.status = status;
-    }
+  constructor(tipo, status) {
+    super(tipo);
+    this.name = 'ErroApi';
+    this.tipo = tipo;
+    this.status = status;
+  }
 }
 
 function mensagemDeErro(erro) {
-    switch (erro?.tipo) {
-        case 'auth':
-            return 'A chave de acesso da API é inválida ou está ausente (erro 401). Verifique o config.js.';
-        case 'limite':
-            return 'Muitas requisições em pouco tempo (erro 429). Aguarde um instante e tente de novo.';
-        case 'offline':
-            return 'Você parece estar sem conexão com a internet.';
-        case 'naoencontrado':
-            return 'Filme não encontrado.';
-        case 'rede':
-            return 'Não foi possível falar com o servidor. Verifique sua conexão.';
-        default:
-            return 'Não foi possível carregar os dados. Tente novamente.';
-    }
+  switch (erro?.tipo) {
+    case 'auth':
+      return 'Não foi possível autenticar o acesso aos filmes. Tente novamente mais tarde.';
+    case 'limite':
+      return 'Muitas requisições em pouco tempo. Aguarde e tente novamente.';
+    case 'offline':
+      return 'Você parece estar sem conexão com a internet.';
+    case 'naoencontrado':
+      return 'Filme não encontrado.';
+    case 'rede':
+      return 'Não foi possível falar com o servidor. Verifique sua conexão.';
+    default:
+      return 'Não foi possível carregar os dados. Tente novamente.';
+  }
 }
 
 async function buscarJson(url, { signal, usarCache = true } = {}) {
-    if (usarCache) {
-        const emCache = lerCache(url);
-        if (emCache) {
-            log('Cache usado para', url);
-            return emCache;
-        }
-    }
+  if (signal?.aborted) {
+    throw new DOMException('Requisição cancelada.', 'AbortError');
+  }
 
-    let resposta;
-    try {
-        resposta = await fetch(url, { ...FETCH_OPTIONS, signal });
-    } catch (erro) {
-        if (erro.name === 'AbortError') throw erro;   // cancelada de propósito
-        throw new ErroApi(navigator.onLine ? 'rede' : 'offline');
-    }
+  if (usarCache) {
+    const dados = lerCache(url);
 
-    if (!resposta.ok) {
-        const tipo = ({ 401: 'auth', 404: 'naoencontrado', 429: 'limite' })[resposta.status] ?? 'http';
-        throw new ErroApi(tipo, resposta.status);
-    }
+    if (dados) return dados;
+  }
 
-    let dados;
-    try {
-        dados = await resposta.json();
-    } catch {
-        throw new ErroApi('http', resposta.status);
-    }
+  let resposta;
 
-    log('Resposta de', url, dados);
+  try {
+    resposta = await fetch(url, { ...FETCH_OPTIONS, signal });
+  } catch (erro) {
+    if (erro.name === 'AbortError' || signal?.aborted) throw erro;
 
-    // Não guarda listas vazias em cache
-    const listaVazia = Array.isArray(dados.results) && dados.results.length === 0;
-    if (usarCache && !listaVazia) gravarCache(url, dados);
+    throw new ErroApi(navigator.onLine ? 'rede' : 'offline');
+  }
 
-    return dados;
+  if (!resposta.ok) {
+    const tipos = {
+      401: 'auth',
+      404: 'naoencontrado',
+      429: 'limite'
+    };
+
+    throw new ErroApi(
+      tipos[resposta.status] ?? 'http',
+      resposta.status
+    );
+  }
+
+  let dados;
+
+  try {
+    dados = await resposta.json();
+  } catch (erro) {
+    if (erro.name === 'AbortError' || signal?.aborted) throw erro;
+
+    throw new ErroApi('http', resposta.status);
+  }
+
+  log('Resposta:', url, dados);
+
+  const listaVazia =
+    Array.isArray(dados.results) && dados.results.length === 0;
+
+  if (usarCache && !listaVazia) {
+    gravarCache(url, dados);
+  }
+
+  return dados;
 }
 
-/* =========================================================
-   Favoritos (localStorage)
-   ========================================================= */
-const favoritos = new Map(); // id -> resumo do filme
+/* ---------- Favoritos ---------- */
+
+const favoritos = new Map();
+
+function resumirFilme(filme) {
+  return {
+    id: filme.id,
+    title: String(filme.title || filme.name || 'Sem título'),
+    poster_path:
+      typeof filme.poster_path === 'string' ? filme.poster_path : null,
+    release_date:
+      typeof filme.release_date === 'string' ? filme.release_date : '',
+    vote_average: Number(filme.vote_average) || 0
+  };
+}
 
 function carregarFavoritos() {
-    favoritos.clear();
-    try {
-        const lista = JSON.parse(lerStorage(STORAGE_KEYS.favorites) || '[]');
-        if (!Array.isArray(lista)) return;
-        lista
-            .filter(item => item && Number.isInteger(item.id))
-            .forEach(item => favoritos.set(item.id, item));
-    } catch {
-        console.warn('Favoritos salvos estavam corrompidos e foram ignorados.');
-    }
+  favoritos.clear();
+
+  try {
+    const lista = JSON.parse(
+      lerStorage(STORAGE_KEYS.favorites) || '[]'
+    );
+
+    if (!Array.isArray(lista)) return;
+
+    lista
+      .filter(item => item && Number.isInteger(item.id))
+      .forEach(item => favoritos.set(item.id, resumirFilme(item)));
+  } catch {
+    console.warn('Favoritos inválidos foram ignorados.');
+  }
 }
 
 function salvarFavoritos() {
-    gravarStorage(STORAGE_KEYS.favorites, JSON.stringify([...favoritos.values()]));
-}
-
-// Guarda só o necessário para desenhar o card
-function resumirFilme(filme) {
-    return {
-        id: filme.id,
-        title: filme.title || filme.name || 'Sem título',
-        poster_path: filme.poster_path ?? null,
-        release_date: filme.release_date ?? '',
-        vote_average: filme.vote_average ?? 0
-    };
+  return gravarStorage(
+    STORAGE_KEYS.favorites,
+    JSON.stringify([...favoritos.values()])
+  );
 }
 
 function aplicarEstadoFavorito(botao) {
-    const ativo = favoritos.has(Number(botao.dataset.id));
-    const titulo = botao.dataset.titulo || 'filme';
-    const texto = botao.querySelector('.fav-texto');
-    const icone = botao.querySelector('i');
+  const ativo = favoritos.has(Number(botao.dataset.id));
+  const titulo = botao.dataset.titulo || 'filme';
+  const texto = botao.querySelector('.fav-texto');
+  const icone = botao.querySelector('i');
 
-    botao.setAttribute('aria-pressed', String(ativo));
+  botao.setAttribute('aria-pressed', String(ativo));
 
-    if (texto) {
-        texto.textContent = ativo ? 'Favoritado' : 'Favoritar';
-    } else {
-        botao.setAttribute('aria-label', ativo
-            ? `Remover ${titulo} dos favoritos`
-            : `Adicionar ${titulo} aos favoritos`);
-    }
+  if (texto) {
+    texto.textContent = ativo ? 'Favoritado' : 'Favoritar';
+  } else {
+    botao.setAttribute(
+      'aria-label',
+      ativo
+        ? `Remover ${titulo} dos favoritos`
+        : `Adicionar ${titulo} aos favoritos`
+    );
+  }
 
-    if (icone) {
-        icone.classList.toggle('fa-solid', ativo);
-        icone.classList.toggle('fa-regular', !ativo);
-    }
+  if (icone) {
+    icone.classList.toggle('fa-solid', ativo);
+    icone.classList.toggle('fa-regular', !ativo);
+  }
 }
 
 function atualizarCoracoes() {
-    document.querySelectorAll('.card-fav, .detalhe-fav').forEach(aplicarEstadoFavorito);
+  document.querySelectorAll('.card-fav, .detalhe-fav')
+    .forEach(aplicarEstadoFavorito);
 }
 
 function alternarFavorito(filme) {
-    if (!Number.isInteger(filme.id)) return;
+  if (!Number.isInteger(filme.id)) return;
 
-    if (favoritos.has(filme.id)) {
-        favoritos.delete(filme.id);
+  const foco = document.activeElement;
+
+  const focoNosFavoritos = document
+    .getElementById('favoritos-list')
+    ?.contains(foco);
+
+  const idFocado = foco?.dataset?.id;
+
+  if (favoritos.has(filme.id)) {
+    favoritos.delete(filme.id);
+  } else {
+    favoritos.set(filme.id, resumirFilme(filme));
+  }
+
+  if (!salvarFavoritos()) {
+    console.warn('Favoritos atualizados apenas nesta sessão.');
+  }
+
+  atualizarCoracoes();
+  renderizarFavoritos();
+
+  if (focoNosFavoritos) {
+    const container = document.getElementById('favoritos-list');
+
+    const novoFoco = [...container.querySelectorAll('.card-fav')]
+      .find(botao => botao.dataset.id === idFocado);
+
+    if (novoFoco) {
+      novoFoco.focus({ preventScroll: true });
     } else {
-        favoritos.set(filme.id, resumirFilme(filme));
-    }
+      const proximo = container.querySelector('.card-fav');
 
-    salvarFavoritos();
-    atualizarCoracoes();
-    renderizarFavoritos();
+      if (proximo) {
+        proximo.focus({ preventScroll: true });
+      } else {
+        const titulo = document.getElementById('title-favoritos');
+        titulo.setAttribute('tabindex', '-1');
+        titulo.focus({ preventScroll: true });
+      }
+    }
+  }
 }
 
 function criarBotaoFavorito(filme, { comTexto = false } = {}) {
-    const titulo = filme.title || filme.name || 'Sem título';
+  const botao = document.createElement('button');
+  botao.type = 'button';
+  botao.className = comTexto ? 'detalhe-fav' : 'card-fav';
+  botao.dataset.id = String(filme.id);
+  botao.dataset.titulo = filme.title || filme.name || 'Sem título';
 
-    const botao = document.createElement('button');
-    botao.type = 'button';
-    botao.className = comTexto ? 'detalhe-fav' : 'card-fav';
-    botao.dataset.id = String(filme.id);
-    botao.dataset.titulo = titulo;
+  const icone = document.createElement('i');
+  icone.className = 'fa-regular fa-heart';
+  icone.setAttribute('aria-hidden', 'true');
 
-    const icone = document.createElement('i');
-    icone.className = 'fa-regular fa-heart';
-    icone.setAttribute('aria-hidden', 'true');
-    botao.appendChild(icone);
+  botao.appendChild(icone);
 
-    if (comTexto) {
-        const texto = document.createElement('span');
-        texto.className = 'fav-texto';
-        botao.appendChild(texto);
-    }
+  if (comTexto) {
+    const texto = document.createElement('span');
+    texto.className = 'fav-texto';
 
-    botao.addEventListener('click', () => alternarFavorito(filme));
-    aplicarEstadoFavorito(botao);
-    return botao;
+    botao.appendChild(texto);
+  }
+
+  botao.addEventListener('click', () => alternarFavorito(filme));
+
+  aplicarEstadoFavorito(botao);
+
+  return botao;
 }
 
 function renderizarFavoritos() {
-    const container = document.getElementById('favoritos-list');
-    const contagem = document.getElementById('favoritos-contagem');
-    if (!container) return;
+  const container = document.getElementById('favoritos-list');
+  const contagem = document.getElementById('favoritos-contagem');
 
-    const lista = [...favoritos.values()].reverse(); // mais recentes primeiro
-    if (contagem) contagem.textContent = lista.length ? `(${lista.length})` : '';
+  if (!container) return;
 
-    renderizarLista(
-        container,
-        lista,
-        lista.length,
-        'Você ainda não favoritou nenhum filme. Clique no ♥ de um pôster para salvá-lo aqui.'
-    );
+  const lista = [...favoritos.values()].reverse();
+
+  if (contagem) {
+    contagem.textContent = lista.length ? `(${lista.length})` : '';
+  }
+
+  renderizarLista(
+    container,
+    lista,
+    lista.length,
+    'Você ainda não favoritou nenhum filme. Use o coração de um pôster para salvá-lo aqui.'
+  );
 }
 
-// Mantém várias abas sincronizadas
 function configurarSincronizacaoDeFavoritos() {
-    window.addEventListener('storage', (evento) => {
-        if (evento.key !== STORAGE_KEYS.favorites) return;
-        carregarFavoritos();
-        atualizarCoracoes();
-        renderizarFavoritos();
-    });
+  window.addEventListener('storage', evento => {
+    if (
+      evento.storageArea !== localStorage ||
+      (
+        evento.key !== STORAGE_KEYS.favorites &&
+        evento.key !== null
+      )
+    ) return;
+
+    carregarFavoritos();
+    atualizarCoracoes();
+    renderizarFavoritos();
+  });
 }
 
-/* =========================================================
-   Renderização de cards, skeleton e erros
-   ========================================================= */
-function criarCard(filme) {
-    const titulo = filme.title || filme.name || 'Sem título';
+/* ---------- Cards e estados ---------- */
 
-    const card = document.createElement('article');
-    card.className = 'movie-card';
+function criarPoster(filme, { detalhe = false } = {}) {
+  const img = document.createElement('img');
 
-    const abrir = document.createElement('button');
-    abrir.type = 'button';
-    abrir.className = 'card-abrir';
-    abrir.setAttribute('aria-label', `Ver detalhes de ${titulo}`);
+  img.src = filme.poster_path
+    ? `${IMAGE_URL}${filme.poster_path}`
+    : POSTER_VAZIO;
 
-    const img = document.createElement('img');
-    img.src = filme.poster_path ? `${IMAGE_URL}${filme.poster_path}` : POSTER_VAZIO;
-    img.alt = '';                       // o botão já tem o nome acessível
-    img.width = 500;
-    img.height = 750;
+  img.alt = detalhe
+    ? `Pôster do filme ${filme.title || filme.name || 'Sem título'}`
+    : '';
+
+  img.width = 500;
+  img.height = 750;
+  img.decoding = 'async';
+
+  if (detalhe) {
+    img.className = 'detalhe-poster';
+  } else {
     img.loading = 'lazy';
-    img.addEventListener('error', () => {
-        if (img.src !== POSTER_VAZIO) img.src = POSTER_VAZIO;
-    }, { once: true });
+  }
 
-    const nome = document.createElement('span');
-    nome.className = 'movie-titulo';
-    nome.textContent = titulo;
+  img.addEventListener('error', () => {
+    img.src = POSTER_VAZIO;
+  }, { once: true });
 
-    abrir.append(img, nome);
+  return img;
+}
 
-    const ano = (filme.release_date || '').slice(0, 4);
-    const nota = filme.vote_average ? filme.vote_average.toFixed(1) : '';
-    const textoMeta = [ano, nota && `★ ${nota}`].filter(Boolean).join(' · ');
+function criarCard(filme) {
+  const titulo = filme.title || filme.name || 'Sem título';
 
-    if (textoMeta) {
-        const meta = document.createElement('span');
-        meta.className = 'movie-meta';
-        meta.textContent = textoMeta;
-        abrir.appendChild(meta);
-    }
+  const card = document.createElement('article');
+  card.className = 'movie-card';
 
-    abrir.addEventListener('click', () => abrirDetalhes(filme.id, titulo));
+  const abrir = document.createElement('button');
+  abrir.type = 'button';
+  abrir.className = 'card-abrir';
+  abrir.setAttribute('aria-label', `Ver detalhes de ${titulo}`);
 
-    card.append(criarBotaoFavorito(filme), abrir);
-    return card;
+  const nome = document.createElement('span');
+  nome.className = 'movie-titulo';
+  nome.textContent = titulo;
+
+  abrir.append(criarPoster(filme), nome);
+
+  const ano = (filme.release_date || '').slice(0, 4);
+  const valorNota = Number(filme.vote_average) || 0;
+  const nota = valorNota ? `★ ${valorNota.toFixed(1)}` : '';
+  const textoMeta = [ano, nota].filter(Boolean).join(' · ');
+
+  if (textoMeta) {
+    const meta = document.createElement('span');
+    meta.className = 'movie-meta';
+    meta.textContent = textoMeta;
+
+    abrir.appendChild(meta);
+  }
+
+  abrir.addEventListener('click', () => {
+    abrirDetalhes(filme.id, titulo);
+  });
+
+  card.append(criarBotaoFavorito(filme), abrir);
+
+  return card;
 }
 
 function mostrarSkeleton(container, quantidade = MAX_CARDS) {
-    container.setAttribute('aria-busy', 'true');
+  container.setAttribute('aria-busy', 'true');
 
-    const fragmento = document.createDocumentFragment();
-    for (let i = 0; i < quantidade; i++) {
-        const esqueleto = document.createElement('div');
-        esqueleto.className = 'movie-card skeleton';
-        esqueleto.setAttribute('aria-hidden', 'true');
+  const fragmento = document.createDocumentFragment();
 
-        const poster = document.createElement('div');
-        poster.className = 'skeleton-poster';
+  for (let i = 0; i < quantidade; i++) {
+    const card = document.createElement('div');
+    card.className = 'movie-card skeleton';
+    card.setAttribute('aria-hidden', 'true');
 
-        const linhaLonga = document.createElement('div');
-        linhaLonga.className = 'skeleton-linha';
+    const poster = document.createElement('div');
+    poster.className = 'skeleton-poster';
 
-        const linhaCurta = document.createElement('div');
-        linhaCurta.className = 'skeleton-linha curta';
+    const longa = document.createElement('div');
+    longa.className = 'skeleton-linha';
 
-        esqueleto.append(poster, linhaLonga, linhaCurta);
-        fragmento.appendChild(esqueleto);
-    }
-    container.replaceChildren(fragmento);
+    const curta = document.createElement('div');
+    curta.className = 'skeleton-linha curta';
+
+    card.append(poster, longa, curta);
+    fragmento.appendChild(card);
+  }
+
+  container.replaceChildren(fragmento);
 }
 
-function renderizarLista(container, filmes, limite, mensagemVazia = MSG_VAZIO_PADRAO) {
-    container.removeAttribute('aria-busy');
-    container.replaceChildren();
+function renderizarLista(
+  container,
+  filmes,
+  limite,
+  mensagemVazia = 'Nenhum filme para exibir.'
+) {
+  container.removeAttribute('aria-busy');
+  container.replaceChildren();
 
-    if (!Array.isArray(filmes) || filmes.length === 0) {
-        const aviso = document.createElement('p');
-        aviso.className = 'mensagem-vazia';
-        aviso.textContent = mensagemVazia;
-        container.appendChild(aviso);
-        return;
-    }
+  if (!Array.isArray(filmes) || !filmes.length) {
+    const aviso = document.createElement('p');
+    aviso.className = 'mensagem-vazia';
+    aviso.textContent = mensagemVazia;
 
-    const fragmento = document.createDocumentFragment();
-    filmes.slice(0, limite).forEach(filme => fragmento.appendChild(criarCard(filme)));
-    container.appendChild(fragmento);
+    container.appendChild(aviso);
+    return;
+  }
+
+  const fragmento = document.createDocumentFragment();
+
+  filmes.slice(0, limite).forEach(filme => {
+    fragmento.appendChild(criarCard(filme));
+  });
+
+  container.appendChild(fragmento);
 }
 
 function criarBlocoDeErro(erro, aoTentarNovamente) {
-    const bloco = document.createElement('div');
-    bloco.className = 'estado-erro';
-    bloco.setAttribute('role', 'alert');
+  const bloco = document.createElement('div');
+  bloco.className = 'estado-erro';
+  bloco.setAttribute('role', 'alert');
 
-    const texto = document.createElement('p');
-    texto.textContent = mensagemDeErro(erro);
+  const texto = document.createElement('p');
+  texto.textContent = mensagemDeErro(erro);
 
-    const botao = document.createElement('button');
-    botao.type = 'button';
-    botao.className = 'btn-tentar';
-    botao.textContent = 'Tentar novamente';
-    botao.addEventListener('click', aoTentarNovamente);
+  const botao = document.createElement('button');
+  botao.type = 'button';
+  botao.className = 'btn-tentar';
+  botao.textContent = 'Tentar novamente';
+  botao.addEventListener('click', aoTentarNovamente);
 
-    bloco.append(texto, botao);
-    return bloco;
+  bloco.append(texto, botao);
+
+  return bloco;
 }
 
 function renderizarErro(container, erro, aoTentarNovamente) {
-    container.removeAttribute('aria-busy');
-    container.replaceChildren(criarBlocoDeErro(erro, aoTentarNovamente));
+  container.removeAttribute('aria-busy');
+  container.replaceChildren(
+    criarBlocoDeErro(erro, aoTentarNovamente)
+  );
 }
 
-/* =========================================================
-   Seções (listas da home)
-   ========================================================= */
+/* ---------- Seções ---------- */
+
 const SECOES = [
-    { endpoint: ENDPOINTS.boxOffice, container: 'box-office-list' },
-    { endpoint: ENDPOINTS.topRated, container: 'top-rated-list' },
-    { endpoint: ENDPOINTS.popularBr, container: 'popular-br-list' },
-    { endpoint: ENDPOINTS.trending, container: 'trending-list' },
-    { endpoint: ENDPOINTS.upcoming, container: 'upcoming-list' }
+  { endpoint: ENDPOINTS.boxOffice, container: 'box-office-list' },
+  { endpoint: ENDPOINTS.topRated, container: 'top-rated-list' },
+  { endpoint: ENDPOINTS.popular, container: 'popular-list' },
+  { endpoint: ENDPOINTS.trending, container: 'trending-list' },
+  { endpoint: ENDPOINTS.upcoming, container: 'upcoming-list' }
 ];
 
 async function carregarSecao(secao) {
-    const container = document.getElementById(secao.container);
-    if (!container) return;
+  const container = document.getElementById(secao.container);
 
-    mostrarSkeleton(container);
+  if (!container) return;
 
-    try {
-        const dados = await buscarJson(secao.endpoint);
-        renderizarLista(
-            container,
-            dados.results || [],
-            MAX_CARDS,
-            'Nenhum filme encontrado nesta seção.'
-        );
-    } catch (erro) {
-        console.error(`Falha ao carregar ${secao.container}:`, erro);
-        renderizarErro(container, erro, () => carregarSecao(secao));
-    }
+  mostrarSkeleton(container);
+
+  try {
+    const dados = await buscarJson(secao.endpoint);
+
+    renderizarLista(
+      container,
+      dados.results || [],
+      MAX_CARDS,
+      'Nenhum filme encontrado nesta seção.'
+    );
+  } catch (erro) {
+    console.error(`Falha ao carregar ${secao.container}:`, erro);
+
+    renderizarErro(
+      container,
+      erro,
+      () => carregarSecao(secao)
+    );
+  }
 }
 
 function carregarSecoes() {
-    SECOES.forEach(carregarSecao);
+  SECOES.forEach(carregarSecao);
 }
 
-/* =========================================================
-   Busca com debounce + AbortController
-   ========================================================= */
+/* ---------- Busca ---------- */
+
 function configurarBusca() {
-    const input = document.getElementById('campo-busca');
-    const form = document.getElementById('form-busca');
-    const btnLimpar = document.getElementById('limpar-busca');
-    const secao = document.getElementById('resultados');
-    const lista = document.getElementById('resultados-list');
-    const titulo = document.getElementById('titulo-resultados');
-    if (!input || !form || !secao || !lista || !titulo) return;
+  const input = document.getElementById('campo-busca');
+  const form = document.getElementById('form-busca');
+  const btnLimpar = document.getElementById('limpar-busca');
+  const secao = document.getElementById('resultados');
+  const lista = document.getElementById('resultados-list');
+  const titulo = document.getElementById('titulo-resultados');
 
-    let temporizador = null;
-    let controlador = null;
+  if (
+    !input || !form || !btnLimpar ||
+    !secao || !lista || !titulo
+  ) return;
 
-    const esconderResultados = () => {
-        clearTimeout(temporizador);
-        controlador?.abort();
-        secao.hidden = true;
-        lista.replaceChildren();
-    };
+  let temporizador = null;
+  let controlador = null;
 
-    const buscar = async (termo) => {
-        controlador?.abort();                 // cancela a busca anterior ainda em andamento
-        controlador = new AbortController();
-        const { signal } = controlador;
+  const esconderResultados = () => {
+    clearTimeout(temporizador);
+    controlador?.abort();
 
-        secao.hidden = false;
-        titulo.textContent = `Resultados para “${termo}”`;
-        mostrarSkeleton(lista, 10);
+    secao.hidden = true;
+    lista.replaceChildren();
+    lista.removeAttribute('aria-busy');
+  };
 
-        try {
-            const dados = await buscarJson(urlBusca(termo), { signal });
-            if (signal.aborted) return;
-            renderizarLista(
-                lista,
-                dados.results || [],
-                MAX_RESULTADOS,
-                `Nenhum filme encontrado para “${termo}”.`
-            );
-        } catch (erro) {
-            if (erro.name === 'AbortError' || signal.aborted) return;
-            console.error('Falha na busca:', erro);
-            renderizarErro(lista, erro, () => buscar(termo));
+  const buscar = async termo => {
+    controlador?.abort();
+    controlador = new AbortController();
+
+    const { signal } = controlador;
+
+    secao.hidden = false;
+    titulo.textContent = `Resultados para “${termo}”`;
+
+    mostrarSkeleton(lista, 10);
+
+    try {
+      const dados = await buscarJson(urlBusca(termo), { signal });
+
+      if (signal.aborted) return;
+
+      renderizarLista(
+        lista,
+        dados.results || [],
+        MAX_RESULTADOS,
+        `Nenhum filme encontrado para “${termo}”.`
+      );
+    } catch (erro) {
+      if (erro.name === 'AbortError' || signal.aborted) return;
+
+      console.error('Falha na busca:', erro);
+
+      renderizarErro(lista, erro, () => {
+        const atual = input.value.trim();
+
+        if (atual.length >= MIN_CARACTERES_BUSCA) {
+          clearTimeout(temporizador);
+          buscar(atual);
+        } else {
+          esconderResultados();
         }
-    };
+      });
+    }
+  };
 
-    input.addEventListener('input', () => {
-        clearTimeout(temporizador);
-        const termo = input.value.trim();
-        btnLimpar.hidden = input.value === '';
+  input.addEventListener('input', () => {
+    clearTimeout(temporizador);
 
-        if (termo.length < MIN_CARACTERES_BUSCA) {
-            esconderResultados();
-            return;
-        }
-        temporizador = setTimeout(() => buscar(termo), ATRASO_BUSCA_MS);
-    });
+    // Cancela imediatamente, antes de aguardar o debounce.
+    controlador?.abort();
 
-    form.addEventListener('submit', (evento) => {
-        evento.preventDefault();
-        clearTimeout(temporizador);
-        const termo = input.value.trim();
-        if (termo.length >= MIN_CARACTERES_BUSCA) buscar(termo);
-    });
+    const termo = input.value.trim();
 
-    btnLimpar.addEventListener('click', () => {
-        input.value = '';
-        btnLimpar.hidden = true;
-        esconderResultados();
-        input.focus();
-    });
+    btnLimpar.hidden = input.value === '';
+
+    if (termo.length < MIN_CARACTERES_BUSCA) {
+      esconderResultados();
+      return;
+    }
+
+    temporizador = setTimeout(
+      () => buscar(termo),
+      ATRASO_BUSCA_MS
+    );
+  });
+
+  form.addEventListener('submit', evento => {
+    evento.preventDefault();
+    clearTimeout(temporizador);
+    controlador?.abort();
+
+    const termo = input.value.trim();
+
+    if (termo.length >= MIN_CARACTERES_BUSCA) {
+      buscar(termo);
+    } else {
+      esconderResultados();
+    }
+  });
+
+  btnLimpar.addEventListener('click', () => {
+    input.value = '';
+    btnLimpar.hidden = true;
+
+    esconderResultados();
+    input.focus();
+  });
 }
 
-/* =========================================================
-   Modal de detalhes do filme
-   ========================================================= */
+/* ---------- Detalhes ---------- */
+
 let controladorDetalhe = null;
 
 function formatarDuracao(minutos) {
-    if (!minutos) return '';
-    const horas = Math.floor(minutos / 60);
-    const resto = minutos % 60;
-    return horas ? `${horas}h ${resto}min` : `${resto}min`;
+  if (!minutos) return '';
+
+  const horas = Math.floor(minutos / 60);
+  const resto = minutos % 60;
+
+  return horas ? `${horas}h ${resto}min` : `${resto}min`;
 }
 
 function criarTituloDetalhe(texto) {
-    const h2 = document.createElement('h2');
-    h2.id = 'detalheTitulo';
-    h2.textContent = texto;
-    return h2;
+  const h2 = document.createElement('h2');
+  h2.id = 'detalheTitulo';
+  h2.textContent = texto;
+
+  return h2;
 }
 
 function criarBlocoDeTexto(rotulo, texto) {
-    const bloco = document.createElement('div');
-    bloco.className = 'detalhe-bloco';
+  const bloco = document.createElement('div');
+  bloco.className = 'detalhe-bloco';
 
-    const h3 = document.createElement('h3');
-    h3.className = 'detalhe-rotulo';
-    h3.textContent = rotulo;
+  const h3 = document.createElement('h3');
+  h3.className = 'detalhe-rotulo';
+  h3.textContent = rotulo;
 
-    const p = document.createElement('p');
-    p.textContent = texto;
+  const p = document.createElement('p');
+  p.textContent = texto;
 
-    bloco.append(h3, p);
-    return bloco;
+  bloco.append(h3, p);
+
+  return bloco;
 }
 
 function criarDetalheCarregando(titulo) {
-    const detalhe = document.createElement('div');
-    detalhe.className = 'detalhe';
-    detalhe.setAttribute('aria-busy', 'true');
+  const detalhe = document.createElement('div');
+  detalhe.className = 'detalhe';
+  detalhe.setAttribute('aria-busy', 'true');
 
-    const poster = document.createElement('div');
-    poster.className = 'skeleton-poster detalhe-poster';
+  const poster = document.createElement('div');
+  poster.className = 'skeleton-poster detalhe-poster';
+  poster.setAttribute('aria-hidden', 'true');
 
-    const info = document.createElement('div');
-    info.className = 'detalhe-info';
-    info.appendChild(criarTituloDetalhe(titulo));
+  const info = document.createElement('div');
+  info.className = 'detalhe-info';
 
-    ['', '', 'curta'].forEach(extra => {
-        const linha = document.createElement('div');
-        linha.className = `skeleton-linha ${extra}`.trim();
-        info.appendChild(linha);
-    });
+  info.appendChild(criarTituloDetalhe(titulo));
 
-    detalhe.append(poster, info);
-    return detalhe;
+  ['', '', 'curta'].forEach(extra => {
+    const linha = document.createElement('div');
+    linha.className = `skeleton-linha ${extra}`.trim();
+    linha.setAttribute('aria-hidden', 'true');
+
+    info.appendChild(linha);
+  });
+
+  detalhe.append(poster, info);
+
+  return detalhe;
 }
 
 function criarDetalheComErro(titulo, erro, aoTentarNovamente) {
-    const bloco = document.createElement('div');
-    bloco.className = 'detalhe-erro';
-    bloco.append(criarTituloDetalhe(titulo), criarBlocoDeErro(erro, aoTentarNovamente));
-    return bloco;
+  const bloco = document.createElement('div');
+  bloco.className = 'detalhe-erro';
+
+  bloco.append(
+    criarTituloDetalhe(titulo),
+    criarBlocoDeErro(erro, aoTentarNovamente)
+  );
+
+  return bloco;
 }
 
 function criarDetalhe(filme) {
-    const titulo = filme.title || filme.name || 'Sem título';
+  const titulo = filme.title || filme.name || 'Sem título';
 
-    const detalhe = document.createElement('div');
-    detalhe.className = 'detalhe';
+  const detalhe = document.createElement('div');
+  detalhe.className = 'detalhe';
 
-    const img = document.createElement('img');
-    img.className = 'detalhe-poster';
-    img.src = filme.poster_path ? `${IMAGE_URL}${filme.poster_path}` : POSTER_VAZIO;
-    img.alt = `Pôster do filme ${titulo}`;
-    img.width = 500;
-    img.height = 750;
-    img.addEventListener('error', () => {
-        if (img.src !== POSTER_VAZIO) img.src = POSTER_VAZIO;
-    }, { once: true });
+  const info = document.createElement('div');
+  info.className = 'detalhe-info';
 
-    const info = document.createElement('div');
-    info.className = 'detalhe-info';
-    info.appendChild(criarTituloDetalhe(titulo));
+  info.appendChild(criarTituloDetalhe(titulo));
 
-    if (filme.tagline) {
-        const frase = document.createElement('p');
-        frase.className = 'detalhe-tagline';
-        frase.textContent = filme.tagline;
-        info.appendChild(frase);
-    }
+  if (filme.tagline) {
+    const frase = document.createElement('p');
+    frase.className = 'detalhe-tagline';
+    frase.textContent = filme.tagline;
 
-    const ano = (filme.release_date || '').slice(0, 4);
-    const nota = filme.vote_average ? `★ ${filme.vote_average.toFixed(1)}` : '';
-    const textoMeta = [ano, formatarDuracao(filme.runtime), nota].filter(Boolean).join(' · ');
-    if (textoMeta) {
-        const meta = document.createElement('p');
-        meta.className = 'detalhe-meta';
-        meta.textContent = textoMeta;
-        info.appendChild(meta);
-    }
+    info.appendChild(frase);
+  }
 
-    if (Array.isArray(filme.genres) && filme.genres.length) {
-        const generos = document.createElement('ul');
-        generos.className = 'detalhe-generos';
-        filme.genres.forEach(genero => {
-            const li = document.createElement('li');
-            li.textContent = genero.name;
-            generos.appendChild(li);
-        });
-        info.appendChild(generos);
-    }
+  const ano = (filme.release_date || '').slice(0, 4);
+  const valorNota = Number(filme.vote_average) || 0;
+  const nota = valorNota ? `★ ${valorNota.toFixed(1)}` : '';
 
-    info.appendChild(criarBlocoDeTexto('Sinopse', filme.overview || 'Sinopse não disponível em português.'));
+  const textoMeta = [
+    ano,
+    formatarDuracao(filme.runtime),
+    nota
+  ].filter(Boolean).join(' · ');
 
-    const elenco = (filme.credits?.cast ?? []).slice(0, 6).map(pessoa => pessoa.name).filter(Boolean);
-    if (elenco.length) {
-        info.appendChild(criarBlocoDeTexto('Elenco principal', elenco.join(', ')));
-    }
+  if (textoMeta) {
+    const meta = document.createElement('p');
+    meta.className = 'detalhe-meta';
+    meta.textContent = textoMeta;
 
-    const acoes = document.createElement('div');
-    acoes.className = 'detalhe-acoes';
-    acoes.appendChild(criarBotaoFavorito(filme, { comTexto: true }));
+    info.appendChild(meta);
+  }
 
-    const trailer = (filme.videos?.results ?? []).find(v => v.site === 'YouTube' && v.type === 'Trailer');
-    if (trailer?.key) {
-        const link = document.createElement('a');
-        link.className = 'btn-trailer';
-        link.href = `https://www.youtube.com/watch?v=${encodeURIComponent(trailer.key)}`;
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
-        link.textContent = 'Assistir trailer';
-        acoes.appendChild(link);
-    }
+  if (Array.isArray(filme.genres) && filme.genres.length) {
+    const generos = document.createElement('ul');
+    generos.className = 'detalhe-generos';
 
-    info.appendChild(acoes);
-    detalhe.append(img, info);
-    return detalhe;
+    filme.genres.forEach(genero => {
+      const li = document.createElement('li');
+      li.textContent = genero.name;
+
+      generos.appendChild(li);
+    });
+
+    info.appendChild(generos);
+  }
+
+  info.appendChild(criarBlocoDeTexto(
+    'Sinopse',
+    filme.overview || 'Sinopse não disponível em português.'
+  ));
+
+  const elenco = (filme.credits?.cast ?? [])
+    .slice(0, 6)
+    .map(pessoa => pessoa.name)
+    .filter(Boolean);
+
+  if (elenco.length) {
+    info.appendChild(
+      criarBlocoDeTexto('Elenco principal', elenco.join(', '))
+    );
+  }
+
+  const acoes = document.createElement('div');
+  acoes.className = 'detalhe-acoes';
+
+  acoes.appendChild(
+    criarBotaoFavorito(filme, { comTexto: true })
+  );
+
+  const trailer = (filme.videos?.results ?? []).find(video =>
+    video.site === 'YouTube' && video.type === 'Trailer'
+  );
+
+  if (trailer?.key) {
+    const link = document.createElement('a');
+    link.className = 'btn-trailer';
+    link.href =
+      `https://www.youtube.com/watch?v=${encodeURIComponent(trailer.key)}`;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = 'Assistir trailer';
+
+    acoes.appendChild(link);
+  }
+
+  info.appendChild(acoes);
+  detalhe.append(criarPoster(filme, { detalhe: true }), info);
+
+  return detalhe;
 }
 
 async function abrirDetalhes(id, tituloInicial = 'Carregando...') {
-    const modal = document.getElementById('detalheModal');
-    const corpo = document.getElementById('detalheCorpo');
-    if (!modal || !corpo || !Number.isInteger(id)) return;
+  const modal = document.getElementById('detalheModal');
+  const corpo = document.getElementById('detalheCorpo');
 
-    controladorDetalhe?.abort();
-    controladorDetalhe = new AbortController();
-    const { signal } = controladorDetalhe;
+  if (!modal || !corpo || !Number.isInteger(id)) return;
 
-    corpo.replaceChildren(criarDetalheCarregando(tituloInicial));
-    if (!modal.open) modal.showModal();
+  controladorDetalhe?.abort();
+  controladorDetalhe = new AbortController();
 
-    try {
-        const filme = await buscarJson(urlDetalhe(id), { signal });
-        if (signal.aborted) return;
-        corpo.replaceChildren(criarDetalhe(filme));
-    } catch (erro) {
-        if (erro.name === 'AbortError' || signal.aborted) return;
-        console.error('Falha ao carregar detalhes:', erro);
-        corpo.replaceChildren(
-            criarDetalheComErro(tituloInicial, erro, () => abrirDetalhes(id, tituloInicial))
-        );
-    }
+  const { signal } = controladorDetalhe;
+
+  corpo.replaceChildren(criarDetalheCarregando(tituloInicial));
+
+  if (!modal.open) modal.showModal();
+
+  try {
+    const filme = await buscarJson(urlDetalhe(id), { signal });
+
+    if (signal.aborted) return;
+
+    corpo.replaceChildren(criarDetalhe(filme));
+  } catch (erro) {
+    if (erro.name === 'AbortError' || signal.aborted) return;
+
+    console.error('Falha ao carregar detalhes:', erro);
+
+    corpo.replaceChildren(criarDetalheComErro(
+      tituloInicial,
+      erro,
+      () => abrirDetalhes(id, tituloInicial)
+    ));
+  }
 }
 
 function configurarDetalhes() {
-    const modal = document.getElementById('detalheModal');
-    const corpo = document.getElementById('detalheCorpo');
-    const btnFechar = document.getElementById('fecharDetalhe');
-    if (!modal || !corpo) return;
+  const modal = document.getElementById('detalheModal');
+  const corpo = document.getElementById('detalheCorpo');
 
-    btnFechar?.addEventListener('click', () => modal.close());
+  if (!modal || !corpo) return;
 
-    // Clique no fundo (o próprio <dialog>) fecha
-    modal.addEventListener('click', (evento) => {
-        if (evento.target === modal) modal.close();
-    });
+  document.getElementById('fecharDetalhe')
+    ?.addEventListener('click', () => modal.close());
 
-    // Ao fechar: cancela requisição pendente e limpa o conteúdo
-    modal.addEventListener('close', () => {
-        controladorDetalhe?.abort();
-        corpo.replaceChildren();
-    });
+  modal.addEventListener('click', evento => {
+    if (evento.target === modal) modal.close();
+  });
+
+  modal.addEventListener('close', () => {
+    controladorDetalhe?.abort();
+    corpo.replaceChildren();
+  });
 }
 
-/* =========================================================
-   Inicialização
-   ========================================================= */
+/* ---------- Inicialização ---------- */
+
 document.addEventListener('DOMContentLoaded', () => {
-    log('Configuração em uso:', { BASE_URL, MAX_CARDS, DEBUG, padrao: DEFAULT_MAX_CARDS });
+  carregarFavoritos();
 
-    carregarFavoritos();
+  const definirMenu = configurarMenu();
 
-    const definirMenu = configurarMenu();
-    configurarNavegacao(definirMenu);
-    configurarObservadorDeSecao();
-    configurarTema();
-    configurarPainelDeConfiguracoes();
-    configurarDetalhes();
-    configurarBusca();
-    configurarSincronizacaoDeFavoritos();
+  configurarNavegacao(definirMenu);
+  configurarObservadorDeSecao();
+  configurarTema();
+  configurarPainelDeConfiguracoes();
+  configurarDetalhes();
+  configurarBusca();
+  configurarSincronizacaoDeFavoritos();
 
-    renderizarFavoritos();
-    carregarSecoes();
+  renderizarFavoritos();
+  carregarSecoes();
 });
