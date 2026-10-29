@@ -14,5 +14,20 @@
     "imagem": "imagens/metrica-cine.png",
     "imagemAlt": "Capa do Métrica Cine com o título, a frase Do Código à Tela e os recursos Explore, Descubra e Favorite",
     "link": "projetos/metrica-cine/index.html"
+  },
+  {
+    "titulo": "Museu da Poesia Digital",
+    "categoria": "dom",
+    "descricao": "Museu literário interativo dedicado à poesia brasileira, com busca de obras, leitura de poemas, controle do tamanho da letra e registro de leituras no navegador.",
+    "tecnologias": [
+      "JavaScript",
+      "Manipulação DOM",
+      "ES Modules",
+      "localStorage",
+      "CSS Grid"
+    ],
+    "imagem": "projetos/museu-digital/imagens/capa.png",
+    "imagemAlt": "Capa do Museu da Poesia Digital com o título, a frase A história escrita em versos e as categorias Lírico, Satírico e Cordel",
+    "link": "projetos/museu-digital/index.html"
   }
 ]
