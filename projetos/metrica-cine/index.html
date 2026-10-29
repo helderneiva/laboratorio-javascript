@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,17 +13,16 @@
 
     <script>
         try {
-            const tema = localStorage.getItem('metrica_theme');
+            const tema = localStorage.getItem("metrica_theme");
 
-            if (tema === 'light' || tema === 'dark') {
+            if (tema === "light" || tema === "dark") {
                 document.documentElement.dataset.theme = tema;
             }
-        } catch (e) {}
+        } catch {}
     </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://kit.fontawesome.com" crossorigin>
 
     <link
         href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rye&display=swap"
@@ -31,13 +30,8 @@
     >
 
     <link rel="stylesheet" href="estilos/style.css">
-
-    <script
-        src="https://kit.fontawesome.com/2fb14b2086.js"
-        crossorigin="anonymous"
-    ></script>
+    <link rel="stylesheet" href="estilos/icones.css">
 </head>
-
 <body>
     <a class="skip-link" href="#conteudo-principal">
         Ir para o conteúdo principal
@@ -52,87 +46,130 @@
             aria-expanded="false"
             aria-controls="lista-menu"
         >
-            <i class="fa-solid fa-bars" aria-hidden="true"></i>
+            <span
+                data-lucide="panel-left-open"
+                aria-hidden="true"
+            ></span>
         </button>
 
         <ul id="lista-menu">
             <li>
-                <button type="button" class="nav-btn"
-                    data-alvo="#inicio" data-tooltip="Início"
-                    aria-label="Ir para o início">
-                    <i class="fa-solid fa-house" aria-hidden="true"></i>
+                <button
+                    type="button"
+                    class="nav-btn"
+                    data-alvo="#inicio"
+                    data-tooltip="Início"
+                    aria-label="Ir para o início"
+                >
+                    <span data-lucide="clapperboard" aria-hidden="true"></span>
                 </button>
             </li>
 
             <li>
-                <button type="button" class="nav-btn"
-                    data-alvo="#busca" data-tooltip="Buscar filmes"
-                    aria-label="Ir para a busca">
-                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                <button
+                    type="button"
+                    class="nav-btn"
+                    data-alvo="#busca"
+                    data-tooltip="Buscar filmes"
+                    aria-label="Ir para a busca"
+                >
+                    <span data-lucide="scan-search" aria-hidden="true"></span>
                 </button>
             </li>
 
             <li>
-                <button type="button" class="nav-btn"
-                    data-alvo="#bilheterias" data-tooltip="Maiores bilheterias"
-                    aria-label="Ir para maiores bilheterias">
-                    <i class="fa-solid fa-money-bill-trend-up" aria-hidden="true"></i>
+                <button
+                    type="button"
+                    class="nav-btn"
+                    data-alvo="#bilheterias"
+                    data-tooltip="Maiores bilheterias"
+                    aria-label="Ir para Maiores bilheterias"
+                >
+                    <span data-lucide="tickets" aria-hidden="true"></span>
                 </button>
             </li>
 
             <li>
-                <button type="button" class="nav-btn"
-                    data-alvo="#bem-avaliados" data-tooltip="Mais bem avaliados"
-                    aria-label="Ir para mais bem avaliados">
-                    <i class="fa-solid fa-crown" aria-hidden="true"></i>
+                <button
+                    type="button"
+                    class="nav-btn"
+                    data-alvo="#bem-avaliados"
+                    data-tooltip="Mais bem avaliados"
+                    aria-label="Ir para Mais bem avaliados"
+                >
+                    <span data-lucide="trophy" aria-hidden="true"></span>
                 </button>
             </li>
 
             <li>
-                <button type="button" class="nav-btn"
-                    data-alvo="#populares" data-tooltip="Populares no TMDB"
-                    aria-label="Ir para populares no TMDB">
-                    <i class="fa-solid fa-users" aria-hidden="true"></i>
+                <button
+                    type="button"
+                    class="nav-btn"
+                    data-alvo="#populares"
+                    data-tooltip="Populares no TMDB"
+                    aria-label="Ir para Populares no TMDB"
+                >
+                    <span data-lucide="popcorn" aria-hidden="true"></span>
                 </button>
             </li>
 
             <li>
-                <button type="button" class="nav-btn"
-                    data-alvo="#em-alta" data-tooltip="Filmes em alta"
-                    aria-label="Ir para filmes em alta">
-                    <i class="fa-solid fa-fire" aria-hidden="true"></i>
+                <button
+                    type="button"
+                    class="nav-btn"
+                    data-alvo="#em-alta"
+                    data-tooltip="Filmes em alta"
+                    aria-label="Ir para Filmes em alta"
+                >
+                    <span data-lucide="flame" aria-hidden="true"></span>
                 </button>
             </li>
 
             <li>
-                <button type="button" class="nav-btn"
-                    data-alvo="#lancamentos" data-tooltip="Próximos lançamentos"
-                    aria-label="Ir para próximos lançamentos">
-                    <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+                <button
+                    type="button"
+                    class="nav-btn"
+                    data-alvo="#lancamentos"
+                    data-tooltip="Próximos lançamentos"
+                    aria-label="Ir para Próximos lançamentos"
+                >
+                    <span data-lucide="calendar-clock" aria-hidden="true"></span>
                 </button>
             </li>
 
             <li>
-                <button type="button" class="nav-btn"
-                    data-alvo="#favoritos" data-tooltip="Meus favoritos"
-                    aria-label="Ir para meus favoritos">
-                    <i class="fa-solid fa-heart" aria-hidden="true"></i>
+                <button
+                    type="button"
+                    class="nav-btn"
+                    data-alvo="#favoritos"
+                    data-tooltip="Meus favoritos"
+                    aria-label="Ir para Meus favoritos"
+                >
+                    <span data-lucide="bookmark" aria-hidden="true"></span>
                 </button>
             </li>
 
             <li>
-                <button type="button" class="nav-btn" id="themeToggle"
+                <button
+                    type="button"
+                    class="nav-btn"
+                    id="themeToggle"
                     data-tooltip="Alterar tema"
-                    aria-label="Alternar tema claro e escuro">
-                    <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
+                    aria-label="Alternar tema claro e escuro"
+                >
+                    <span data-lucide="contrast" aria-hidden="true"></span>
                 </button>
             </li>
 
             <li>
-                <button type="button" class="nav-btn" id="settingsToggle"
+                <button
+                    type="button"
+                    class="nav-btn"
+                    id="settingsToggle"
                     data-tooltip="Configurações"
-                    aria-label="Abrir configurações">
-                    <i class="fa-solid fa-gear" aria-hidden="true"></i>
+                    aria-label="Abrir configurações"
+                >
+                    <span data-lucide="sliders-horizontal" aria-hidden="true"></span>
                 </button>
             </li>
         </ul>
@@ -142,21 +179,50 @@
         <h1>Métrica Cine</h1>
     </header>
 
-    <main id="conteudo-principal" class="app-main" tabindex="-1">
-        <section id="inicio" class="apresentacao" aria-labelledby="hero-title">
+    <main
+        id="conteudo-principal"
+        class="app-main"
+        tabindex="-1"
+    >
+        <section
+            id="inicio"
+            class="apresentacao"
+            aria-labelledby="hero-title"
+        >
             <h2 id="hero-title">Do Código à Tela</h2>
 
-            <p>O <strong>Métrica Cine</strong> é uma aplicação que demonstra a manipulação do DOM com requisições assíncronas à API do TMDB. Busque filmes com <em>debounce</em>, veja detalhes, elenco e trailer, e salve seus favoritos no <em>localStorage</em>.</p>
+            <p>
+                O <strong>Métrica Cine</strong> é uma aplicação que
+                demonstra a manipulação do DOM com requisições
+                assíncronas à API do TMDB. Busque filmes com
+                <em>debounce</em>, veja detalhes, elenco e trailer,
+                e salve seus favoritos no <em>localStorage</em>.
+            </p>
         </section>
 
         <div class="conteudo-container">
-            <section id="busca" class="movies-section" aria-labelledby="titulo-busca">
+            <section
+                id="busca"
+                class="movies-section"
+                aria-labelledby="titulo-busca"
+            >
                 <h2 id="titulo-busca">Buscar filmes</h2>
 
-                <form id="form-busca" class="form-busca" role="search" autocomplete="off">
-                    <label for="campo-busca" class="sr-only">Título do filme</label>
+                <form
+                    id="form-busca"
+                    class="form-busca"
+                    role="search"
+                    autocomplete="off"
+                >
+                    <label for="campo-busca" class="sr-only">
+                        Título do filme
+                    </label>
 
-                    <i class="fa-solid fa-magnifying-glass icone-busca" aria-hidden="true"></i>
+                    <span
+                        data-lucide="search"
+                        class="icone-busca"
+                        aria-hidden="true"
+                    ></span>
 
                     <input
                         type="search"
@@ -172,54 +238,109 @@
                         class="btn-limpar"
                         aria-label="Limpar busca"
                         hidden
-                    >&times;</button>
+                    >
+                        &times;
+                    </button>
                 </form>
             </section>
 
-            <section id="resultados" class="movies-section"
-                aria-labelledby="titulo-resultados" hidden>
+            <section
+                id="resultados"
+                class="movies-section"
+                aria-labelledby="titulo-resultados"
+                hidden
+            >
                 <h2 id="titulo-resultados">Resultados</h2>
-                <div id="resultados-list" class="movies-grid" aria-live="polite"></div>
+                <div
+                    id="resultados-list"
+                    class="movies-grid"
+                    aria-live="polite"
+                ></div>
             </section>
 
-            <section id="bilheterias" class="movies-section"
-                aria-labelledby="title-box-office">
+            <section
+                id="bilheterias"
+                class="movies-section"
+                aria-labelledby="title-box-office"
+            >
                 <h2 id="title-box-office">Maiores bilheterias</h2>
-                <div id="box-office-list" class="movies-grid" aria-live="polite"></div>
+                <div
+                    id="box-office-list"
+                    class="movies-grid"
+                    aria-live="polite"
+                ></div>
             </section>
 
-            <section id="bem-avaliados" class="movies-section"
-                aria-labelledby="title-top-rated">
+            <section
+                id="bem-avaliados"
+                class="movies-section"
+                aria-labelledby="title-top-rated"
+            >
                 <h2 id="title-top-rated">Mais bem avaliados</h2>
-                <div id="top-rated-list" class="movies-grid" aria-live="polite"></div>
+                <div
+                    id="top-rated-list"
+                    class="movies-grid"
+                    aria-live="polite"
+                ></div>
             </section>
 
-            <section id="populares" class="movies-section"
-                aria-labelledby="title-popular">
+            <section
+                id="populares"
+                class="movies-section"
+                aria-labelledby="title-popular"
+            >
                 <h2 id="title-popular">Populares no TMDB</h2>
-                <div id="popular-list" class="movies-grid" aria-live="polite"></div>
+                <div
+                    id="popular-list"
+                    class="movies-grid"
+                    aria-live="polite"
+                ></div>
             </section>
 
-            <section id="em-alta" class="movies-section"
-                aria-labelledby="title-trending">
+            <section
+                id="em-alta"
+                class="movies-section"
+                aria-labelledby="title-trending"
+            >
                 <h2 id="title-trending">Em alta</h2>
-                <div id="trending-list" class="movies-grid" aria-live="polite"></div>
+                <div
+                    id="trending-list"
+                    class="movies-grid"
+                    aria-live="polite"
+                ></div>
             </section>
 
-            <section id="lancamentos" class="movies-section"
-                aria-labelledby="title-upcoming">
+            <section
+                id="lancamentos"
+                class="movies-section"
+                aria-labelledby="title-upcoming"
+            >
                 <h2 id="title-upcoming">Próximos lançamentos em destaque</h2>
-                <div id="upcoming-list" class="movies-grid" aria-live="polite"></div>
+                <div
+                    id="upcoming-list"
+                    class="movies-grid"
+                    aria-live="polite"
+                ></div>
             </section>
 
-            <section id="favoritos" class="movies-section"
-                aria-labelledby="title-favoritos">
+            <section
+                id="favoritos"
+                class="movies-section"
+                aria-labelledby="title-favoritos"
+            >
                 <h2 id="title-favoritos">
                     Meus favoritos
-                    <span id="favoritos-contagem" class="contagem"></span>
+                    <span
+                        id="favoritos-contagem"
+                        class="contagem"
+                    ></span>
                 </h2>
 
-                <div id="favoritos-list" class="movies-grid" aria-live="polite"></div>
+                <div
+                    id="favoritos-list"
+                    class="movies-grid"
+                    aria-live="polite"
+                ></div>
             </section>
         </div>
     </main>
@@ -227,17 +348,26 @@
     <footer class="app-footer">
         <p>
             Projeto desenvolvido por
-            <a href="https://github.com/helderneiva"
-                target="_blank" rel="noopener noreferrer">
+            <a
+                href="https://github.com/helderneiva"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
                 Helder Neiva
             </a>
         </p>
 
-        <section class="creditos-tmdb" aria-labelledby="titulo-creditos">
+        <section
+            class="creditos-tmdb"
+            aria-labelledby="titulo-creditos"
+        >
             <h2 id="titulo-creditos">Créditos</h2>
 
-            <a href="https://www.themoviedb.org"
-                target="_blank" rel="noopener noreferrer">
+            <a
+                href="https://www.themoviedb.org"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
                 <img
                     src="https://www.themoviedb.org/assets/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg"
                     alt="TMDB"
@@ -250,31 +380,46 @@
             <p>Dados e imagens fornecidos pelo TMDB.</p>
 
             <p lang="en">
-                This product uses the TMDB API but is not endorsed or certified by TMDB.
+                This product uses the TMDB API but is not endorsed
+                or certified by TMDB.
             </p>
         </section>
     </footer>
 
-    <dialog id="detalheModal" class="detalhe-modal" aria-labelledby="detalheTitulo">
+    <dialog
+        id="detalheModal"
+        class="detalhe-modal"
+        aria-labelledby="detalheTitulo"
+    >
         <div class="detalhe-conteudo">
             <button
                 type="button"
                 id="fecharDetalhe"
                 class="close-btn detalhe-fechar"
                 aria-label="Fechar detalhes"
-            >&times;</button>
+            >
+                &times;
+            </button>
 
             <div id="detalheCorpo"></div>
         </div>
     </dialog>
 
-    <dialog id="settingsModal" class="settings-modal" aria-labelledby="settingsTitle">
+    <dialog
+        id="settingsModal"
+        class="settings-modal"
+        aria-labelledby="settingsTitle"
+    >
         <div class="settings-content">
             <header class="settings-header">
                 <h2 id="settingsTitle">Configurações</h2>
 
-                <button type="button" id="closeSettings"
-                    class="close-btn" aria-label="Fechar configurações">
+                <button
+                    type="button"
+                    id="closeSettings"
+                    class="close-btn"
+                    aria-label="Fechar configurações"
+                >
                     &times;
                 </button>
             </header>
@@ -313,19 +458,33 @@
                     </label>
                 </div>
 
-                <p id="settingsErro" class="form-erro" role="alert" hidden></p>
+                <p
+                    id="settingsErro"
+                    class="form-erro"
+                    role="alert"
+                    hidden
+                ></p>
 
-                <button type="button" id="saveSettingsBtn" class="save-btn">
+                <button
+                    type="button"
+                    id="saveSettingsBtn"
+                    class="save-btn"
+                >
                     Salvar configurações
                 </button>
 
-                <button type="button" id="resetSettingsBtn" class="reset-btn">
+                <button
+                    type="button"
+                    id="resetSettingsBtn"
+                    class="reset-btn"
+                >
                     Restaurar padrão
                 </button>
             </div>
         </div>
     </dialog>
 
-    <script src="script.js" type="module"></script>
+    <script src="lucide.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>

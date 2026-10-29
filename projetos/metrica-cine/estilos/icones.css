@@ -1,0 +1,49 @@
+@charset "UTF-8";
+
+.lucide,
+.icone {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 1.25em;
+    height: 1.25em;
+    vertical-align: middle;
+    stroke-width: 1.8;
+    pointer-events: none;
+}
+
+.nav-btn .lucide {
+    width: 1.3em;
+    height: 1.3em;
+}
+
+.menu-toggle .icone {
+    width: 1.3em;
+    height: 1.3em;
+}
+
+.form-busca .icone-busca {
+    width: 1.2em;
+    height: 1.2em;
+}
+
+.card-fav .icone {
+    width: 1.15em;
+    height: 1.15em;
+    stroke-width: 2;
+}
+
+.detalhe-fav .icone {
+    width: 1.2em;
+    height: 1.2em;
+}
+
+.card-fav[aria-pressed="true"] .icone {
+    stroke-width: 2.3;
+}
+
+@media (forced-colors: active) {
+    .lucide,
+    .icone {
+        stroke: currentColor;
+    }
+}
