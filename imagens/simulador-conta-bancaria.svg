@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="titulo descricao">
+    <title id="titulo">Simulador de Conta Bancária</title>
+    <desc id="descricao">Você no controle. Cartão bancário em uma composição verde e azul-clara.</desc>
+    <defs>
+        <linearGradient id="fundo" x2="1" y2="1">
+            <stop stop-color="#e1edf5"/>
+            <stop offset="1" stop-color="#aec8df"/>
+        </linearGradient>
+        <linearGradient id="cartao" x2="1" y2="1">
+            <stop stop-color="#123b40"/>
+            <stop offset="1" stop-color="#24595a"/>
+        </linearGradient>
+        <clipPath id="recorte">
+            <rect x="678" y="172" width="444" height="282" rx="26"/>
+        </clipPath>
+    </defs>
+    <rect width="1200" height="675" fill="url(#fundo)"/>
+    <path d="M760 0h270L800 675H530Z" fill="#fff" opacity=".22"/>
+    <path d="M1030 0h170v675H800Z" fill="#fff" opacity=".12"/>
+    <text x="70" y="100" fill="#084b64" font-family="monospace" font-size="18" letter-spacing="3">SIMULADOR / CONTA BANCÁRIA</text>
+    <rect x="70" y="151" width="62" height="5" rx="2" fill="#277b70"/>
+    <g fill="#114e45" font-family="Arial, sans-serif" font-weight="700" font-size="72">
+        <text x="65" y="273">Você no</text>
+        <text x="65" y="353">controle.</text>
+    </g>
+    <text x="70" y="422" fill="#234f62" font-family="Arial, sans-serif" font-size="22">Seu perfil. Sua conta. Suas escolhas.</text>
+    <rect x="678" y="184" width="444" height="282" rx="26" fill="#386b72" opacity=".15"/>
+    <rect x="678" y="172" width="444" height="282" rx="26" fill="url(#cartao)"/>
+    <g clip-path="url(#recorte)" fill="none" stroke="#64c5ac" stroke-width="28" opacity=".12">
+        <circle cx="1080" cy="200" r="117"/>
+        <circle cx="1080" cy="200" r="163"/>
+    </g>
+    <rect x="714" y="211" width="47" height="37" rx="7" fill="#a5d4c7"/>
+    <path d="M730 211v37m16-37v37m-32-19h47" fill="none" stroke="#24595a" stroke-width="2"/>
+    <text x="714" y="317" fill="#fff" font-family="monospace" font-size="30" letter-spacing="4">••••  ••••  ••••</text>
+    <text x="714" y="402" fill="#ccebe4" font-family="monospace" font-size="16" letter-spacing="2">TERMINAL PESSOAL</text>
+    <g fill="#123b40" font-family="monospace" font-size="17" letter-spacing="1">
+        <text x="70" y="577">CADASTRO · SAQUES · EXTRATO</text>
+        <text x="70" y="613">JAVASCRIPT + NODE.JS + POSTGRESQL</text>
+    </g>
+    <path d="M1053 560h60m-22-22 22 22-22 22" fill="none" stroke="#1b796e" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
