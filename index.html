@@ -1,34 +1,26 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Laboratório JavaScript de Helder Neiva: projetos com interfaces interativas, manipulação do DOM, consumo de APIs e integração com back-end.">
+
+    <meta property="og:title" content="Laboratório JavaScript | Helder Neiva">
+    <meta property="og:description" content="Ideias em prática. Explore meus projetos e experiências com JavaScript.">
+    <meta property="og:type" content="website">
 
     <title>Laboratório JavaScript | Helder Neiva</title>
 
-    <meta name="description" content="Laboratório com meus experimentos em JavaScript: manipulação do DOM, AJAX, async e lógica. Projetos de Helder Neiva, estudante de Sistemas de Informação.">
-
-    <meta property="og:title" content="Laboratório JavaScript">
-    <meta property="og:description" content="Meus experimentos e projetos em JavaScript.">
-    <meta property="og:type" content="website">
-
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <script>
         try {
-            if (localStorage.getItem('laboratorio-tema') === 'light') {
-                document.documentElement.classList.add('light-mode');
-            }
-        } catch (e) {}
+            const temaSalvo = localStorage.getItem('laboratorio-tema');
+            document.documentElement.classList.toggle('light-mode', temaSalvo === 'light');
+        } catch (erro) {
+            document.documentElement.classList.remove('light-mode');
+        }
     </script>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&display=swap"
-        rel="stylesheet"
-    >
 
     <link rel="stylesheet" href="estilos/principal.css">
 
@@ -37,284 +29,233 @@
 </head>
 
 <body>
-    <header>
-        <h1>Laboratório JavaScript</h1>
+    <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
+
+    <header class="cabecalho">
+        <div class="cabecalho-interno">
+            <a class="marca" href="#apresentacao" aria-label="Laboratório JavaScript — início">
+                <span class="marca-simbolo" aria-hidden="true">JS</span>
+
+                <span class="marca-nome">
+                    Laboratório
+                    <strong>JavaScript</strong>
+                </span>
+            </a>
+
+            <a class="autor" href="https://github.com/helderneiva" target="_blank" rel="noopener noreferrer">
+                <span>Helder Neiva</span>
+                <i data-lucide="arrow-up-right" aria-hidden="true"></i>
+            </a>
+        </div>
     </header>
 
-    <nav id="menu" aria-label="Menu principal">
+    <nav id="menu" aria-label="Navegação principal">
         <ul>
             <li>
                 <a href="#apresentacao" aria-label="Início">
-                    <i data-lucide="house-plus"></i>
+                    <i data-lucide="house" aria-hidden="true"></i>
+                    <span class="menu-rotulo">Início</span>
                 </a>
             </li>
 
             <li>
-                <a href="#painel-controle" aria-label="Meus experimentos">
-                    <i data-lucide="flask-conical"></i>
+                <a href="#painel-controle" aria-label="Projetos">
+                    <i data-lucide="flask-conical" aria-hidden="true"></i>
+                    <span class="menu-rotulo">Projetos</span>
                 </a>
             </li>
 
             <li>
-                <a href="#experiencia" aria-label="Minha proficiência">
-                    <i data-lucide="square-code"></i>
+                <a href="#experiencia" aria-label="Conceitos aplicados">
+                    <i data-lucide="square-code" aria-hidden="true"></i>
+                    <span class="menu-rotulo">Conceitos</span>
                 </a>
             </li>
 
             <li>
                 <a href="#contato" aria-label="Contato">
-                    <i data-lucide="contact-round"></i>
+                    <i data-lucide="send" aria-hidden="true"></i>
+                    <span class="menu-rotulo">Contato</span>
                 </a>
             </li>
 
             <li>
-                <button
-                    type="button"
-                    class="btn-tema"
-                    aria-label="Alternar tema claro/escuro"
-                >
-                    <i data-lucide="moon-star"></i>
+                <button type="button" class="btn-tema" aria-label="Alternar tema claro e escuro">
+                    <i data-lucide="moon-star" aria-hidden="true"></i>
+                    <span class="menu-rotulo">Tema</span>
                 </button>
             </li>
         </ul>
     </nav>
 
-    <main>
-        <section id="apresentacao">
-            <h2>Seja Bem-Vindo</h2>
+    <main id="conteudo" tabindex="-1">
+        <section id="apresentacao" aria-labelledby="titulo-principal">
+            <div class="apresentacao-texto">
+                <p class="sobretitulo">Portfólio de desenvolvimento · Helder Neiva</p>
 
-            <p>Este site é um projeto por si só: um espaço que criei para centralizar, testar e documentar todas as minhas aplicações com JS. Mais do que um índice estático, esta página é um ecossistema vivo que reflete minha evolução lógica e técnica. Aqui valido meus algoritmos e testo conceitos de manipulação de dados em tempo real, transformando linhas de código estáticas em recursos web dinâmicos e funcionais. Cada projeto publicado funciona como um experimento que consolida minha evolução lógica e visual.</p>
+                <h1 id="titulo-principal">
+                    Laboratório<br>
+                    <span>JavaScript.</span>
+                </h1>
+
+                <p class="apresentacao-chamada">Ideias em prática. Código em evolução.</p>
+
+                <p class="apresentacao-descricao">Um espaço para explorar interfaces, trabalhar com dados e transformar desafios em aplicações. Cada projeto registra uma nova etapa do meu aprendizado em desenvolvimento web.</p>
+
+                <div class="apresentacao-acoes">
+                    <a class="botao-principal" href="#painel-controle">
+                        <span>Explorar projetos</span>
+                        <i data-lucide="arrow-down" aria-hidden="true"></i>
+                    </a>
+
+                    <a class="link-texto" href="#experiencia">
+                        <span>Conhecer os conceitos</span>
+                        <i data-lucide="arrow-up-right" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="assinatura-visual" aria-hidden="true">
+                <span class="assinatura-indice">IDEIA → CÓDIGO → EXPERIÊNCIA</span>
+
+                <span class="assinatura-js">JS<span>.</span></span>
+
+                <div class="assinatura-base">
+                    <span>HTML5 / CSS3 / JavaScript</span>
+                    <i data-lucide="braces"></i>
+                </div>
+            </div>
         </section>
 
-        <section
-            id="painel-controle"
-            class="lab"
-            aria-labelledby="titulo-experimentos"
-        >
+        <section id="painel-controle" class="lab" aria-labelledby="titulo-experimentos">
+            <div class="secao-cabecalho">
+                <p class="sobretitulo">01 / Exploração</p>
+
+                <h2 id="titulo-experimentos">Meus experimentos</h2>
+
+                <p>Aplicações com identidades próprias e desafios diferentes. Abra um projeto para experimentar.</p>
+            </div>
+
             <div class="painel-barra-horizontal">
-                <h2 id="titulo-experimentos">Meus Experimentos</h2>
+                <div class="filtros" role="group" aria-label="Filtrar projetos por conceito">
+                    <button type="button" class="btn-filtro active" data-categoria="todos" aria-pressed="true">Todos</button>
 
-                <div
-                    class="filtros"
-                    role="group"
-                    aria-label="Filtrar experimentos"
-                >
-                    <button
-                        type="button"
-                        class="btn-filtro active"
-                        data-categoria="todos"
-                    >
-                        Todos
-                    </button>
+                    <button type="button" class="btn-filtro" data-categoria="dom" aria-pressed="false">DOM</button>
 
-                    <button
-                        type="button"
-                        class="btn-filtro"
-                        data-categoria="dom"
-                    >
-                        Manipulação DOM
-                    </button>
+                    <button type="button" class="btn-filtro" data-categoria="api" aria-pressed="false">APIs / AJAX</button>
 
-                    <button
-                        type="button"
-                        class="btn-filtro"
-                        data-categoria="api"
-                    >
-                        AJAX
-                    </button>
+                    <button type="button" class="btn-filtro" data-categoria="async" aria-pressed="false">Assíncrono</button>
 
-                    <button
-                        type="button"
-                        class="btn-filtro"
-                        data-categoria="async"
-                    >
-                        Async
-                    </button>
+                    <button type="button" class="btn-filtro" data-categoria="data" aria-pressed="false">Dados</button>
 
-                    <button
-                        type="button"
-                        class="btn-filtro"
-                        data-categoria="data"
-                    >
-                        Data
-                    </button>
-
-                    <button
-                        type="button"
-                        class="btn-filtro"
-                        data-categoria="logica"
-                    >
-                        Lógica Pura
-                    </button>
+                    <button type="button" class="btn-filtro" data-categoria="logica" aria-pressed="false">Lógica</button>
                 </div>
             </div>
 
             <div class="carrossel">
-                <button
-                    type="button"
-                    class="carrossel-btn"
-                    id="carrossel-anterior"
-                    aria-label="Experimentos anteriores"
-                >
-                    <i data-lucide="chevron-left"></i>
+                <button type="button" class="carrossel-btn" id="carrossel-anterior" aria-label="Projetos anteriores" aria-controls="grid-projetos">
+                    <i data-lucide="chevron-left" aria-hidden="true"></i>
                 </button>
 
-                <div
-                    id="grid-projetos"
-                    class="grid-container"
-                    role="region"
-                    aria-label="Lista de experimentos"
-                ></div>
+                <div id="grid-projetos" class="grid-container" role="region" aria-label="Lista de projetos" aria-busy="true" tabindex="0">
+                    <p class="mensagem-vazia">Carregando projetos...</p>
+                </div>
 
-                <button
-                    type="button"
-                    class="carrossel-btn"
-                    id="carrossel-proximo"
-                    aria-label="Próximos experimentos"
-                >
-                    <i data-lucide="chevron-right"></i>
+                <button type="button" class="carrossel-btn" id="carrossel-proximo" aria-label="Próximos projetos" aria-controls="grid-projetos">
+                    <i data-lucide="chevron-right" aria-hidden="true"></i>
                 </button>
+            </div>
+
+            <noscript>
+                <p class="estado-erro">Ative o JavaScript para carregar os projetos, usar os filtros e enviar o formulário.</p>
+            </noscript>
+        </section>
+
+        <section id="experiencia" class="experiencia-container" aria-labelledby="titulo-experiencia">
+            <div class="secao-cabecalho">
+                <p class="sobretitulo">02 / Aprendizado em prática</p>
+
+                <h2 id="titulo-experiencia">Conceitos aplicados</h2>
+
+                <p>Mais do que listar tecnologias, mostrar onde elas entram em cada experiência.</p>
+            </div>
+
+            <div class="conceitos-grid">
+                <article class="conceito">
+                    <i data-lucide="mouse-pointer-2" aria-hidden="true"></i>
+
+                    <h3>Interfaces e eventos</h3>
+
+                    <p>Manipulação do DOM, filtros e criação dinâmica dos cards que organizam este laboratório.</p>
+
+                    <span class="conceito-etiqueta">DOM · Eventos</span>
+                </article>
+
+                <article class="conceito">
+                    <i data-lucide="network" aria-hidden="true"></i>
+
+                    <h3>Dados e requisições</h3>
+
+                    <p>Carregamento de JSON, consumo de APIs e tratamento de estados de espera e falha.</p>
+
+                    <span class="conceito-etiqueta">Fetch · Async / Await</span>
+                </article>
+
+                <article class="conceito">
+                    <i data-lucide="database" aria-hidden="true"></i>
+
+                    <h3>Persistência e integração</h3>
+
+                    <p>Preferências no navegador e integração com Node.js e PostgreSQL no Simulador Bancário.</p>
+
+                    <span class="conceito-etiqueta">localStorage · Back-end</span>
+                </article>
             </div>
         </section>
 
-        <section
-            id="experiencia"
-            class="experiencia-container"
-            aria-labelledby="titulo-experiencia"
-        >
-            <h2 id="titulo-experiencia">Minha Proficiência com JS</h2>
+        <section id="contato" class="contato-container" aria-labelledby="titulo-contato">
+            <div class="contato-apresentacao">
+                <p class="sobretitulo">03 / Vamos conversar</p>
 
-            <p class="nota-habilidades">
-                Níveis atuais de estudo, em evolução constante.
-            </p>
+                <h2 id="titulo-contato">
+                    Uma ideia começa<br>
+                    com uma conversa.
+                </h2>
 
-            <div class="habilidades-bloco">
-                <div class="tech-item">
-                    <h3>JS (ES6+)</h3>
+                <p>Tem uma sugestão, encontrou algo para melhorar ou quer conversar sobre desenvolvimento? Deixe sua mensagem.</p>
 
-                    <div class="barra-progresso">
-                        <div
-                            class="progresso-interno"
-                            data-nivel="70"
-                        ></div>
-                    </div>
-                </div>
-
-                <div class="tech-item">
-                    <h3>Manipulação DOM</h3>
-
-                    <div class="barra-progresso">
-                        <div
-                            class="progresso-interno"
-                            data-nivel="75"
-                        ></div>
-                    </div>
-                </div>
-
-                <div class="tech-item">
-                    <h3>AJAX</h3>
-
-                    <div class="barra-progresso">
-                        <div
-                            class="progresso-interno"
-                            data-nivel="60"
-                        ></div>
-                    </div>
-                </div>
-
-                <div class="tech-item">
-                    <h3>Async (Promises / APIs)</h3>
-
-                    <div class="barra-progresso">
-                        <div
-                            class="progresso-interno"
-                            data-nivel="60"
-                        ></div>
-                    </div>
-                </div>
-
-                <div class="tech-item">
-                    <h3>Data (Estruturas e Storage)</h3>
-
-                    <div class="barra-progresso">
-                        <div
-                            class="progresso-interno"
-                            data-nivel="55"
-                        ></div>
-                    </div>
-                </div>
-
-                <div class="tech-item">
-                    <h3>Lógica Pura</h3>
-
-                    <div class="barra-progresso">
-                        <div
-                            class="progresso-interno"
-                            data-nivel="70"
-                        ></div>
-                    </div>
-                </div>
+                <a class="link-texto" href="https://github.com/helderneiva" target="_blank" rel="noopener noreferrer">
+                    <span>Conhecer meu GitHub</span>
+                    <i data-lucide="arrow-up-right" aria-hidden="true"></i>
+                </a>
             </div>
-        </section>
 
-        <section id="contato" class="contato-container">
             <div class="formulario-bloco">
-                <h2>Iniciar Conexão</h2>
-
-                <form id="form-contato">
+                <form id="form-contato" aria-labelledby="titulo-contato" aria-describedby="aviso-contato">
                     <div class="input-grupo campo-nome">
                         <label for="nome">Nome</label>
 
-                        <input
-                            type="text"
-                            id="nome"
-                            name="nome"
-                            maxlength="100"
-                            autocomplete="name"
-                            required
-                            placeholder="Seu nome..."
-                        >
+                        <input type="text" id="nome" name="nome" maxlength="100" autocomplete="name" required placeholder="Como posso chamar você?">
                     </div>
 
                     <div class="input-grupo campo-email">
                         <label for="email">E-mail</label>
 
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            maxlength="254"
-                            autocomplete="email"
-                            required
-                            placeholder="seu@email.com"
-                        >
+                        <input type="email" id="email" name="email" maxlength="254" autocomplete="email" required placeholder="voce@exemplo.com">
                     </div>
 
                     <div class="input-grupo campo-mensagem">
                         <label for="mensagem">Mensagem</label>
 
-                        <textarea
-                            id="mensagem"
-                            name="mensagem"
-                            maxlength="5000"
-                            rows="4"
-                            required
-                            placeholder="Digite sua mensagem técnica..."
-                        ></textarea>
+                        <textarea id="mensagem" name="mensagem" maxlength="5000" rows="6" required placeholder="Conte um pouco sobre sua ideia..."></textarea>
                     </div>
 
                     <!-- Campo antispam: deve permanecer oculto e desmarcado. -->
-                    <input
-                        type="checkbox"
-                        name="botcheck"
-                        hidden
-                        tabindex="-1"
-                        autocomplete="off"
-                    >
+                    <input type="checkbox" name="botcheck" hidden tabindex="-1" autocomplete="off" aria-label="Deixe este campo desmarcado">
 
-                    <button type="submit" class="btn-enviar">
-                        Transmitir Dados
-                    </button>
+                    <p id="aviso-contato" class="aviso-contato">Todos os campos são obrigatórios. O envio utiliza o serviço Web3Forms.</p>
+
+                    <button type="submit" class="btn-enviar">Enviar mensagem</button>
                 </form>
             </div>
         </section>
@@ -322,26 +263,19 @@
 
     <footer>
         <p>
-            Laboratório desenvolvido por
-            <a
-                href="https://github.com/helderneiva"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Helder Neiva
-            </a>
+            Laboratório JavaScript
+            <span aria-hidden="true">/</span>
+            Desenvolvido por
+            <a href="https://github.com/helderneiva" target="_blank" rel="noopener noreferrer">Helder Neiva</a>
         </p>
+
+        <a href="#apresentacao">Voltar ao início ↑</a>
     </footer>
 
-    <dialog id="modal" aria-labelledby="modal-titulo">
+    <dialog id="modal" aria-label="Informações do laboratório">
         <div class="modal-conteudo">
-            <button
-                id="btn-fechar-modal"
-                class="modal-fechar"
-                type="button"
-                aria-label="Fechar"
-            >
-                <i data-lucide="x"></i>
+            <button id="btn-fechar-modal" class="modal-fechar" type="button" aria-label="Fechar janela">
+                <i data-lucide="x" aria-hidden="true"></i>
             </button>
 
             <div id="modal-corpo"></div>
