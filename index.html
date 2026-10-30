@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Laboratório JavaScript de Helder Neiva: projetos com interfaces interativas, manipulação do DOM, consumo de APIs e integração com back-end.">
+    <meta name="description" content="Explore os projetos de Helder Neiva: experiências com JavaScript, interfaces interativas, APIs e integração com back-end.">
 
     <meta property="og:title" content="Laboratório JavaScript | Helder Neiva">
     <meta property="og:description" content="Ideias em prática. Explore meus projetos e experiências com JavaScript.">
@@ -15,8 +15,7 @@
 
     <script>
         try {
-            const temaSalvo = localStorage.getItem('laboratorio-tema');
-            document.documentElement.classList.toggle('light-mode', temaSalvo === 'light');
+            document.documentElement.classList.toggle('light-mode', localStorage.getItem('laboratorio-tema') === 'light');
         } catch (erro) {
             document.documentElement.classList.remove('light-mode');
         }
@@ -35,15 +34,11 @@
         <div class="cabecalho-interno">
             <a class="marca" href="#apresentacao" aria-label="Laboratório JavaScript — início">
                 <span class="marca-simbolo" aria-hidden="true">JS</span>
-
-                <span class="marca-nome">
-                    Laboratório
-                    <strong>JavaScript</strong>
-                </span>
+                <span>Laboratório <strong>JavaScript</strong></span>
             </a>
 
             <a class="autor" href="https://github.com/helderneiva" target="_blank" rel="noopener noreferrer">
-                <span>Helder Neiva</span>
+                Helder Neiva
                 <i data-lucide="arrow-up-right" aria-hidden="true"></i>
             </a>
         </div>
@@ -66,9 +61,9 @@
             </li>
 
             <li>
-                <a href="#experiencia" aria-label="Conceitos aplicados">
+                <a href="#experiencia" aria-label="Habilidades em prática">
                     <i data-lucide="square-code" aria-hidden="true"></i>
-                    <span class="menu-rotulo">Conceitos</span>
+                    <span class="menu-rotulo">Habilidades</span>
                 </a>
             </li>
 
@@ -80,7 +75,7 @@
             </li>
 
             <li>
-                <button type="button" class="btn-tema" aria-label="Alternar tema claro e escuro">
+                <button type="button" class="btn-tema" aria-label="Ativar tema claro">
                     <i data-lucide="moon-star" aria-hidden="true"></i>
                     <span class="menu-rotulo">Tema</span>
                 </button>
@@ -104,12 +99,12 @@
 
                 <div class="apresentacao-acoes">
                     <a class="botao-principal" href="#painel-controle">
-                        <span>Explorar projetos</span>
+                        Explorar projetos
                         <i data-lucide="arrow-down" aria-hidden="true"></i>
                     </a>
 
                     <a class="link-texto" href="#experiencia">
-                        <span>Conhecer os conceitos</span>
+                        Conhecer minhas habilidades
                         <i data-lucide="arrow-up-right" aria-hidden="true"></i>
                     </a>
                 </div>
@@ -139,15 +134,10 @@
             <div class="painel-barra-horizontal">
                 <div class="filtros" role="group" aria-label="Filtrar projetos por conceito">
                     <button type="button" class="btn-filtro active" data-categoria="todos" aria-pressed="true">Todos</button>
-
                     <button type="button" class="btn-filtro" data-categoria="dom" aria-pressed="false">DOM</button>
-
                     <button type="button" class="btn-filtro" data-categoria="api" aria-pressed="false">APIs / AJAX</button>
-
                     <button type="button" class="btn-filtro" data-categoria="async" aria-pressed="false">Assíncrono</button>
-
                     <button type="button" class="btn-filtro" data-categoria="data" aria-pressed="false">Dados</button>
-
                     <button type="button" class="btn-filtro" data-categoria="logica" aria-pressed="false">Lógica</button>
                 </div>
             </div>
@@ -171,49 +161,185 @@
             </noscript>
         </section>
 
-        <section id="experiencia" class="experiencia-container" aria-labelledby="titulo-experiencia">
+        <section id="experiencia" class="experiencia-container" aria-labelledby="titulo-experiencia" aria-describedby="nota-habilidades">
             <div class="secao-cabecalho">
                 <p class="sobretitulo">02 / Aprendizado em prática</p>
 
-                <h2 id="titulo-experiencia">Conceitos aplicados</h2>
+                <h2 id="titulo-experiencia">Habilidades em prática</h2>
 
-                <p>Mais do que listar tecnologias, mostrar onde elas entram em cada experiência.</p>
+                <p id="nota-habilidades">Os conhecimentos que exercito nos projetos, com exemplos de aplicação. As barras representam minha autoavaliação pessoal, sem equivalência com testes ou certificações.</p>
             </div>
 
-            <div class="conceitos-grid">
-                <article class="conceito">
-                    <i data-lucide="mouse-pointer-2" aria-hidden="true"></i>
+            <div class="habilidades-grid">
+                <article class="habilidade-card" aria-labelledby="habilidade-js">
+                    <span class="habilidade-icone" aria-hidden="true">
+                        <i data-lucide="braces"></i>
+                    </span>
 
-                    <h3>Interfaces e eventos</h3>
+                    <h3 id="habilidade-js">JavaScript moderno</h3>
 
-                    <p>Manipulação do DOM, filtros e criação dinâmica dos cards que organizam este laboratório.</p>
+                    <p class="habilidade-descricao">Funções, arrays, objetos e organização de recursos da linguagem para construir aplicações.</p>
 
-                    <span class="conceito-etiqueta">DOM · Eventos</span>
+                    <p class="habilidade-exemplo"><strong>Na prática</strong>Funções responsáveis por criar cards, aplicar filtros e controlar o tema deste laboratório.</p>
+
+                    <p class="habilidade-tecnologias">ES6+ · Funções · Arrays</p>
+
+                    <div class="habilidade-progresso">
+                        <div class="habilidade-medida">
+                            <span>Autoavaliação</span>
+                            <span>70%</span>
+                        </div>
+
+                        <meter class="habilidade-barra" min="0" max="100" value="70" aria-label="Autoavaliação em JavaScript moderno">70 de 100</meter>
+                    </div>
                 </article>
 
-                <article class="conceito">
-                    <i data-lucide="network" aria-hidden="true"></i>
+                <article class="habilidade-card" aria-labelledby="habilidade-dom">
+                    <span class="habilidade-icone" aria-hidden="true">
+                        <i data-lucide="mouse-pointer-2"></i>
+                    </span>
 
-                    <h3>Dados e requisições</h3>
+                    <h3 id="habilidade-dom">DOM e eventos</h3>
 
-                    <p>Carregamento de JSON, consumo de APIs e tratamento de estados de espera e falha.</p>
+                    <p class="habilidade-descricao">Criação e atualização de elementos e resposta às interações de quem utiliza a interface.</p>
 
-                    <span class="conceito-etiqueta">Fetch · Async / Await</span>
+                    <p class="habilidade-exemplo"><strong>Na prática</strong>Cards criados dinamicamente e filtros que atualizam a lista de projetos.</p>
+
+                    <p class="habilidade-tecnologias">DOM · Eventos · Interfaces</p>
+
+                    <div class="habilidade-progresso">
+                        <div class="habilidade-medida">
+                            <span>Autoavaliação</span>
+                            <span>75%</span>
+                        </div>
+
+                        <meter class="habilidade-barra" min="0" max="100" value="75" aria-label="Autoavaliação em DOM e eventos">75 de 100</meter>
+                    </div>
                 </article>
 
-                <article class="conceito">
-                    <i data-lucide="database" aria-hidden="true"></i>
+                <article class="habilidade-card" aria-labelledby="habilidade-async">
+                    <span class="habilidade-icone" aria-hidden="true">
+                        <i data-lucide="network"></i>
+                    </span>
 
-                    <h3>Persistência e integração</h3>
+                    <h3 id="habilidade-async">Programação assíncrona</h3>
 
-                    <p>Preferências no navegador e integração com Node.js e PostgreSQL no Simulador Bancário.</p>
+                    <p class="habilidade-descricao">Requisições com Fetch, uso de async e await e tratamento dos estados de carregamento e falha.</p>
 
-                    <span class="conceito-etiqueta">localStorage · Back-end</span>
+                    <p class="habilidade-exemplo"><strong>Na prática</strong>Leitura do JSON de projetos e consumo da API de filmes no Métrica Cine.</p>
+
+                    <p class="habilidade-tecnologias">Fetch · JSON · Async / Await</p>
+
+                    <div class="habilidade-progresso">
+                        <div class="habilidade-medida">
+                            <span>Autoavaliação</span>
+                            <span>60%</span>
+                        </div>
+
+                        <meter class="habilidade-barra" min="0" max="100" value="60" aria-label="Autoavaliação em programação assíncrona">60 de 100</meter>
+                    </div>
+                </article>
+
+                <article class="habilidade-card" aria-labelledby="habilidade-dados">
+                    <span class="habilidade-icone" aria-hidden="true">
+                        <i data-lucide="database"></i>
+                    </span>
+
+                    <h3 id="habilidade-dados">Persistência de dados</h3>
+
+                    <p class="habilidade-descricao">Armazenamento de informações no navegador e integração com serviços que mantêm dados entre acessos.</p>
+
+                    <p class="habilidade-exemplo"><strong>Na prática</strong>Tema salvo com localStorage e integração do Simulador Bancário com Node.js e PostgreSQL.</p>
+
+                    <p class="habilidade-tecnologias">localStorage · Back-end · Banco de dados</p>
+
+                    <div class="habilidade-progresso">
+                        <div class="habilidade-medida">
+                            <span>Autoavaliação</span>
+                            <span>55%</span>
+                        </div>
+
+                        <meter class="habilidade-barra" min="0" max="100" value="55" aria-label="Autoavaliação em persistência de dados">55 de 100</meter>
+                    </div>
+                </article>
+
+                <article class="habilidade-card" aria-labelledby="habilidade-formularios">
+                    <span class="habilidade-icone" aria-hidden="true">
+                        <i data-lucide="clipboard-check"></i>
+                    </span>
+
+                    <h3 id="habilidade-formularios">Formulários e validação</h3>
+
+                    <p class="habilidade-descricao">Verificação de campos, tratamento das entradas e mensagens que orientam o preenchimento.</p>
+
+                    <p class="habilidade-exemplo"><strong>Na prática</strong>Validação do contato, bloqueio de envios simultâneos e preservação dos campos quando o envio falha.</p>
+
+                    <p class="habilidade-tecnologias">FormData · Validação · Feedback</p>
+
+                    <div class="habilidade-progresso">
+                        <div class="habilidade-medida">
+                            <span>Autoavaliação</span>
+                            <span>A definir</span>
+                        </div>
+
+                        <div class="barra-progresso barra-pendente" aria-hidden="true"></div>
+                    </div>
+                </article>
+
+                <article class="habilidade-card" aria-labelledby="habilidade-logica">
+                    <span class="habilidade-icone" aria-hidden="true">
+                        <i data-lucide="workflow"></i>
+                    </span>
+
+                    <h3 id="habilidade-logica">Lógica e algoritmos</h3>
+
+                    <p class="habilidade-descricao">Decomposição de problemas, condições e repetições para transformar regras em comportamentos.</p>
+
+                    <p class="habilidade-exemplo"><strong>Na prática</strong>Filtragem dos projetos e composição de cédulas nos saques do Simulador Bancário.</p>
+
+                    <p class="habilidade-tecnologias">Condições · Repetições · Algoritmos</p>
+
+                    <div class="habilidade-progresso">
+                        <div class="habilidade-medida">
+                            <span>Autoavaliação</span>
+                            <span>70%</span>
+                        </div>
+
+                        <meter class="habilidade-barra" min="0" max="100" value="70" aria-label="Autoavaliação em lógica e algoritmos">70 de 100</meter>
+                    </div>
                 </article>
             </div>
+
+            <details class="niveis-legenda">
+                <summary>Como interpretar minha autoavaliação</summary>
+
+                <p>As porcentagens expressam minha percepção de progresso nos estudos. A escala abaixo descreve a autonomia; não existe conversão automática entre uma porcentagem e um nível.</p>
+
+                <dl class="niveis-lista">
+                    <div>
+                        <dt>Em aprendizado</dt>
+                        <dd>Estou conhecendo o conceito e praticando com orientação.</dd>
+                    </div>
+
+                    <div>
+                        <dt>Básico</dt>
+                        <dd>Consigo implementar situações simples, consultando exemplos.</dd>
+                    </div>
+
+                    <div>
+                        <dt>Intermediário</dt>
+                        <dd>Consigo combinar recursos, adaptar soluções e investigar erros.</dd>
+                    </div>
+
+                    <div>
+                        <dt>Avançado</dt>
+                        <dd>Consigo justificar escolhas, avaliar limitações e resolver situações complexas com autonomia.</dd>
+                    </div>
+                </dl>
+            </details>
         </section>
 
-        <section id="contato" class="contato-container" aria-labelledby="titulo-contato">
+        <section id="contato" aria-labelledby="titulo-contato">
             <div class="contato-apresentacao">
                 <p class="sobretitulo">03 / Vamos conversar</p>
 
@@ -225,7 +351,7 @@
                 <p>Tem uma sugestão, encontrou algo para melhorar ou quer conversar sobre desenvolvimento? Deixe sua mensagem.</p>
 
                 <a class="link-texto" href="https://github.com/helderneiva" target="_blank" rel="noopener noreferrer">
-                    <span>Conhecer meu GitHub</span>
+                    Conhecer meu GitHub
                     <i data-lucide="arrow-up-right" aria-hidden="true"></i>
                 </a>
             </div>
@@ -250,7 +376,6 @@
                         <textarea id="mensagem" name="mensagem" maxlength="5000" rows="6" required placeholder="Conte um pouco sobre sua ideia..."></textarea>
                     </div>
 
-                    <!-- Campo antispam: deve permanecer oculto e desmarcado. -->
                     <input type="checkbox" name="botcheck" hidden tabindex="-1" autocomplete="off" aria-label="Deixe este campo desmarcado">
 
                     <p id="aviso-contato" class="aviso-contato">Todos os campos são obrigatórios. O envio utiliza o serviço Web3Forms.</p>
