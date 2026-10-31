@@ -31,31 +31,25 @@
 :root {
     --font-titulos: 'Space Grotesk Local', 'Syne Local', sans-serif;
     --font-textos: 'Inter Local', sans-serif;
-
     --fundo-principal: #101225;
     --fundo-card: #1a2038;
     --fundo-elevado: #252c48;
     --fundo-campo: #14192e;
     --fundo-hover: #303958;
-
     --borda: #394362;
     --borda-forte: #7583ad;
-
     --texto: #f4f5ff;
     --texto-inverso: #211e0e;
     --texto-secundario: #bcc5df;
     --texto-botao-filtro: #e2e7fa;
-
     --destaque: #f0db4f;
     --destaque-inverso: #211e0e;
     --destaque-hover: #f8e983;
     --destaque-suave: #39351e;
-
     --apoio: #baa5ff;
     --apoio-suave: #30264a;
     --link: #a8c3ff;
     --foco: #f0db4f;
-
     --sombra: 0 16px 40px #00000026;
     --overlay: #080b1ccc;
     --duracao: 180ms;
@@ -71,25 +65,20 @@
     --fundo-elevado: #e6e9f7;
     --fundo-campo: #eaeef8;
     --fundo-hover: #e0e5f5;
-
     --borda: #cfd6e9;
     --borda-forte: #7784a5;
-
     --texto: #202642;
     --texto-inverso: #211e0e;
     --texto-secundario: #53617f;
     --texto-botao-filtro: #414e70;
-
     --destaque: #f0db4f;
     --destaque-inverso: #211e0e;
     --destaque-hover: #e2c936;
     --destaque-suave: #faf3c5;
-
     --apoio: #6941b7;
     --apoio-suave: #ece4fb;
     --link: #3159aa;
     --foco: #6941b7;
-
     --sombra: 0 16px 40px #2026420f;
     --overlay: #151b35a6;
 
@@ -477,7 +466,7 @@ main > section {
     color: var(--texto-secundario);
 }
 
-/* Filtros e cards dinâmicos */
+/* Filtros */
 
 .painel-barra-horizontal {
     margin-bottom: 24px;
@@ -511,14 +500,20 @@ main > section {
     color: var(--destaque-inverso);
 }
 
+/* Grade e cards dos projetos */
+
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+    align-items: stretch;
     gap: 24px;
     width: 100%;
 }
 
 .card-projeto {
+    width: 100%;
+    max-width: 560px;
+    justify-self: center;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -683,11 +678,11 @@ main > section {
 }
 
 .modo-carrossel .card-projeto {
-    flex: 0 0 min(340px, 85%);
+    flex: 0 0 min(380px, 86%);
     scroll-snap-align: start;
 }
 
-/* Habilidades em prática */
+/* Habilidades */
 
 .habilidades-grid {
     display: grid;
@@ -809,7 +804,7 @@ main > section {
     background: linear-gradient(90deg, var(--apoio), var(--link));
 }
 
-/* Legenda dos níveis */
+/* Legenda */
 
 .niveis-legenda {
     margin-top: 24px;
@@ -974,7 +969,7 @@ footer a {
     color: var(--link);
 }
 
-/* Janela interna e mensagens */
+/* Janela interna */
 
 dialog#modal {
     width: fit-content;
@@ -1008,8 +1003,12 @@ dialog#modal::backdrop {
 }
 
 .modal-conteudo.modal-largo {
-    width: min(96vw, 1280px);
-    height: min(94dvh, 960px);
+    width: calc(100vw - 24px);
+    max-width: 1600px;
+    height: calc(100dvh - 24px);
+    max-height: calc(100dvh - 24px);
+    padding: 12px;
+    border-radius: 12px;
 }
 
 .modal-fechar {
@@ -1055,13 +1054,29 @@ dialog#modal::backdrop {
 }
 
 .modal-largo #modal-corpo {
+    gap: 10px;
+    padding: 0;
     overflow: hidden;
+}
+
+.modal-largo #modal-corpo h2 {
+    min-height: 36px;
+    padding: 2px 52px 2px 4px;
+    font-size: 1.125em;
+    line-height: 1.5;
+}
+
+.modal-largo .modal-fechar {
+    top: 8px;
+    right: 8px;
+    width: 36px;
+    height: 36px;
 }
 
 .modal-largo #modal-corpo > div {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
     flex: 1;
     min-height: 0;
 }
@@ -1077,9 +1092,12 @@ dialog#modal::backdrop {
 
 .modal-iframe + .card-link {
     flex: none;
+    min-height: 36px;
+    padding: 6px 12px;
+    font-size: 0.8125em;
 }
 
-/* Estados da lista de projetos */
+/* Estados da lista */
 
 .mensagem-vazia {
     padding: 20px 0;
@@ -1250,8 +1268,10 @@ dialog#modal::backdrop {
     }
 
     .modal-conteudo.modal-largo {
-        width: 96vw;
-        height: 94dvh;
+        width: calc(100vw - 12px);
+        height: calc(100dvh - 12px);
+        max-height: calc(100dvh - 12px);
+        padding: 10px;
     }
 
     #modal-corpo h2 {
@@ -1263,8 +1283,6 @@ dialog#modal::backdrop {
         padding-bottom: calc(112px + env(safe-area-inset-bottom));
     }
 }
-
-/* Celulares estreitos */
 
 @media (max-width: 480px) {
     #apresentacao h1 {
