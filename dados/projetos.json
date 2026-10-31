@@ -2,7 +2,7 @@
     {
         "titulo": "Métrica Cine",
         "categoria": "api",
-        "descricao": "Catálogo de filmes com busca (debounce), detalhes com elenco e trailer, e favoritos salvos no navegador. Consome a API do TMDB.",
+        "descricao": "Busque filmes, consulte elenco e trailers e salve favoritos. Prática com API, busca com debounce e armazenamento local.",
         "tecnologias": [
             "JavaScript",
             "Fetch API",
@@ -18,7 +18,7 @@
     {
         "titulo": "Museu da Poesia Digital",
         "categoria": "dom",
-        "descricao": "Museu literário interativo dedicado à poesia brasileira, com busca de obras, leitura de poemas, controle do tamanho da letra e registro de leituras no navegador.",
+        "descricao": "Explore a poesia brasileira, encontre obras e registre suas leituras. Prática com DOM, eventos e preferências salvas no navegador.",
         "tecnologias": [
             "JavaScript",
             "Manipulação DOM",
@@ -33,7 +33,7 @@
     {
         "titulo": "Simulador de Conta Bancária",
         "categoria": "async",
-        "descricao": "Aplicação com cadastro, autenticação, crédito inicial baseado em recortes da RAIS, saques com composição de cédulas e extrato persistido no banco de dados.",
+        "descricao": "Simule cadastro e saques com composição de cédulas e consulte o extrato. Integração com Node.js, autenticação e PostgreSQL.",
         "tecnologias": [
             "JavaScript",
             "Fetch API",

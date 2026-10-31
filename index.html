@@ -4,15 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Explore os projetos de Helder Neiva: experiências com JavaScript, interfaces interativas, APIs e integração com back-end.">
-
     <meta property="og:title" content="Laboratório JavaScript | Helder Neiva">
     <meta property="og:description" content="Ideias em prática. Explore meus projetos e experiências com JavaScript.">
     <meta property="og:type" content="website">
-
     <title>Laboratório JavaScript | Helder Neiva</title>
-
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-
     <script>
         try {
             document.documentElement.classList.toggle('light-mode', localStorage.getItem('laboratorio-tema') === 'light');
@@ -20,13 +16,11 @@
             document.documentElement.classList.remove('light-mode');
         }
     </script>
-
     <link rel="stylesheet" href="estilos/principal.css">
-
     <script src="scripts/lucide.js" defer></script>
     <script src="scripts/script.js" type="module"></script>
+    <script src="scripts/efeitos.js" defer></script>
 </head>
-
 <body>
     <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
 
@@ -36,50 +30,17 @@
                 <span class="marca-simbolo" aria-hidden="true">JS</span>
                 <span>Laboratório <strong>JavaScript</strong></span>
             </a>
-
-            <a class="autor" href="https://github.com/helderneiva" target="_blank" rel="noopener noreferrer">
-                Helder Neiva
-                <i data-lucide="arrow-up-right" aria-hidden="true"></i>
-            </a>
+            <a class="autor" href="https://github.com/helderneiva" target="_blank" rel="noopener noreferrer">Helder Neiva <i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
         </div>
     </header>
 
     <nav id="menu" aria-label="Navegação principal">
         <ul>
-            <li>
-                <a href="#apresentacao" aria-label="Início">
-                    <i data-lucide="house" aria-hidden="true"></i>
-                    <span class="menu-rotulo">Início</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="#painel-controle" aria-label="Projetos">
-                    <i data-lucide="flask-conical" aria-hidden="true"></i>
-                    <span class="menu-rotulo">Projetos</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="#experiencia" aria-label="Habilidades em prática">
-                    <i data-lucide="square-code" aria-hidden="true"></i>
-                    <span class="menu-rotulo">Habilidades</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="#contato" aria-label="Contato">
-                    <i data-lucide="send" aria-hidden="true"></i>
-                    <span class="menu-rotulo">Contato</span>
-                </a>
-            </li>
-
-            <li>
-                <button type="button" class="btn-tema" aria-label="Ativar tema claro">
-                    <i data-lucide="moon-star" aria-hidden="true"></i>
-                    <span class="menu-rotulo">Tema</span>
-                </button>
-            </li>
+            <li><a href="#apresentacao" class="ativo" aria-current="location" aria-label="Início"><i data-lucide="house" aria-hidden="true"></i><span class="menu-rotulo">Início</span></a></li>
+            <li><a href="#painel-controle" aria-label="Projetos"><i data-lucide="flask-conical" aria-hidden="true"></i><span class="menu-rotulo">Projetos</span></a></li>
+            <li><a href="#experiencia" aria-label="Habilidades em prática"><i data-lucide="square-code" aria-hidden="true"></i><span class="menu-rotulo">Habilidades</span></a></li>
+            <li><a href="#contato" aria-label="Contato"><i data-lucide="send" aria-hidden="true"></i><span class="menu-rotulo">Contato</span></a></li>
+            <li><button type="button" class="btn-tema" aria-label="Ativar tema claro"><i data-lucide="moon-star" aria-hidden="true"></i><span class="menu-rotulo">Tema</span></button></li>
         </ul>
     </nav>
 
@@ -87,48 +48,46 @@
         <section id="apresentacao" aria-labelledby="titulo-principal">
             <div class="apresentacao-texto">
                 <p class="sobretitulo">Portfólio de desenvolvimento · Helder Neiva</p>
-
-                <h1 id="titulo-principal">
-                    Laboratório<br>
-                    <span>JavaScript.</span>
-                </h1>
-
+                <h1 id="titulo-principal">Laboratório<br><span>JavaScript.</span></h1>
                 <p class="apresentacao-chamada">Ideias em prática. Código em evolução.</p>
-
-                <p class="apresentacao-descricao">Um espaço para explorar interfaces, trabalhar com dados e transformar desafios em aplicações. Cada projeto registra uma nova etapa do meu aprendizado em desenvolvimento web.</p>
-
+                <p class="apresentacao-descricao">Interfaces, APIs e dados em aplicações que você pode explorar. Conheça os projetos e os conceitos de JavaScript que coloquei em prática.</p>
                 <div class="apresentacao-acoes">
-                    <a class="botao-principal" href="#painel-controle">
-                        Explorar projetos
-                        <i data-lucide="arrow-down" aria-hidden="true"></i>
-                    </a>
-
-                    <a class="link-texto" href="#experiencia">
-                        Conhecer minhas habilidades
-                        <i data-lucide="arrow-up-right" aria-hidden="true"></i>
-                    </a>
+                    <a class="botao-principal" href="#painel-controle">Explorar projetos <i data-lucide="arrow-down" aria-hidden="true"></i></a>
+                    <a class="link-texto" href="#experiencia">Conhecer minhas habilidades <i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
                 </div>
             </div>
 
-            <div class="assinatura-visual" aria-hidden="true">
-                <span class="assinatura-indice">IDEIA → CÓDIGO → EXPERIÊNCIA</span>
+            <button type="button" class="assinatura-cartao" id="cartao-js" aria-label="Mostrar verso do cartão JavaScript" aria-pressed="false" aria-describedby="cartao-frente">
+                <span class="cartao-rotor">
+                    <span class="assinatura-visual cartao-face cartao-frente" id="cartao-frente">
+                        <span class="assinatura-indice">IDEIA → CÓDIGO → EXPERIÊNCIA</span>
+                        <span class="assinatura-js" role="img" aria-label="JS.">
+                            <svg class="monograma-js" viewBox="0 0 148 100" aria-hidden="true" focusable="false">
+                                <path d="M49 13V62C49 78 42 85 29 85C19 85 12 80 8 72" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="butt"/>
+                                <path d="M119 24C113 16 105 13 96 13C82 13 73 21 73 32C73 43 83 48 96 51C111 55 120 59 120 71C120 81 111 87 98 87C86 87 76 82 70 74" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="butt"/>
+                                <circle class="monograma-ponto" cx="140" cy="84" r="5"/>
+                            </svg>
+                        </span>
+                        <span class="assinatura-base">HTML5 / CSS3 / JavaScript / Node.js</span>
+                    </span>
 
-                <span class="assinatura-js">JS<span>.</span></span>
-
-                <div class="assinatura-base">
-                    <span>HTML5 / CSS3 / JavaScript</span>
-                    <i data-lucide="braces"></i>
-                </div>
-            </div>
+                    <span class="assinatura-visual cartao-face cartao-verso" id="cartao-verso" aria-hidden="true" inert>
+                        <span class="verso-titulo">Problema <span class="verso-seta" aria-hidden="true">→</span> Código <span class="verso-seta" aria-hidden="true">→</span> Resolução</span>
+                        <span class="verso-percurso"><span><b>01 /</b> Entender</span><span><b>02 /</b> Desenvolver</span><span><b>03 /</b> Solucionar</span></span>
+                        <span class="verso-conteudo">
+                            <span class="verso-nota">Entender o problema. Desenvolver um caminho. Executar a solução.</span>
+                            <span class="verso-assinatura">Helder Neiva · Laboratório JavaScript</span>
+                        </span>
+                    </span>
+                </span>
+            </button>
         </section>
 
         <section id="painel-controle" class="lab" aria-labelledby="titulo-experimentos">
             <div class="secao-cabecalho">
                 <p class="sobretitulo">01 / Exploração</p>
-
                 <h2 id="titulo-experimentos">Meus experimentos</h2>
-
-                <p>Aplicações com identidades próprias e desafios diferentes. Abra um projeto para experimentar.</p>
+                <p>Escolha um projeto, explore a aplicação e conheça as tecnologias utilizadas.</p>
             </div>
 
             <div class="painel-barra-horizontal">
@@ -143,198 +102,105 @@
             </div>
 
             <div class="carrossel">
-                <button type="button" class="carrossel-btn" id="carrossel-anterior" aria-label="Projetos anteriores" aria-controls="grid-projetos">
-                    <i data-lucide="chevron-left" aria-hidden="true"></i>
-                </button>
-
+                <button type="button" class="carrossel-btn" id="carrossel-anterior" aria-label="Projetos anteriores" aria-controls="grid-projetos"><i data-lucide="chevron-left" aria-hidden="true"></i></button>
                 <div id="grid-projetos" class="grid-container" role="region" aria-label="Lista de projetos" aria-busy="true" tabindex="0">
                     <p class="mensagem-vazia">Carregando projetos...</p>
                 </div>
-
-                <button type="button" class="carrossel-btn" id="carrossel-proximo" aria-label="Próximos projetos" aria-controls="grid-projetos">
-                    <i data-lucide="chevron-right" aria-hidden="true"></i>
-                </button>
+                <button type="button" class="carrossel-btn" id="carrossel-proximo" aria-label="Próximos projetos" aria-controls="grid-projetos"><i data-lucide="chevron-right" aria-hidden="true"></i></button>
             </div>
 
-            <noscript>
-                <p class="estado-erro">Ative o JavaScript para carregar os projetos, usar os filtros e enviar o formulário.</p>
-            </noscript>
+            <noscript><p class="estado-erro">Ative o JavaScript para carregar os projetos, usar os filtros e enviar o formulário.</p></noscript>
         </section>
 
         <section id="experiencia" class="experiencia-container" aria-labelledby="titulo-experiencia" aria-describedby="nota-habilidades">
             <div class="secao-cabecalho">
                 <p class="sobretitulo">02 / Aprendizado em prática</p>
-
                 <h2 id="titulo-experiencia">Habilidades em prática</h2>
-
-                <p id="nota-habilidades">Os conhecimentos que exercito nos projetos, com exemplos de aplicação. As barras representam minha autoavaliação pessoal, sem equivalência com testes ou certificações.</p>
+                <p id="nota-habilidades">Veja onde cada conhecimento aparece nos projetos. As barras indicam minha estimativa pessoal de proficiência; os exemplos mostram sua aplicação.</p>
             </div>
 
             <div class="habilidades-grid">
                 <article class="habilidade-card" aria-labelledby="habilidade-js">
-                    <span class="habilidade-icone" aria-hidden="true">
-                        <i data-lucide="braces"></i>
-                    </span>
-
-                    <h3 id="habilidade-js">JavaScript moderno</h3>
-
-                    <p class="habilidade-descricao">Funções, arrays, objetos e organização de recursos da linguagem para construir aplicações.</p>
-
+                    <span class="habilidade-icone" aria-hidden="true"><i data-lucide="braces"></i></span>
+                    <h3 id="habilidade-js"><a class="habilidade-link" href="proficiencias.html#javascript-moderno">JavaScript moderno</a></h3>
                     <p class="habilidade-exemplo"><strong>Na prática</strong>Funções responsáveis por criar cards, aplicar filtros e controlar o tema deste laboratório.</p>
-
+                    <p class="habilidade-descricao">Funções, arrays, objetos e organização de recursos da linguagem para construir aplicações.</p>
                     <p class="habilidade-tecnologias">ES6+ · Funções · Arrays</p>
-
                     <div class="habilidade-progresso">
-                        <div class="habilidade-medida">
-                            <span>Autoavaliação</span>
-                            <span>70%</span>
-                        </div>
-
-                        <meter class="habilidade-barra" min="0" max="100" value="70" aria-label="Autoavaliação em JavaScript moderno">70 de 100</meter>
+                        <div class="habilidade-medida"><span>Proficiência</span><span>70%</span></div>
+                        <meter class="habilidade-barra" min="0" max="100" value="70" aria-label="Proficiência em JavaScript moderno">70 de 100</meter>
                     </div>
                 </article>
 
                 <article class="habilidade-card" aria-labelledby="habilidade-dom">
-                    <span class="habilidade-icone" aria-hidden="true">
-                        <i data-lucide="mouse-pointer-2"></i>
-                    </span>
-
-                    <h3 id="habilidade-dom">DOM e eventos</h3>
-
-                    <p class="habilidade-descricao">Criação e atualização de elementos e resposta às interações de quem utiliza a interface.</p>
-
+                    <span class="habilidade-icone" aria-hidden="true"><i data-lucide="mouse-pointer-2"></i></span>
+                    <h3 id="habilidade-dom"><a class="habilidade-link" href="proficiencias.html#dom-eventos">DOM e eventos</a></h3>
                     <p class="habilidade-exemplo"><strong>Na prática</strong>Cards criados dinamicamente e filtros que atualizam a lista de projetos.</p>
-
+                    <p class="habilidade-descricao">Criação e atualização de elementos e resposta às interações de quem utiliza a interface.</p>
                     <p class="habilidade-tecnologias">DOM · Eventos · Interfaces</p>
-
                     <div class="habilidade-progresso">
-                        <div class="habilidade-medida">
-                            <span>Autoavaliação</span>
-                            <span>75%</span>
-                        </div>
-
-                        <meter class="habilidade-barra" min="0" max="100" value="75" aria-label="Autoavaliação em DOM e eventos">75 de 100</meter>
+                        <div class="habilidade-medida"><span>Proficiência</span><span>75%</span></div>
+                        <meter class="habilidade-barra" min="0" max="100" value="75" aria-label="Proficiência em DOM e eventos">75 de 100</meter>
                     </div>
                 </article>
 
                 <article class="habilidade-card" aria-labelledby="habilidade-async">
-                    <span class="habilidade-icone" aria-hidden="true">
-                        <i data-lucide="network"></i>
-                    </span>
-
-                    <h3 id="habilidade-async">Programação assíncrona</h3>
-
-                    <p class="habilidade-descricao">Requisições com Fetch, uso de async e await e tratamento dos estados de carregamento e falha.</p>
-
+                    <span class="habilidade-icone" aria-hidden="true"><i data-lucide="network"></i></span>
+                    <h3 id="habilidade-async"><a class="habilidade-link" href="proficiencias.html#programacao-assincrona">Programação assíncrona</a></h3>
                     <p class="habilidade-exemplo"><strong>Na prática</strong>Leitura do JSON de projetos e consumo da API de filmes no Métrica Cine.</p>
-
+                    <p class="habilidade-descricao">Requisições com Fetch, uso de async e await e tratamento dos estados de carregamento e falha.</p>
                     <p class="habilidade-tecnologias">Fetch · JSON · Async / Await</p>
-
                     <div class="habilidade-progresso">
-                        <div class="habilidade-medida">
-                            <span>Autoavaliação</span>
-                            <span>60%</span>
-                        </div>
-
-                        <meter class="habilidade-barra" min="0" max="100" value="60" aria-label="Autoavaliação em programação assíncrona">60 de 100</meter>
+                        <div class="habilidade-medida"><span>Proficiência</span><span>60%</span></div>
+                        <meter class="habilidade-barra" min="0" max="100" value="60" aria-label="Proficiência em programação assíncrona">60 de 100</meter>
                     </div>
                 </article>
 
                 <article class="habilidade-card" aria-labelledby="habilidade-dados">
-                    <span class="habilidade-icone" aria-hidden="true">
-                        <i data-lucide="database"></i>
-                    </span>
-
-                    <h3 id="habilidade-dados">Persistência de dados</h3>
-
-                    <p class="habilidade-descricao">Armazenamento de informações no navegador e integração com serviços que mantêm dados entre acessos.</p>
-
+                    <span class="habilidade-icone" aria-hidden="true"><i data-lucide="database"></i></span>
+                    <h3 id="habilidade-dados"><a class="habilidade-link" href="proficiencias.html#persistencia-dados">Persistência de dados</a></h3>
                     <p class="habilidade-exemplo"><strong>Na prática</strong>Tema salvo com localStorage e integração do Simulador Bancário com Node.js e PostgreSQL.</p>
-
+                    <p class="habilidade-descricao">Armazenamento de informações no navegador e integração com serviços que mantêm dados entre acessos.</p>
                     <p class="habilidade-tecnologias">localStorage · Back-end · Banco de dados</p>
-
                     <div class="habilidade-progresso">
-                        <div class="habilidade-medida">
-                            <span>Autoavaliação</span>
-                            <span>55%</span>
-                        </div>
-
-                        <meter class="habilidade-barra" min="0" max="100" value="55" aria-label="Autoavaliação em persistência de dados">55 de 100</meter>
+                        <div class="habilidade-medida"><span>Proficiência</span><span>55%</span></div>
+                        <meter class="habilidade-barra" min="0" max="100" value="55" aria-label="Proficiência em persistência de dados">55 de 100</meter>
                     </div>
                 </article>
 
                 <article class="habilidade-card" aria-labelledby="habilidade-formularios">
-                    <span class="habilidade-icone" aria-hidden="true">
-                        <i data-lucide="clipboard-check"></i>
-                    </span>
-
-                    <h3 id="habilidade-formularios">Formulários e validação</h3>
-
-                    <p class="habilidade-descricao">Verificação de campos, tratamento das entradas e mensagens que orientam o preenchimento.</p>
-
+                    <span class="habilidade-icone" aria-hidden="true"><i data-lucide="clipboard-check"></i></span>
+                    <h3 id="habilidade-formularios"><a class="habilidade-link" href="proficiencias.html#formularios-validacao">Formulários e validação</a></h3>
                     <p class="habilidade-exemplo"><strong>Na prática</strong>Validação do contato, bloqueio de envios simultâneos e preservação dos campos quando o envio falha.</p>
-
+                    <p class="habilidade-descricao">Verificação de campos, tratamento das entradas e mensagens que orientam o preenchimento.</p>
                     <p class="habilidade-tecnologias">FormData · Validação · Feedback</p>
-
                     <div class="habilidade-progresso">
-                        <div class="habilidade-medida">
-                            <span>Autoavaliação</span>
-                            <span>A definir</span>
-                        </div>
-
+                        <div class="habilidade-medida"><span>Proficiência</span><span>A definir</span></div>
                         <div class="barra-progresso barra-pendente" aria-hidden="true"></div>
                     </div>
                 </article>
 
                 <article class="habilidade-card" aria-labelledby="habilidade-logica">
-                    <span class="habilidade-icone" aria-hidden="true">
-                        <i data-lucide="workflow"></i>
-                    </span>
-
-                    <h3 id="habilidade-logica">Lógica e algoritmos</h3>
-
-                    <p class="habilidade-descricao">Decomposição de problemas, condições e repetições para transformar regras em comportamentos.</p>
-
+                    <span class="habilidade-icone" aria-hidden="true"><i data-lucide="workflow"></i></span>
+                    <h3 id="habilidade-logica"><a class="habilidade-link" href="proficiencias.html#logica-algoritmos">Lógica e algoritmos</a></h3>
                     <p class="habilidade-exemplo"><strong>Na prática</strong>Filtragem dos projetos e composição de cédulas nos saques do Simulador Bancário.</p>
-
+                    <p class="habilidade-descricao">Decomposição de problemas, condições e repetições para transformar regras em comportamentos.</p>
                     <p class="habilidade-tecnologias">Condições · Repetições · Algoritmos</p>
-
                     <div class="habilidade-progresso">
-                        <div class="habilidade-medida">
-                            <span>Autoavaliação</span>
-                            <span>70%</span>
-                        </div>
-
-                        <meter class="habilidade-barra" min="0" max="100" value="70" aria-label="Autoavaliação em lógica e algoritmos">70 de 100</meter>
+                        <div class="habilidade-medida"><span>Proficiência</span><span>70%</span></div>
+                        <meter class="habilidade-barra" min="0" max="100" value="70" aria-label="Proficiência em lógica e algoritmos">70 de 100</meter>
                     </div>
                 </article>
             </div>
 
             <details class="niveis-legenda">
-                <summary>Como interpretar minha autoavaliação</summary>
-
-                <p>As porcentagens expressam minha percepção de progresso nos estudos. A escala abaixo descreve a autonomia; não existe conversão automática entre uma porcentagem e um nível.</p>
-
+                <summary>Como interpretar minha proficiência</summary>
+                <p>As porcentagens expressam minha estimativa pessoal de proficiência e não representam uma certificação. A escala abaixo descreve a autonomia; não existe conversão automática entre uma porcentagem e um nível.</p>
                 <dl class="niveis-lista">
-                    <div>
-                        <dt>Em aprendizado</dt>
-                        <dd>Estou conhecendo o conceito e praticando com orientação.</dd>
-                    </div>
-
-                    <div>
-                        <dt>Básico</dt>
-                        <dd>Consigo implementar situações simples, consultando exemplos.</dd>
-                    </div>
-
-                    <div>
-                        <dt>Intermediário</dt>
-                        <dd>Consigo combinar recursos, adaptar soluções e investigar erros.</dd>
-                    </div>
-
-                    <div>
-                        <dt>Avançado</dt>
-                        <dd>Consigo justificar escolhas, avaliar limitações e resolver situações complexas com autonomia.</dd>
-                    </div>
+                    <div><dt>Em aprendizado</dt><dd>Estou conhecendo o conceito e praticando com orientação.</dd></div>
+                    <div><dt>Básico</dt><dd>Consigo implementar situações simples, consultando exemplos.</dd></div>
+                    <div><dt>Intermediário</dt><dd>Consigo combinar recursos, adaptar soluções e investigar erros.</dd></div>
+                    <div><dt>Avançado</dt><dd>Consigo justificar escolhas, avaliar limitações e resolver situações complexas com autonomia.</dd></div>
                 </dl>
             </details>
         </section>
@@ -342,67 +208,38 @@
         <section id="contato" aria-labelledby="titulo-contato">
             <div class="contato-apresentacao">
                 <p class="sobretitulo">03 / Vamos conversar</p>
-
-                <h2 id="titulo-contato">
-                    Uma ideia começa<br>
-                    com uma conversa.
-                </h2>
-
+                <h2 id="titulo-contato">Uma ideia começa<br>com uma conversa.</h2>
                 <p>Tem uma sugestão, encontrou algo para melhorar ou quer conversar sobre desenvolvimento? Deixe sua mensagem.</p>
-
-                <a class="link-texto" href="https://github.com/helderneiva" target="_blank" rel="noopener noreferrer">
-                    Conhecer meu GitHub
-                    <i data-lucide="arrow-up-right" aria-hidden="true"></i>
-                </a>
+                <a class="link-texto" href="https://github.com/helderneiva" target="_blank" rel="noopener noreferrer">Conhecer meu GitHub <i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
             </div>
 
             <div class="formulario-bloco">
                 <form id="form-contato" aria-labelledby="titulo-contato" aria-describedby="aviso-contato">
                     <div class="input-grupo campo-nome">
                         <label for="nome">Nome</label>
-
                         <input type="text" id="nome" name="nome" maxlength="100" autocomplete="name" required placeholder="Como posso chamar você?">
                     </div>
-
                     <div class="input-grupo campo-email">
                         <label for="email">E-mail</label>
-
                         <input type="email" id="email" name="email" maxlength="254" autocomplete="email" required placeholder="voce@exemplo.com">
                     </div>
-
                     <div class="input-grupo campo-mensagem">
                         <label for="mensagem">Mensagem</label>
-
                         <textarea id="mensagem" name="mensagem" maxlength="5000" rows="6" required placeholder="Conte um pouco sobre sua ideia..."></textarea>
                     </div>
-
                     <input type="checkbox" name="botcheck" hidden tabindex="-1" autocomplete="off" aria-label="Deixe este campo desmarcado">
-
-                    <p id="aviso-contato" class="aviso-contato">Todos os campos são obrigatórios. O envio utiliza o serviço Web3Forms.</p>
-
+                    <p id="aviso-contato" class="aviso-contato">Todos os campos são obrigatórios. Sua mensagem será enviada pelo Web3Forms.</p>
                     <button type="submit" class="btn-enviar">Enviar mensagem</button>
                 </form>
             </div>
         </section>
     </main>
 
-    <footer>
-        <p>
-            Laboratório JavaScript
-            <span aria-hidden="true">/</span>
-            Desenvolvido por
-            <a href="https://github.com/helderneiva" target="_blank" rel="noopener noreferrer">Helder Neiva</a>
-        </p>
-
-        <a href="#apresentacao">Voltar ao início ↑</a>
-    </footer>
+    <footer><p>Laboratório JavaScript <span aria-hidden="true">/</span> Desenvolvido por <a href="https://github.com/helderneiva" target="_blank" rel="noopener noreferrer">Helder Neiva</a></p><a href="#apresentacao">Voltar ao início ↑</a></footer>
 
     <dialog id="modal" aria-label="Informações do laboratório">
         <div class="modal-conteudo">
-            <button id="btn-fechar-modal" class="modal-fechar" type="button" aria-label="Fechar janela">
-                <i data-lucide="x" aria-hidden="true"></i>
-            </button>
-
+            <button id="btn-fechar-modal" class="modal-fechar" type="button" aria-label="Fechar janela"><i data-lucide="x" aria-hidden="true"></i></button>
             <div id="modal-corpo"></div>
         </div>
     </dialog>
